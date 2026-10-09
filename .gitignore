@@ -1,0 +1,21 @@
+# Python environment and caches
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+# generated pipeline outputs (reproducible from code)
+data/clean/
+data/model/
+
+# company-provided materials (not redistributed)
+normal_machines/
+return_repair_machines/
+reference_files/
+take_home_assignment_details.pdf
+
+# Word lock files
+~$*
+
+# local tooling instructions
+CLAUDE.md
