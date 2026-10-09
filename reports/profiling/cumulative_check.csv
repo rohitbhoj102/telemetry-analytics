@@ -1,0 +1,461 @@
+group,path,kind,serials_with_path,serials_ge2_obs,consecutive_pairs,pct_serials_monotonic,pct_serials_monotonic_total,pairs_with_decrease,pairs_total_decrease,pct_pairs_unchanged,constant_everywhere,pct_serials_monotonic_by_server_ts,pairs_with_decrease_by_server_ts,decrease_examples
+motor_normal,ddmUsage.ambTempMeas,scalar,76,54,394,87.0,87.0,7,7,97.2,False,87.0,7,027c084f 2025-10-11: 1->0 | 400fee1a 2025-12-05: 1->0
+motor_normal,ddmUsage.ambientPressure_Pa,scalar,76,54,394,1.9,1.9,167,167,5.3,False,1.9,168,01e45b1c 2025-10-31: 102088->100860 | 01e45b1c 2026-05-28: 102737->102393
+motor_normal,ddmUsage.ambientTemperature_mC,scalar,76,54,394,1.9,1.9,177,177,2.3,False,1.9,178,01e45b1c 2025-12-01: 23560->18930 | 01e45b1c 2026-01-17: 18930->16470
+motor_normal,ddmUsage.barometerDerCounter,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.bmsAmbientTemperature_mC,scalar,76,54,394,1.9,1.9,191,191,2.3,False,1.9,192,01e45b1c 2025-09-22: 327670->20000 | 01e45b1c 2025-12-01: 23560->18930
+motor_normal,ddmUsage.ddm692_BarometerTempBins.bins,array,76,54,394,100.0,100.0,0,0,0.0,False,92.6,4,
+motor_normal,ddmUsage.ddm692_BarometerTempBins.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_BarometerTempBins.tableSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_ExhaustTempBins.bins,array,76,54,394,100.0,100.0,0,0,0.0,False,92.6,4,
+motor_normal,ddmUsage.ddm692_ExhaustTempBins.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_ExhaustTempBins.tableSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_FisfTempBins.bins,array,76,54,394,100.0,100.0,0,0,0.0,False,92.6,4,
+motor_normal,ddmUsage.ddm692_FisfTempBins.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_FisfTempBins.tableSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_NormSpeedBins.bins,array,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_NormSpeedBins.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_NormSpeedBins.tableSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_PowerBins.bins,array,76,54,394,100.0,100.0,0,0,5.3,False,94.4,3,
+motor_normal,ddmUsage.ddm692_PowerBins.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_PowerBins.tableSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_PressureBins.bins,array,76,54,394,100.0,100.0,0,0,0.0,False,92.6,4,
+motor_normal,ddmUsage.ddm692_PressureBins.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_PressureBins.tableSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_SpeedBins.bins,array,76,54,394,100.0,100.0,0,0,5.3,False,94.4,3,
+motor_normal,ddmUsage.ddm692_SpeedBins.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddm692_SpeedBins.tableSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.ddmOnButNotRunTime_s,scalar,76,54,394,100.0,100.0,0,0,0.0,False,92.6,4,
+motor_normal,ddmUsage.exhaustDerCounter,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.filterStateChgCounter,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.filterWashCounter,scalar,76,54,394,100.0,100.0,0,0,51.0,False,96.3,2,
+motor_normal,ddmUsage.filterWashStatus,scalar,76,54,394,50.0,50.0,39,39,76.6,False,50.0,39,01e45b1c 2026-06-12: 1->0 | 027c084f 2026-05-22: 1->0
+motor_normal,ddmUsage.fwFilteredDeqv_mm,scalar,76,54,394,1.9,1.9,211,211,18.3,False,1.9,208,01e45b1c 2025-09-29: 37->36 | 01e45b1c 2025-10-31: 36->28
+motor_normal,ddmUsage.fwPrevFilteredDeqv_mm,scalar,76,54,394,1.9,1.9,211,211,18.3,False,1.9,208,01e45b1c 2025-09-29: 37->36 | 01e45b1c 2025-10-31: 36->28
+motor_normal,ddmUsage.motorThermalBemfDerCounter,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.packVoltLow_mV,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,ddmUsage.powerReset,scalar,76,54,394,14.8,14.8,82,82,64.0,False,14.8,82,01e45b1c 2025-09-22: 1->0 | 01e45b1c 2025-10-31: 1->0
+motor_normal,ddmUsage.ppcPeakPowerTimeReset_ms,scalar,76,54,394,46.3,46.3,50,50,0.0,False,42.6,54,01e45b1c 2025-10-31: 1.12976e+07->3.3054e+06 | 01e45b1c 2026-01-17: 9.97123e+06->1.51394e+06
+motor_normal,ddmUsage.ppcPeakPowerTime_ms,scalar,76,54,394,90.7,90.7,5,5,97.5,False,90.7,5,01e45b1c 2026-03-05: 50000->48494 | 0a75ecbf 2025-11-06: 50000->1798
+motor_normal,header.checksum,scalar,76,54,394,3.7,3.7,189,189,0.0,False,3.7,188,01e45b1c 2025-10-31: 2.22832e+09->1.49416e+09 | 01e45b1c 2025-12-01: 1.49416e+09->2.0015e+08
+motor_normal,header.dataSize,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,header.formatId,scalar,76,54,394,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_normal,header.writeCount,scalar,76,54,394,100.0,100.0,0,0,0.0,False,92.6,4,
+motor_rr,ddmUsage.ambTempMeas,scalar,44,37,448,94.6,94.6,2,2,99.3,False,94.6,3,0bd46b11 2025-12-08: 1->0 | 695021da 2025-12-31: 1->0
+motor_rr,ddmUsage.ambientPressure_Pa,scalar,44,37,448,8.1,8.1,211,211,7.1,False,8.1,215,0bd46b11 2025-12-22: 97923->97471 | 0c24c8b5 2025-09-14: 91937->91656
+motor_rr,ddmUsage.ambientTemperature_mC,scalar,44,37,448,5.4,5.4,212,212,3.6,False,5.4,212,05859aac 2025-09-01: 27370->26830 | 05859aac 2025-11-01: 26830->24420
+motor_rr,ddmUsage.barometerDerCounter,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.bmsAmbientTemperature_mC,scalar,44,37,448,2.7,2.7,219,219,4.5,False,2.7,219,05859aac 2025-09-01: 27370->26830 | 05859aac 2025-11-01: 26830->24420
+motor_rr,ddmUsage.ddm692_BarometerTempBins.bins,array,44,37,448,100.0,100.0,0,0,0.9,False,89.2,4,
+motor_rr,ddmUsage.ddm692_BarometerTempBins.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_BarometerTempBins.tableSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_ExhaustTempBins.bins,array,44,37,448,100.0,100.0,0,0,0.9,False,89.2,4,
+motor_rr,ddmUsage.ddm692_ExhaustTempBins.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_ExhaustTempBins.tableSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_FisfTempBins.bins,array,44,37,448,100.0,100.0,0,0,0.9,False,89.2,4,
+motor_rr,ddmUsage.ddm692_FisfTempBins.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_FisfTempBins.tableSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_NormSpeedBins.bins,array,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_NormSpeedBins.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_NormSpeedBins.tableSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_PowerBins.bins,array,44,37,448,100.0,100.0,0,0,7.6,False,89.2,4,
+motor_rr,ddmUsage.ddm692_PowerBins.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_PowerBins.tableSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_PressureBins.bins,array,44,37,448,100.0,100.0,0,0,0.9,False,89.2,4,
+motor_rr,ddmUsage.ddm692_PressureBins.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_PressureBins.tableSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_SpeedBins.bins,array,44,37,448,100.0,100.0,0,0,7.6,False,89.2,4,
+motor_rr,ddmUsage.ddm692_SpeedBins.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddm692_SpeedBins.tableSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.ddmOnButNotRunTime_s,scalar,44,37,448,100.0,100.0,0,0,0.9,False,89.2,4,
+motor_rr,ddmUsage.exhaustDerCounter,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.filterStateChgCounter,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.filterWashCounter,scalar,44,37,448,100.0,100.0,0,0,56.9,False,94.6,2,
+motor_rr,ddmUsage.filterWashStatus,scalar,44,37,448,56.8,56.8,39,39,80.6,False,56.8,40,0bd46b11 2025-12-22: 1->0 | 0e013235 2025-12-14: 1->0
+motor_rr,ddmUsage.fwFilteredDeqv_mm,scalar,44,37,448,10.8,10.8,224,224,20.5,False,10.8,225,0bd46b11 2025-12-08: 28->17 | 0bd46b11 2025-12-15: 17->14
+motor_rr,ddmUsage.fwPrevFilteredDeqv_mm,scalar,44,37,448,10.8,10.8,224,224,20.5,False,10.8,225,0bd46b11 2025-12-08: 28->17 | 0bd46b11 2025-12-15: 17->14
+motor_rr,ddmUsage.motorThermalBemfDerCounter,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.packVoltLow_mV,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,ddmUsage.powerReset,scalar,44,37,448,18.9,18.9,79,79,67.4,False,18.9,78,0bd46b11 2025-12-22: 1->0 | 0c24c8b5 2025-09-21: 1->0
+motor_rr,ddmUsage.ppcPeakPowerTimeReset_ms,scalar,44,37,448,54.1,54.1,40,40,0.9,False,51.4,44,0bd46b11 2025-12-22: 9.95184e+07->1.99415e+06 | 0e013235 2026-01-14: 4.65338e+07->1.7238e+06
+motor_rr,ddmUsage.ppcPeakPowerTime_ms,scalar,44,37,448,89.2,89.2,7,7,96.9,False,89.2,7,9943e649 2026-01-03: 50000->48238 | af10d998 2026-01-29: 50000->48742
+motor_rr,header.checksum,scalar,44,37,448,8.1,8.1,220,220,0.9,False,8.1,221,05859aac 2025-11-08: 4.15433e+09->9.32753e+08 | 0bd46b11 2025-12-15: 4.06999e+09->1.72976e+09
+motor_rr,header.dataSize,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,header.formatId,scalar,44,37,448,100.0,100.0,0,0,100.0,True,100.0,0,
+motor_rr,header.writeCount,scalar,44,37,448,100.0,100.0,0,0,0.9,False,89.2,4,
+battery_normal,eventLog.checksum,scalar,18,17,400,0.0,0.0,190,190,0.0,False,0.0,187,05b1750e 2025-09-12: 1.73342e+09->1.28813e+09 | 05b1750e 2025-10-03: 2.39975e+09->1.47189e+09
+battery_normal,eventLog.counter,scalar,18,17,400,47.1,47.1,25,25,0.0,False,64.7,8,05b1750e 2025-09-12: 1650->1115 | 53b8b4d1 2025-11-01: 3144->2455
+battery_normal,eventLog.eventFaultIndex,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,eventLog.eventIndex,scalar,28,25,523,0.0,0.0,263,263,5.0,False,0.0,262,027c084f 2025-09-10: 14->8 | 027c084f 2025-10-04: 12->0
+battery_normal,header.configID,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,header.power_ups,scalar,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 315->9
+battery_normal,header.rated_power,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.counter,scalar,18,17,400,47.1,47.1,25,25,0.0,False,64.7,8,05b1750e 2025-09-12: 1650->1115 | 53b8b4d1 2025-11-01: 3144->2455
+battery_normal,miscAndSibyl.miscLog.chgErrors.ChgErrPresent,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.chgErrors.ChgOverCurrent,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.chgErrors.CycleCharger,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.devMode.devModeUsed,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.flags.Behaviour_Flags,scalar,28,25,523,96.0,96.0,1,1,99.4,False,96.0,1,c79ea6ed 2026-04-08: 16->0
+battery_normal,miscAndSibyl.miscLog.flags.Debug_Config,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.flags.Main_Body_Fault,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.flags.Pack_Flat,scalar,28,25,523,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal,miscAndSibyl.miscLog.flags.Stats_Frozen,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.resets.Brown_Out_12_Resets,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.resets.Brown_Out_33_Resets,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.resets.External_Resets,scalar,28,25,523,100.0,100.0,0,0,99.6,False,100.0,0,
+battery_normal,miscAndSibyl.miscLog.resets.Power_On_Resets,scalar,28,25,523,60.0,60.0,26,26,0.0,False,68.0,10,05b1750e 2025-09-12: 1650->1115 | 168bb237 2055-09-07: 314->8
+battery_normal,miscAndSibyl.miscLog.resets.RTC_Resets,scalar,28,25,523,96.0,96.0,1,1,76.5,False,92.0,2,168bb237 2055-09-07: 1824->1046
+battery_normal,miscAndSibyl.miscLog.resets.System_Resets,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.resets.Watchdog_Resets,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.runtimeStats.Max_Stack_Used,scalar,28,25,523,0.0,0.0,237,237,10.3,False,4.0,237,027c084f 2025-09-27: 528->520 | 027c084f 2025-10-11: 528->472
+battery_normal,miscAndSibyl.miscLog.runtimeStats.bgnd_task,scalar,28,25,523,40.0,40.0,91,91,65.8,False,40.0,88,4b7efd0f 2025-09-26: 126->124 | 4b7efd0f 2025-11-07: 125->124
+battery_normal,miscAndSibyl.miscLog.runtimeStats.d_10ms_task,scalar,28,25,523,0.0,0.0,253,253,6.3,False,4.0,250,027c084f 2025-10-04: 3143->2951 | 027c084f 2025-10-11: 2951->2940
+battery_normal,miscAndSibyl.miscLog.runtimeStats.d_1ms_task,scalar,28,25,523,0.0,0.0,173,173,35.4,False,4.0,171,027c084f 2025-09-27: 150->149 | 027c084f 2025-10-11: 150->149
+battery_normal,miscAndSibyl.miscLog.shipState.AuxPower,scalar,10,8,123,87.5,87.5,1,1,97.6,False,100.0,0,168bb237 2055-09-07: 1->0
+battery_normal,miscAndSibyl.miscLog.shipState.ChargerPresent,scalar,28,25,523,28.0,28.0,37,37,85.3,False,28.0,39,027c084f 2025-11-26: 1->0 | 027c084f 2026-02-21: 1->0
+battery_normal,miscAndSibyl.miscLog.shipState.WakeReqEnabled,scalar,10,8,123,87.5,87.5,1,1,97.6,False,100.0,0,168bb237 2055-09-07: 1->0
+battery_normal,miscAndSibyl.miscLog.temperature.highest,scalar,28,25,523,12.0,12.0,142,142,42.1,False,8.0,142,027c084f 2025-09-10: 2954->2401 | 027c084f 2025-09-27: 2401->1844
+battery_normal,miscAndSibyl.miscLog.temperature.latest,scalar,28,25,523,8.0,8.0,149,149,41.3,False,4.0,148,027c084f 2025-09-10: 2200->2135 | 027c084f 2025-09-27: 2135->1774
+battery_normal,miscAndSibyl.miscLog.timers.DisableAuxOnFlat,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.miscLog.timers.RecAmbientTemp,scalar,10,8,123,12.5,12.5,63,63,0.0,False,12.5,63,027c084f 2025-09-10: 6.72138e+08->4.39849e+08 | 027c084f 2025-10-11: 1.73073e+09->5.77139e+08
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_Cmax,scalar,28,25,523,0.0,0.0,449,449,4.4,False,0.0,457,027c084f 2025-09-10: 1.45517->1.45444 | 027c084f 2025-09-27: 1.45444->1.45231
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_G,scalar,28,25,523,0.0,0.0,260,260,0.0,False,0.0,263,027c084f 2025-09-10: 0.019295->0.0134306 | 027c084f 2025-09-27: 0.0134306->0.00904476
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha1,scalar,28,25,523,12.0,12.0,167,167,0.0,False,16.0,164,027c084f 2025-09-27: -0.598338->-0.60947 | 027c084f 2026-01-22: -0.506628->-0.515204
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha2,scalar,28,25,523,8.0,8.0,247,247,0.0,False,12.0,243,027c084f 2025-10-04: 2.7934->0.737329 | 027c084f 2026-02-05: 3.17461->3.0864
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_chgRs,scalar,28,25,523,8.0,8.0,240,240,2.7,False,8.0,236,027c084f 2025-09-10: 0.0210494->0.0152333 | 027c084f 2025-10-04: 0.0200528->0.017776
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_disRs,scalar,28,25,523,4.0,4.0,253,253,0.0,False,4.0,254,027c084f 2025-09-10: 0.0105132->0.00961467 | 027c084f 2025-10-04: 0.0133041->0.0106518
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_SOC,scalar,28,25,523,0.0,0.0,276,276,0.0,False,0.0,284,027c084f 2025-10-11: 0.881698->0.630541 | 027c084f 2025-11-01: 0.630541->0.321597
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf1,scalar,28,25,523,4.0,4.0,262,262,0.0,False,8.0,269,027c084f 2025-09-10: 4.22595e-12->1.1824e-12 | 027c084f 2025-09-27: 1.1824e-12->1.08345e-12
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf2,scalar,28,25,523,4.0,4.0,273,273,0.0,False,8.0,269,027c084f 2025-09-27: -3.64105e-12->-2.73771e-09 | 027c084f 2025-10-11: -1.32932e-12->-1.77957e-12
+battery_normal,miscAndSibyl.sibylData.initialSoC,scalar,18,17,400,0.0,0.0,189,189,6.0,False,0.0,184,05b1750e 2025-09-19: 9869->9751 | 05b1750e 2025-10-03: 10008->10006
+battery_normal,miscAndSibyl.sibylData.maxCapacity,scalar,28,25,523,0.0,0.0,448,448,4.8,False,0.0,453,027c084f 2025-09-10: 1.45517e+07->1.45448e+07 | 027c084f 2025-09-27: 1.45448e+07->1.45231e+07
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Avg_EOD_imbalance,scalar,28,25,523,76.0,76.0,16,16,94.1,False,76.0,16,3159f84b 2025-09-11: 65515->0 | 5bb0a7e8 2025-08-25: 26->17
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Charge_flag,scalar,28,25,523,76.0,76.0,9,9,96.7,False,76.0,9,05b1750e 2025-09-26: 1->0 | 798d9421 2025-11-19: 1->0
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Discharge_flag,scalar,28,25,523,76.0,76.0,7,7,97.1,False,76.0,7,05b1750e 2025-10-03: 1->0 | 798d9421 2025-11-26: 1->0
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.High_Power_Resistance,scalar,28,25,523,96.0,96.0,6,6,98.3,False,96.0,6,5bb0a7e8 2025-08-04: 20->19 | 5bb0a7e8 2025-09-01: 19->17
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Initialized_flag,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Low_Power_Resistance,scalar,28,25,523,96.0,96.0,1,1,99.2,False,96.0,1,84c2cd1d 2025-12-02: 39->38
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Medium_Power_Resistance,scalar,28,25,523,88.0,88.0,4,4,96.0,False,84.0,5,168bb237 2025-09-14: 20->19 | 5bb0a7e8 2025-08-25: 25->23
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Min_Power_Resistance,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Peak_Power_Resistance,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.sibylData.sohData.Delta_Energy,scalar,18,17,400,0.0,0.0,197,197,0.0,False,0.0,200,05b1750e 2025-09-12: 3.52961e+06->447334 | 05b1750e 2025-09-26: 3.55700e+06->-2.99432e+06
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_High,scalar,28,25,523,100.0,100.0,0,0,99.6,False,100.0,0,
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Low,scalar,28,25,523,64.0,64.0,16,16,45.1,False,76.0,6,05b1750e 2025-09-12: 20->11 | 53b8b4d1 2025-11-01: 24->19
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Med,scalar,28,25,523,68.0,68.0,16,16,21.8,False,80.0,5,05b1750e 2025-09-12: 118->43 | 168bb237 2055-09-07: 4->0
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Min,scalar,10,8,123,100.0,100.0,0,0,94.3,False,87.5,1,
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Peak,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_High,scalar,28,25,523,100.0,100.0,0,0,99.6,False,100.0,0,
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Low,scalar,28,25,523,44.0,44.0,56,56,59.1,False,32.0,53,05b1750e 2025-09-12: 29->26 | 05b1750e 2025-10-17: 29->28
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Med,scalar,28,25,523,20.0,20.0,122,122,41.9,False,32.0,120,027c084f 2026-04-22: 12->11 | 05b1750e 2025-09-12: 28->27
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Min,scalar,10,8,123,100.0,100.0,0,0,94.3,False,87.5,1,
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Peak,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,usage.chargeLog.chargeActiveTime,scalar,28,25,523,60.0,60.0,21,21,7.3,False,76.0,6,05b1750e 2025-09-12: 81827->42432 | 168bb237 2055-09-07: 44148->3832
+battery_normal,usage.chargeLog.chargeAmbientTempCustomerBins,array,28,25,523,56.0,56.0,27,27,0.0,False,68.0,10,05b1750e 2025-09-12: 165->65 | 168bb237 2055-09-07: 71->0
+battery_normal,usage.chargeLog.chargeAmbientTempPreCustomerBins,array,28,25,523,92.0,96.0,2,1,99.2,False,88.0,3,168bb237 2055-09-07: 1757->1046
+battery_normal,usage.chargeLog.chargeBandBins,array,28,25,523,56.0,56.0,26,26,2.7,False,68.0,10,05b1750e 2025-09-12: 97831->48039 | 168bb237 2055-09-07: 44197->3832
+battery_normal,usage.chargeLog.chargeDurationBins,array,28,25,523,60.0,60.0,21,21,8.0,False,76.0,6,05b1750e 2025-09-12: 31->13 | 168bb237 2055-09-07: 3->0
+battery_normal,usage.chargeLog.chargeMaintainCount,scalar,28,25,523,56.0,56.0,26,26,3.1,False,68.0,10,05b1750e 2025-09-12: 267->60 | 168bb237 2055-09-07: 112->0
+battery_normal,usage.chargeLog.chargeMaintainTempBins,array,28,25,523,56.0,56.0,26,26,3.1,False,68.0,10,05b1750e 2025-09-12: 86342->32055 | 168bb237 2055-09-07: 737->0
+battery_normal,usage.chargeLog.chargeStopEvents.chargerRemoved,scalar,28,25,523,64.0,64.0,18,18,39.4,False,80.0,5,05b1750e 2025-09-12: 134->70 | 168bb237 2055-09-07: 7->5
+battery_normal,usage.chargeLog.chargeStopEvents.chargingForLong,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,usage.chargeLog.chargeStopEvents.otherFault,scalar,28,25,523,56.0,56.0,26,26,3.1,False,68.0,10,05b1750e 2025-09-12: 221->43 | 168bb237 2055-09-07: 116->0
+battery_normal,usage.chargeLog.chargeStopEvents.overCurrent,scalar,28,25,523,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal,usage.chargeLog.chargeStopEvents.overTemp,scalar,28,25,523,100.0,100.0,0,0,98.9,False,100.0,0,
+battery_normal,usage.chargeLog.chargeStopEvents.underTemp,scalar,28,25,523,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal,usage.chargeLog.chargerInsertions.allTime,scalar,28,25,523,56.0,56.0,26,26,2.5,False,68.0,10,05b1750e 2025-09-12: 432->143 | 168bb237 2055-09-07: 123->5
+battery_normal,usage.chargeLog.chargerInsertions.whenFrozen,scalar,28,25,523,56.0,56.0,26,26,2.5,False,68.0,10,05b1750e 2025-09-12: 432->143 | 168bb237 2055-09-07: 123->5
+battery_normal,usage.chargeLog.everFullyCharged,scalar,28,25,523,96.0,96.0,1,1,98.3,False,92.0,2,168bb237 2055-09-07: 1->0
+battery_normal,usage.chargeLog.imbalanceAtEnd.Initial,scalar,28,25,523,96.0,96.0,1,1,98.1,False,92.0,2,168bb237 2055-09-07: 13->0
+battery_normal,usage.chargeLog.imbalanceAtEnd.Latest,scalar,28,25,523,4.0,4.0,171,171,41.1,False,8.0,172,027c084f 2026-01-15: 11->7 | 027c084f 2026-01-22: 7->4
+battery_normal,usage.chargeLog.minCellVoltAtChargeStartBins,array,28,25,523,56.0,56.0,26,26,2.5,False,68.0,10,05b1750e 2025-09-12: 432->143 | 168bb237 2055-09-07: 123->5
+battery_normal,usage.checksum,scalar,18,17,400,0.0,0.0,361,361,0.0,False,0.0,378,05b1750e 2025-09-19: 4.2251e+09->4.19806e+09 | 05b1750e 2025-09-26: 4.19806e+09->4.17998e+09
+battery_normal,usage.counter,scalar,18,17,400,47.1,47.1,25,25,0.0,False,64.7,8,05b1750e 2025-09-12: 1650->1115 | 53b8b4d1 2025-11-01: 3144->2455
+battery_normal,usage.dischargeLog.dischargeBandBins,array,28,25,523,56.0,56.0,22,22,4.6,False,72.0,7,05b1750e 2025-09-12: 13482->6272 | 168bb237 2055-09-07: 6636->30
+battery_normal,usage.dischargeLog.dischargeBtwChargesBins,array,28,25,523,56.0,56.0,22,22,6.7,False,76.0,6,05b1750e 2025-09-12: 177->80 | 168bb237 2055-09-07: 8->3
+battery_normal,usage.dischargeLog.dischargeDurationBins,array,28,25,523,56.0,56.0,22,22,4.6,False,72.0,7,05b1750e 2025-09-12: 640->328 | 168bb237 2055-09-07: 37->4
+battery_normal,usage.dischargeLog.dischargeInhibitEvents.other,scalar,28,25,523,56.0,56.0,24,24,2.9,False,68.0,8,05b1750e 2025-09-12: 641->141 | 168bb237 2055-09-07: 22->4
+battery_normal,usage.dischargeLog.dischargeInhibitEvents.packFlat,scalar,28,25,523,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal,usage.dischargeLog.dischargeOffTimeBins,array,28,25,523,56.0,56.0,22,22,4.6,False,72.0,7,05b1750e 2025-09-12: 664->343 | 168bb237 2055-09-07: 39->6
+battery_normal,usage.dischargeLog.dischargeSecsSinceLastCharge,scalar,28,25,523,40.0,40.0,56,56,77.4,False,40.0,56,027c084f 2025-09-27: 1220->525 | 027c084f 2025-10-04: 525->228
+battery_normal,usage.dischargeLog.dischargeStartTempBins,array,28,25,523,56.0,56.0,22,22,4.6,False,72.0,7,05b1750e 2025-09-12: 664->343 | 168bb237 2055-09-07: 39->6
+battery_normal,usage.dischargeLog.dischargeStopEvents.lowVolt,scalar,28,25,523,92.0,92.0,2,2,92.9,False,92.0,2,168bb237 2055-09-07: 1->0 | 84c2cd1d 2025-12-02: 1->0
+battery_normal,usage.dischargeLog.dischargeStopEvents.noLoad,scalar,28,25,523,96.0,96.0,1,1,96.2,False,96.0,1,05b1750e 2025-09-12: 25->20
+battery_normal,usage.dischargeLog.dischargeStopEvents.overTemp,scalar,28,25,523,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal,usage.dischargeLog.oneSecDischarge,scalar,28,25,523,80.0,80.0,7,7,62.7,False,80.0,5,05b1750e 2025-09-12: 24->15 | 5bb0a7e8 2026-01-04: 44->43
+battery_normal,usage.dischargeLog.powerBins,array,28,25,523,56.0,56.0,22,22,4.6,False,72.0,7,05b1750e 2025-09-12: 13482->6272 | 168bb237 2055-09-07: 6636->30
+battery_normal,usage.dischargeLog.sigDischarges.allTime,scalar,28,25,523,56.0,56.0,22,22,4.6,False,72.0,7,05b1750e 2025-09-12: 664->343 | 168bb237 2055-09-07: 39->6
+battery_normal,usage.dischargeLog.sigDischarges.whenFrozen,scalar,28,25,523,56.0,56.0,22,22,4.6,False,72.0,7,05b1750e 2025-09-12: 664->343 | 168bb237 2055-09-07: 39->6
+battery_rr_standard,eventLog.eventFaultIndex,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,eventLog.eventIndex,scalar,42,37,368,10.8,10.8,171,171,9.2,False,10.8,173,05859aac 2025-07-28: 10->2 | 05859aac 2025-09-01: 10->6
+battery_rr_standard,header.configID,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,header.power_ups,scalar,42,37,368,100.0,100.0,0,0,0.8,False,91.9,3,
+battery_rr_standard,header.rated_power,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.chgErrors.ChgErrPresent,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.chgErrors.ChgOverCurrent,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.chgErrors.CycleCharger,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.flags.Behaviour_Flags,scalar,42,37,368,94.6,94.6,2,2,97.6,False,94.6,2,0e013235 2026-01-14: 16->0 | 6fb111c1 2026-02-21: 16->0
+battery_rr_standard,miscAndSibyl.miscLog.flags.Debug_Config,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.flags.Main_Body_Fault,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.flags.Pack_Flat,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.flags.Stats_Frozen,scalar,42,37,368,100.0,100.0,0,0,99.7,False,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.resets.Brown_Out_12_Resets,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.resets.Brown_Out_33_Resets,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.resets.External_Resets,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.resets.Power_On_Resets,scalar,42,37,368,100.0,100.0,0,0,0.8,False,91.9,3,
+battery_rr_standard,miscAndSibyl.miscLog.resets.RTC_Resets,scalar,42,37,368,100.0,100.0,0,0,1.1,False,91.9,3,
+battery_rr_standard,miscAndSibyl.miscLog.resets.System_Resets,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.resets.Watchdog_Resets,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.Max_Stack_Used,scalar,42,37,368,10.8,10.8,158,158,12.5,False,10.8,160,05859aac 2025-09-01: 512->488 | 05859aac 2025-11-22: 520->512
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.bgnd_task,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.d_10ms_task,scalar,42,37,368,16.2,16.2,176,176,3.0,False,16.2,178,05859aac 2025-08-05: 3189->2985 | 05859aac 2025-08-25: 2985->2974
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.d_1ms_task,scalar,42,37,368,13.5,13.5,117,117,35.3,False,13.5,119,05859aac 2025-08-05: 151->149 | 0bd46b11 2025-12-08: 150->149
+battery_rr_standard,miscAndSibyl.miscLog.shipState.AuxPower,scalar,42,37,368,94.6,94.6,2,2,96.5,False,94.6,2,15fd786c 2026-04-19: 10->1 | a9472110 2025-10-25: 10->1
+battery_rr_standard,miscAndSibyl.miscLog.shipState.ChargerPresent,scalar,42,37,368,37.8,37.8,39,39,78.8,False,35.1,40,05859aac 2025-09-01: 1->0 | 15fd786c 2026-04-19: 1->0
+battery_rr_standard,miscAndSibyl.miscLog.shipState.WakeReqEnabled,scalar,42,37,368,94.6,94.6,2,2,96.5,False,94.6,2,1c3eb6b1 2026-06-06: 1->0 | a9472110 2025-10-25: 1->0
+battery_rr_standard,miscAndSibyl.miscLog.temperature.highest,scalar,42,37,368,8.1,8.1,185,185,4.1,False,8.1,187,05859aac 2025-08-05: 2887->2858 | 05859aac 2025-11-01: 2875->2737
+battery_rr_standard,miscAndSibyl.miscLog.temperature.latest,scalar,42,37,368,10.8,10.8,172,172,3.0,False,10.8,174,05859aac 2025-07-28: 2850->2762 | 05859aac 2025-08-25: 2829->2737
+battery_rr_standard,miscAndSibyl.miscLog.timers.DisableAuxOnFlat,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.miscLog.timers.RecAmbientTemp,scalar,42,37,368,8.1,8.1,184,184,0.8,False,8.1,186,05859aac 2025-07-28: 1.63978e+09->1.88982e+08 | 05859aac 2025-08-25: 1.80517e+09->6.32919e+08
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_Cmax,scalar,42,37,368,2.7,2.7,342,342,1.9,False,2.7,341,05859aac 2025-07-28: 1.45492->1.45271 | 05859aac 2025-08-05: 1.45271->1.44736
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_G,scalar,42,37,368,5.4,5.4,218,218,0.8,False,5.4,217,05859aac 2025-07-28: 0.0163804->0.0138041 | 05859aac 2025-08-05: 0.0138041->0.00972265
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha1,scalar,42,37,368,29.7,29.7,106,106,0.8,False,27.0,108,05859aac 2025-08-05: -0.578125->-0.604655 | 0c24c8b5 2025-09-21: -0.592107->-0.602667
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha2,scalar,42,37,368,13.5,13.5,156,156,0.8,False,13.5,158,05859aac 2025-11-01: 2.02462->1.38235 | 0bd46b11 2025-12-15: 3.28713->3.08875
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_chgRs,scalar,42,37,368,8.1,8.1,176,176,4.1,False,8.1,178,05859aac 2025-08-05: 0.0204513->0.0123126 | 05859aac 2025-11-22: 0.0252693->0.0210253
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_disRs,scalar,42,37,368,13.5,13.5,188,188,0.8,False,13.5,190,05859aac 2025-08-25: 0.0144269->0.0120963 | 05859aac 2025-11-22: 0.0160722->0.0160508
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_SOC,scalar,42,37,368,10.8,10.8,176,176,0.8,False,10.8,176,05859aac 2025-09-01: 1.005->0.707745 | 0bd46b11 2025-12-22: 1.00857->1.00541
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf1,scalar,42,37,368,13.5,13.5,192,192,0.8,False,13.5,194,05859aac 2025-08-05: 1.03214e-12->-5.29609e-13 | 05859aac 2025-09-01: 2.55449e-12->2.22473e-12
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf2,scalar,42,37,368,10.8,10.8,185,185,0.8,False,10.8,185,05859aac 2025-07-28: -2.55925e-12->-4.44757e-12 | 05859aac 2025-08-05: -4.44757e-12->-6.6208e-12
+battery_rr_standard,miscAndSibyl.sibylData.maxCapacity,scalar,42,37,368,2.7,2.7,346,346,1.4,False,2.7,345,05859aac 2025-07-28: 1.45483e+07->1.45361e+07 | 05859aac 2025-08-05: 1.45361e+07->1.44736e+07
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Avg_EOD_imbalance,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Charge_flag,scalar,42,37,368,78.4,78.4,10,10,94.8,False,78.4,10,14a64c7b 2026-03-09: 1->0 | 14a64c7b 2026-06-12: 1->0
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Discharge_flag,scalar,42,37,368,83.8,83.8,6,6,97.0,False,83.8,6,83561f8e 2026-02-06: 1->0 | 9943e649 2026-01-30: 1->0
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.High_Power_Resistance,scalar,42,37,368,94.6,94.6,2,2,98.1,False,94.6,2,6fb111c1 2025-12-31: 13->12 | 83561f8e 2026-06-14: 11->10
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Initialized_flag,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Low_Power_Resistance,scalar,42,37,368,91.9,91.9,5,5,96.2,False,91.9,5,5ef50a64 2025-12-30: 45->44 | 9943e649 2025-12-03: 45->44
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Medium_Power_Resistance,scalar,42,37,368,75.7,75.7,19,19,84.5,False,75.7,19,0e013235 2026-01-22: 20->19 | 1c3eb6b1 2026-01-19: 23->22
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Min_Power_Resistance,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Peak_Power_Resistance,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_High,scalar,42,37,368,100.0,100.0,0,0,96.5,False,100.0,0,
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Low,scalar,42,37,368,100.0,100.0,0,0,27.7,False,94.6,2,
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Med,scalar,42,37,368,100.0,100.0,0,0,34.0,False,97.3,1,
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Min,scalar,42,37,368,100.0,100.0,0,0,84.0,False,97.3,1,
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Peak,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_High,scalar,42,37,368,97.3,97.3,1,1,97.0,False,97.3,1,c34a56d1 2026-02-16: 15->14
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Low,scalar,42,37,368,48.6,48.6,68,68,47.6,False,48.6,67,0bd46b11 2025-12-15: 15->13 | 0c24c8b5 2025-10-06: 18->15
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Med,scalar,42,37,368,51.4,51.4,53,53,51.6,False,51.4,53,0bd46b11 2025-12-15: 15->12 | 0bd46b11 2025-12-22: 12->11
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Min,scalar,42,37,368,100.0,100.0,0,0,85.9,False,97.3,1,
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Peak,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,usage.chargeLog.chargeActiveTime,scalar,42,37,368,100.0,100.0,0,0,6.0,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeAmbientTempCustomerBins,array,42,37,368,100.0,100.0,0,0,2.4,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeAmbientTempPreCustomerBins,array,42,37,368,100.0,100.0,0,0,97.0,False,100.0,0,
+battery_rr_standard,usage.chargeLog.chargeBandBins,array,42,37,368,100.0,100.0,0,0,4.3,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeDurationBins,array,42,37,368,100.0,100.0,0,0,10.1,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeMaintainCount,scalar,42,37,368,100.0,100.0,0,0,8.2,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeMaintainTempBins,array,42,37,368,100.0,100.0,0,0,7.9,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeStopEvents.chargerRemoved,scalar,42,37,368,100.0,100.0,0,0,41.8,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeStopEvents.chargingForLong,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,usage.chargeLog.chargeStopEvents.otherFault,scalar,42,37,368,100.0,100.0,0,0,7.6,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargeStopEvents.overCurrent,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,usage.chargeLog.chargeStopEvents.overTemp,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,usage.chargeLog.chargeStopEvents.underTemp,scalar,42,37,368,100.0,100.0,0,0,98.6,False,100.0,0,
+battery_rr_standard,usage.chargeLog.chargerInsertions.allTime,scalar,42,37,368,100.0,100.0,0,0,3.8,False,91.9,3,
+battery_rr_standard,usage.chargeLog.chargerInsertions.whenFrozen,scalar,42,37,368,100.0,100.0,0,0,4.1,False,91.9,3,
+battery_rr_standard,usage.chargeLog.everFullyCharged,scalar,42,37,368,100.0,100.0,0,0,97.6,False,100.0,0,
+battery_rr_standard,usage.chargeLog.imbalanceAtEnd.Initial,scalar,42,37,368,100.0,100.0,0,0,97.6,False,100.0,0,
+battery_rr_standard,usage.chargeLog.imbalanceAtEnd.Latest,scalar,42,37,368,13.5,13.5,174,174,31.8,False,13.5,174,05859aac 2025-07-28: 24->20 | 05859aac 2025-08-05: 20->17
+battery_rr_standard,usage.chargeLog.minCellVoltAtChargeStartBins,array,42,37,368,100.0,100.0,0,0,4.1,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.dischargeBandBins,array,42,37,368,100.0,100.0,0,0,1.4,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.dischargeBtwChargesBins,array,42,37,368,100.0,100.0,0,0,4.9,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.dischargeDurationBins,array,42,37,368,100.0,100.0,0,0,1.4,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.dischargeInhibitEvents.other,scalar,42,37,368,100.0,100.0,0,0,1.1,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.dischargeInhibitEvents.packFlat,scalar,42,37,368,100.0,100.0,0,0,100.0,False,100.0,0,
+battery_rr_standard,usage.dischargeLog.dischargeOffTimeBins,array,42,37,368,100.0,100.0,0,0,1.4,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.dischargeSecsSinceLastCharge,scalar,42,37,368,32.4,32.4,67,67,61.4,False,32.4,68,0bd46b11 2025-12-08: 257->0 | 0e013235 2025-11-06: 696->0
+battery_rr_standard,usage.dischargeLog.dischargeStartTempBins,array,42,37,368,100.0,100.0,0,0,1.4,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.dischargeStopEvents.lowVolt,scalar,42,37,368,100.0,100.0,0,0,79.3,False,100.0,0,
+battery_rr_standard,usage.dischargeLog.dischargeStopEvents.noLoad,scalar,42,37,368,100.0,100.0,0,0,92.9,False,100.0,0,
+battery_rr_standard,usage.dischargeLog.dischargeStopEvents.overTemp,scalar,42,37,368,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_rr_standard,usage.dischargeLog.oneSecDischarge,scalar,42,37,368,100.0,100.0,0,0,63.9,False,94.6,2,
+battery_rr_standard,usage.dischargeLog.powerBins,array,42,37,368,100.0,100.0,0,0,1.4,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.sigDischarges.allTime,scalar,42,37,368,100.0,100.0,0,0,1.4,False,91.9,3,
+battery_rr_standard,usage.dischargeLog.sigDischarges.whenFrozen,scalar,42,37,368,100.0,100.0,0,0,1.4,False,91.9,3,
+battery_normal_4cell,eventLog.checksum,scalar,18,17,400,0.0,0.0,190,190,0.0,False,0.0,187,05b1750e 2025-09-12: 1.73342e+09->1.28813e+09 | 05b1750e 2025-10-03: 2.39975e+09->1.47189e+09
+battery_normal_4cell,eventLog.counter,scalar,18,17,400,47.1,47.1,25,25,0.0,False,64.7,8,05b1750e 2025-09-12: 1650->1115 | 53b8b4d1 2025-11-01: 3144->2455
+battery_normal_4cell,eventLog.eventFaultIndex,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,eventLog.eventIndex,scalar,18,17,400,0.0,0.0,198,198,4.5,False,0.0,199,05b1750e 2025-09-19: 6->5 | 05b1750e 2025-09-26: 5->1
+battery_normal_4cell,miscAndSibyl.counter,scalar,18,17,400,47.1,47.1,25,25,0.0,False,64.7,8,05b1750e 2025-09-12: 1650->1115 | 53b8b4d1 2025-11-01: 3144->2455
+battery_normal_4cell,miscAndSibyl.miscLog.devMode.devModeUsed,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.flags.Behaviour_Flags,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.flags.Debug_Config,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.flags.Main_Body_Fault,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.flags.Pack_Flat,scalar,18,17,400,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.flags.Stats_Frozen,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.resets.Brown_Out_12_Resets,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.resets.Brown_Out_33_Resets,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.resets.External_Resets,scalar,18,17,400,100.0,100.0,0,0,99.5,False,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.resets.Power_On_Resets,scalar,18,17,400,47.1,47.1,25,25,0.0,False,64.7,8,05b1750e 2025-09-12: 1650->1115 | 53b8b4d1 2025-11-01: 3144->2455
+battery_normal_4cell,miscAndSibyl.miscLog.resets.RTC_Resets,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.resets.System_Resets,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.resets.Watchdog_Resets,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.miscLog.runtimeStats.Max_Stack_Used,scalar,18,17,400,0.0,0.0,182,182,10.0,False,0.0,183,05b1750e 2025-09-19: 556->512 | 05b1750e 2025-10-03: 572->528
+battery_normal_4cell,miscAndSibyl.miscLog.runtimeStats.bgnd_task,scalar,18,17,400,11.8,11.8,91,91,55.2,False,11.8,88,4b7efd0f 2025-09-26: 126->124 | 4b7efd0f 2025-11-07: 125->124
+battery_normal_4cell,miscAndSibyl.miscLog.runtimeStats.d_10ms_task,scalar,18,17,400,0.0,0.0,193,193,7.0,False,0.0,190,05b1750e 2025-09-19: 9999->9998 | 3159f84b 2025-09-18: 9993->1404
+battery_normal_4cell,miscAndSibyl.miscLog.runtimeStats.d_1ms_task,scalar,18,17,400,0.0,0.0,133,133,35.0,False,0.0,132,05b1750e 2025-09-12: 180->179 | 05b1750e 2025-09-19: 179->163
+battery_normal_4cell,miscAndSibyl.miscLog.shipState.ChargerPresent,scalar,18,17,400,23.5,23.5,24,24,87.8,False,23.5,26,05b1750e 2025-09-26: 1->0 | 3159f84b 2025-09-18: 1->0
+battery_normal_4cell,miscAndSibyl.miscLog.temperature.highest,scalar,18,17,400,11.8,11.8,88,88,54.0,False,5.9,87,3159f84b 2025-09-18: 32767->3223 | 4b7efd0f 2025-10-17: 32767->2290
+battery_normal_4cell,miscAndSibyl.miscLog.temperature.latest,scalar,18,17,400,11.8,11.8,91,91,53.5,False,5.9,89,3159f84b 2025-09-18: 32767->2644 | 4b7efd0f 2025-10-17: 32767->2290
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_Cmax,scalar,18,17,400,0.0,0.0,346,346,5.8,False,0.0,355,05b1750e 2025-09-19: 0.863131->0.859145 | 05b1750e 2025-09-26: 0.859145->0.858458
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_G,scalar,18,17,400,0.0,0.0,193,193,0.0,False,0.0,197,05b1750e 2025-09-26: 0.0152447->0.0145691 | 05b1750e 2025-10-03: 0.0145691->0.0143962
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha1,scalar,18,17,400,5.9,5.9,137,137,0.0,False,5.9,134,05b1750e 2025-09-12: -0.478204->-0.500314 | 05b1750e 2025-10-03: -0.479238->-0.48063
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha2,scalar,18,17,400,0.0,0.0,198,198,0.0,False,0.0,195,05b1750e 2025-09-12: 3.25407->3.02184 | 05b1750e 2025-09-26: 3.11017->3.07379
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_chgRs,scalar,18,17,400,0.0,0.0,183,183,1.0,False,0.0,179,05b1750e 2025-10-03: 0.0313107->0.0295786 | 05b1750e 2025-10-17: 0.0295786->0.0228271
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_disRs,scalar,18,17,400,0.0,0.0,198,198,0.0,False,0.0,198,05b1750e 2025-09-12: 0.0318049->0.0292638 | 05b1750e 2025-09-26: 0.0311691->0.0296454
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_SOC,scalar,18,17,400,0.0,0.0,219,219,0.0,False,0.0,227,05b1750e 2025-09-26: 1.00372->0.976299 | 3159f84b 2025-09-11: 1.00306->1.00254
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf1,scalar,18,17,400,0.0,0.0,201,201,0.0,False,0.0,208,05b1750e 2025-09-19: -4.95305e-13->-0.737743 | 05b1750e 2025-10-03: -1.91822e-12->-0.682773
+battery_normal_4cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf2,scalar,18,17,400,5.9,5.9,202,202,0.0,False,5.9,200,05b1750e 2025-09-12: 2.58913e-08->3.5927e-11 | 05b1750e 2025-09-19: 3.5927e-11->-12.3394
+battery_normal_4cell,miscAndSibyl.sibylData.initialSoC,scalar,18,17,400,0.0,0.0,189,189,6.0,False,0.0,184,05b1750e 2025-09-19: 9869->9751 | 05b1750e 2025-10-03: 10008->10006
+battery_normal_4cell,miscAndSibyl.sibylData.maxCapacity,scalar,18,17,400,0.0,0.0,346,346,6.0,False,0.0,352,05b1750e 2025-09-19: 8.63131e+06->8.59144e+06 | 05b1750e 2025-09-26: 8.59144e+06->8.58458e+06
+battery_normal_4cell,miscAndSibyl.sibylData.runtimeAlgo.Avg_EOD_imbalance,scalar,18,17,400,64.7,64.7,16,16,92.2,False,64.7,16,3159f84b 2025-09-11: 65515->0 | 5bb0a7e8 2025-08-25: 26->17
+battery_normal_4cell,miscAndSibyl.sibylData.runtimeAlgo.Charge_flag,scalar,18,17,400,70.6,70.6,8,8,96.5,False,70.6,8,05b1750e 2025-09-26: 1->0 | 83108ffc 2025-12-18: 1->0
+battery_normal_4cell,miscAndSibyl.sibylData.runtimeAlgo.Discharge_flag,scalar,18,17,400,76.5,76.5,5,5,97.0,False,76.5,5,05b1750e 2025-10-03: 1->0 | 83108ffc 2025-12-25: 1->0
+battery_normal_4cell,miscAndSibyl.sibylData.runtimeAlgo.High_Power_Resistance,scalar,18,17,400,94.1,94.1,6,6,97.8,False,94.1,6,5bb0a7e8 2025-08-04: 20->19 | 5bb0a7e8 2025-09-01: 19->17
+battery_normal_4cell,miscAndSibyl.sibylData.runtimeAlgo.Initialized_flag,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,miscAndSibyl.sibylData.runtimeAlgo.Low_Power_Resistance,scalar,18,17,400,94.1,94.1,1,1,99.2,False,94.1,1,84c2cd1d 2025-12-02: 39->38
+battery_normal_4cell,miscAndSibyl.sibylData.runtimeAlgo.Medium_Power_Resistance,scalar,18,17,400,94.1,94.1,2,2,95.8,False,94.1,2,5bb0a7e8 2025-08-25: 25->23 | 5bb0a7e8 2025-11-23: 25->24
+battery_normal_4cell,miscAndSibyl.sibylData.sohData.Delta_Energy,scalar,18,17,400,0.0,0.0,197,197,0.0,False,0.0,200,05b1750e 2025-09-12: 3.52961e+06->447334 | 05b1750e 2025-09-26: 3.55700e+06->-2.99432e+06
+battery_normal_4cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_High,scalar,18,17,400,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal_4cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Low,scalar,18,17,400,47.1,47.1,16,16,47.8,False,70.6,5,05b1750e 2025-09-12: 20->11 | 53b8b4d1 2025-11-01: 24->19
+battery_normal_4cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Med,scalar,18,17,400,58.8,58.8,15,15,12.5,False,76.5,4,05b1750e 2025-09-12: 118->43 | 53b8b4d1 2025-11-01: 41->31
+battery_normal_4cell,miscAndSibyl.sibylData.sohData.SoH_Rs_High,scalar,18,17,400,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal_4cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Low,scalar,18,17,400,35.3,35.3,38,38,60.0,False,23.5,34,05b1750e 2025-09-12: 29->26 | 05b1750e 2025-10-17: 29->28
+battery_normal_4cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Med,scalar,18,17,400,17.6,17.6,109,109,35.2,False,29.4,107,05b1750e 2025-09-12: 28->27 | 4b7efd0f 2025-10-24: 31->29
+battery_normal_4cell,usage.chargeLog.chargeActiveTime,scalar,18,17,400,47.1,47.1,20,20,6.8,False,70.6,5,05b1750e 2025-09-12: 81827->42432 | 53b8b4d1 2025-11-01: 83149->68690
+battery_normal_4cell,usage.chargeLog.chargeAmbientTempCustomerBins,array,18,17,400,41.2,41.2,26,26,0.0,False,58.8,9,05b1750e 2025-09-12: 165->65 | 53b8b4d1 2025-11-01: 583->475
+battery_normal_4cell,usage.chargeLog.chargeAmbientTempPreCustomerBins,array,18,17,400,94.1,100.0,1,0,99.8,False,94.1,1,
+battery_normal_4cell,usage.chargeLog.chargeBandBins,array,18,17,400,41.2,41.2,25,25,1.0,False,58.8,9,05b1750e 2025-09-12: 97831->48039 | 53b8b4d1 2025-11-01: 95195->78225
+battery_normal_4cell,usage.chargeLog.chargeDurationBins,array,18,17,400,47.1,47.1,20,20,7.0,False,70.6,5,05b1750e 2025-09-12: 31->13 | 53b8b4d1 2025-11-01: 46->35
+battery_normal_4cell,usage.chargeLog.chargeMaintainCount,scalar,18,17,400,41.2,41.2,25,25,1.2,False,58.8,9,05b1750e 2025-09-12: 267->60 | 53b8b4d1 2025-11-01: 2719->2039
+battery_normal_4cell,usage.chargeLog.chargeMaintainTempBins,array,18,17,400,41.2,41.2,25,25,1.2,False,58.8,9,05b1750e 2025-09-12: 86342->32055 | 53b8b4d1 2025-11-01: 157586->124321
+battery_normal_4cell,usage.chargeLog.chargeStopEvents.chargerRemoved,scalar,18,17,400,52.9,52.9,17,17,36.5,False,76.5,4,05b1750e 2025-09-12: 134->70 | 53b8b4d1 2025-11-01: 33->27
+battery_normal_4cell,usage.chargeLog.chargeStopEvents.chargingForLong,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,usage.chargeLog.chargeStopEvents.otherFault,scalar,18,17,400,41.2,41.2,25,25,1.2,False,58.8,9,05b1750e 2025-09-12: 221->43 | 53b8b4d1 2025-11-01: 2753->2064
+battery_normal_4cell,usage.chargeLog.chargeStopEvents.overCurrent,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,usage.chargeLog.chargeStopEvents.overTemp,scalar,18,17,400,100.0,100.0,0,0,98.5,False,100.0,0,
+battery_normal_4cell,usage.chargeLog.chargeStopEvents.underTemp,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,usage.chargeLog.chargerInsertions.allTime,scalar,18,17,400,41.2,41.2,25,25,1.0,False,58.8,9,05b1750e 2025-09-12: 432->143 | 53b8b4d1 2025-11-01: 2798->2101
+battery_normal_4cell,usage.chargeLog.chargerInsertions.whenFrozen,scalar,18,17,400,41.2,41.2,25,25,1.0,False,58.8,9,05b1750e 2025-09-12: 432->143 | 53b8b4d1 2025-11-01: 2798->2101
+battery_normal_4cell,usage.chargeLog.everFullyCharged,scalar,18,17,400,100.0,100.0,0,0,99.2,False,94.1,1,
+battery_normal_4cell,usage.chargeLog.imbalanceAtEnd.Initial,scalar,18,17,400,100.0,100.0,0,0,99.0,False,94.1,1,
+battery_normal_4cell,usage.chargeLog.imbalanceAtEnd.Latest,scalar,18,17,400,0.0,0.0,121,121,41.5,False,0.0,122,05b1750e 2025-09-12: 7->6 | 05b1750e 2025-09-26: 7->5
+battery_normal_4cell,usage.chargeLog.minCellVoltAtChargeStartBins,array,18,17,400,41.2,41.2,25,25,1.0,False,58.8,9,05b1750e 2025-09-12: 432->143 | 53b8b4d1 2025-11-01: 2798->2101
+battery_normal_4cell,usage.checksum,scalar,18,17,400,0.0,0.0,361,361,0.0,False,0.0,378,05b1750e 2025-09-19: 4.2251e+09->4.19806e+09 | 05b1750e 2025-09-26: 4.19806e+09->4.17998e+09
+battery_normal_4cell,usage.counter,scalar,18,17,400,47.1,47.1,25,25,0.0,False,64.7,8,05b1750e 2025-09-12: 1650->1115 | 53b8b4d1 2025-11-01: 3144->2455
+battery_normal_4cell,usage.dischargeLog.dischargeBandBins,array,18,17,400,41.2,41.2,21,21,6.0,False,70.6,5,05b1750e 2025-09-12: 13482->6272 | 53b8b4d1 2025-11-01: 10368->8491
+battery_normal_4cell,usage.dischargeLog.dischargeBtwChargesBins,array,18,17,400,41.2,41.2,21,21,6.2,False,70.6,5,05b1750e 2025-09-12: 177->80 | 53b8b4d1 2025-11-01: 72->57
+battery_normal_4cell,usage.dischargeLog.dischargeDurationBins,array,18,17,400,41.2,41.2,21,21,6.0,False,70.6,5,05b1750e 2025-09-12: 640->328 | 53b8b4d1 2025-11-01: 199->171
+battery_normal_4cell,usage.dischargeLog.dischargeInhibitEvents.other,scalar,18,17,400,41.2,41.2,23,23,3.8,False,64.7,6,05b1750e 2025-09-12: 641->141 | 53b8b4d1 2025-11-01: 219->199
+battery_normal_4cell,usage.dischargeLog.dischargeInhibitEvents.packFlat,scalar,18,17,400,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_4cell,usage.dischargeLog.dischargeOffTimeBins,array,18,17,400,41.2,41.2,21,21,6.0,False,70.6,5,05b1750e 2025-09-12: 664->343 | 53b8b4d1 2025-11-01: 203->175
+battery_normal_4cell,usage.dischargeLog.dischargeSecsSinceLastCharge,scalar,18,17,400,47.1,47.1,36,36,82.5,False,47.1,36,4b7efd0f 2025-09-26: 5->0 | 4b7efd0f 2025-12-19: 16->0
+battery_normal_4cell,usage.dischargeLog.dischargeStartTempBins,array,18,17,400,41.2,41.2,21,21,6.0,False,70.6,5,05b1750e 2025-09-12: 664->343 | 53b8b4d1 2025-11-01: 203->175
+battery_normal_4cell,usage.dischargeLog.dischargeStopEvents.lowVolt,scalar,18,17,400,94.1,94.1,1,1,92.2,False,94.1,1,84c2cd1d 2025-12-02: 1->0
+battery_normal_4cell,usage.dischargeLog.dischargeStopEvents.noLoad,scalar,18,17,400,94.1,94.1,1,1,96.0,False,100.0,0,05b1750e 2025-09-12: 25->20
+battery_normal_4cell,usage.dischargeLog.dischargeStopEvents.overTemp,scalar,18,17,400,100.0,100.0,0,0,99.8,False,100.0,0,
+battery_normal_4cell,usage.dischargeLog.oneSecDischarge,scalar,18,17,400,70.6,70.6,7,7,59.5,False,76.5,4,05b1750e 2025-09-12: 24->15 | 5bb0a7e8 2026-01-04: 44->43
+battery_normal_4cell,usage.dischargeLog.powerBins,array,18,17,400,41.2,41.2,21,21,6.0,False,70.6,5,05b1750e 2025-09-12: 13482->6272 | 53b8b4d1 2025-11-01: 10368->8491
+battery_normal_4cell,usage.dischargeLog.sigDischarges.allTime,scalar,18,17,400,41.2,41.2,21,21,6.0,False,70.6,5,05b1750e 2025-09-12: 664->343 | 53b8b4d1 2025-11-01: 203->175
+battery_normal_4cell,usage.dischargeLog.sigDischarges.whenFrozen,scalar,18,17,400,41.2,41.2,21,21,6.0,False,70.6,5,05b1750e 2025-09-12: 664->343 | 53b8b4d1 2025-11-01: 203->175
+battery_normal_7cell,eventLog.eventFaultIndex,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,eventLog.eventIndex,scalar,10,8,123,0.0,0.0,65,65,6.5,False,0.0,63,027c084f 2025-09-10: 14->8 | 027c084f 2025-10-04: 12->0
+battery_normal_7cell,header.configID,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,header.power_ups,scalar,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 315->9
+battery_normal_7cell,header.rated_power,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.chgErrors.ChgErrPresent,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.chgErrors.ChgOverCurrent,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.chgErrors.CycleCharger,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.flags.Behaviour_Flags,scalar,10,8,123,87.5,87.5,1,1,97.6,False,87.5,1,c79ea6ed 2026-04-08: 16->0
+battery_normal_7cell,miscAndSibyl.miscLog.flags.Debug_Config,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.flags.Main_Body_Fault,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.flags.Pack_Flat,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.flags.Stats_Frozen,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.resets.Brown_Out_12_Resets,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.resets.Brown_Out_33_Resets,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.resets.External_Resets,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.resets.Power_On_Resets,scalar,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 314->8
+battery_normal_7cell,miscAndSibyl.miscLog.resets.RTC_Resets,scalar,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 1824->1046
+battery_normal_7cell,miscAndSibyl.miscLog.resets.System_Resets,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.resets.Watchdog_Resets,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.runtimeStats.Max_Stack_Used,scalar,10,8,123,0.0,0.0,55,55,11.4,False,12.5,54,027c084f 2025-09-27: 528->520 | 027c084f 2025-10-11: 528->472
+battery_normal_7cell,miscAndSibyl.miscLog.runtimeStats.bgnd_task,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.runtimeStats.d_10ms_task,scalar,10,8,123,0.0,0.0,60,60,4.1,False,12.5,60,027c084f 2025-10-04: 3143->2951 | 027c084f 2025-10-11: 2951->2940
+battery_normal_7cell,miscAndSibyl.miscLog.runtimeStats.d_1ms_task,scalar,10,8,123,0.0,0.0,40,40,36.6,False,12.5,39,027c084f 2025-09-27: 150->149 | 027c084f 2025-10-11: 150->149
+battery_normal_7cell,miscAndSibyl.miscLog.shipState.AuxPower,scalar,10,8,123,87.5,87.5,1,1,97.6,False,100.0,0,168bb237 2055-09-07: 1->0
+battery_normal_7cell,miscAndSibyl.miscLog.shipState.ChargerPresent,scalar,10,8,123,37.5,37.5,13,13,77.2,False,37.5,13,027c084f 2025-11-26: 1->0 | 027c084f 2026-02-21: 1->0
+battery_normal_7cell,miscAndSibyl.miscLog.shipState.WakeReqEnabled,scalar,10,8,123,87.5,87.5,1,1,97.6,False,100.0,0,168bb237 2055-09-07: 1->0
+battery_normal_7cell,miscAndSibyl.miscLog.temperature.highest,scalar,10,8,123,12.5,12.5,54,54,3.3,False,12.5,55,027c084f 2025-09-10: 2954->2401 | 027c084f 2025-09-27: 2401->1844
+battery_normal_7cell,miscAndSibyl.miscLog.temperature.latest,scalar,10,8,123,0.0,0.0,58,58,1.6,False,0.0,59,027c084f 2025-09-10: 2200->2135 | 027c084f 2025-09-27: 2135->1774
+battery_normal_7cell,miscAndSibyl.miscLog.timers.DisableAuxOnFlat,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.miscLog.timers.RecAmbientTemp,scalar,10,8,123,12.5,12.5,63,63,0.0,False,12.5,63,027c084f 2025-09-10: 6.72138e+08->4.39849e+08 | 027c084f 2025-10-11: 1.73073e+09->5.77139e+08
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_Cmax,scalar,10,8,123,0.0,0.0,103,103,0.0,False,0.0,102,027c084f 2025-09-10: 1.45517->1.45444 | 027c084f 2025-09-27: 1.45444->1.45231
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_G,scalar,10,8,123,0.0,0.0,67,67,0.0,False,0.0,66,027c084f 2025-09-10: 0.019295->0.0134306 | 027c084f 2025-09-27: 0.0134306->0.00904476
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha1,scalar,10,8,123,25.0,25.0,30,30,0.0,False,37.5,30,027c084f 2025-09-27: -0.598338->-0.60947 | 027c084f 2026-01-22: -0.506628->-0.515204
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha2,scalar,10,8,123,25.0,25.0,49,49,0.0,False,37.5,48,027c084f 2025-10-04: 2.7934->0.737329 | 027c084f 2026-02-05: 3.17461->3.0864
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_chgRs,scalar,10,8,123,25.0,25.0,57,57,8.1,False,25.0,57,027c084f 2025-09-10: 0.0210494->0.0152333 | 027c084f 2025-10-04: 0.0200528->0.017776
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_disRs,scalar,10,8,123,12.5,12.5,55,55,0.0,False,12.5,56,027c084f 2025-09-10: 0.0105132->0.00961467 | 027c084f 2025-10-04: 0.0133041->0.0106518
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_SOC,scalar,10,8,123,0.0,0.0,57,57,0.0,False,0.0,57,027c084f 2025-10-11: 0.881698->0.630541 | 027c084f 2025-11-01: 0.630541->0.321597
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf1,scalar,10,8,123,12.5,12.5,61,61,0.0,False,25.0,61,027c084f 2025-09-10: 4.22595e-12->1.1824e-12 | 027c084f 2025-09-27: 1.1824e-12->1.08345e-12
+battery_normal_7cell,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf2,scalar,10,8,123,0.0,0.0,71,71,0.0,False,12.5,69,027c084f 2025-09-27: -3.64105e-12->-2.73771e-09 | 027c084f 2025-10-11: -1.32932e-12->-1.77957e-12
+battery_normal_7cell,miscAndSibyl.sibylData.maxCapacity,scalar,10,8,123,0.0,0.0,102,102,0.8,False,0.0,101,027c084f 2025-09-10: 1.45517e+07->1.45448e+07 | 027c084f 2025-09-27: 1.45448e+07->1.45231e+07
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Avg_EOD_imbalance,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Charge_flag,scalar,10,8,123,87.5,87.5,1,1,97.6,False,87.5,1,798d9421 2025-11-19: 1->0
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Discharge_flag,scalar,10,8,123,75.0,75.0,2,2,97.6,False,75.0,2,798d9421 2025-11-26: 1->0 | d7fe43d3 2025-09-24: 1->0
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.High_Power_Resistance,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Initialized_flag,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Low_Power_Resistance,scalar,10,8,123,100.0,100.0,0,0,99.2,False,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Medium_Power_Resistance,scalar,10,8,123,75.0,75.0,2,2,96.7,False,62.5,3,168bb237 2025-09-14: 20->19 | d7fe43d3 2026-06-17: 20->19
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Min_Power_Resistance,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.runtimeAlgo.Peak_Power_Resistance,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_High,scalar,10,8,123,100.0,100.0,0,0,99.2,False,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Low,scalar,10,8,123,100.0,100.0,0,0,36.6,False,87.5,1,
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Med,scalar,10,8,123,87.5,87.5,1,1,52.0,False,87.5,1,168bb237 2055-09-07: 4->0
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Min,scalar,10,8,123,100.0,100.0,0,0,94.3,False,87.5,1,
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Peak,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_High,scalar,10,8,123,100.0,100.0,0,0,99.2,False,100.0,0,
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Low,scalar,10,8,123,62.5,62.5,18,18,56.1,False,50.0,19,798d9421 2025-12-03: 15->14 | 798d9421 2025-12-18: 15->13
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Med,scalar,10,8,123,25.0,25.0,13,13,63.4,False,37.5,13,027c084f 2026-04-22: 12->11 | 168bb237 2055-09-07: 6->0
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Min,scalar,10,8,123,100.0,100.0,0,0,94.3,False,87.5,1,
+battery_normal_7cell,miscAndSibyl.sibylData.sohData.SoH_Rs_Peak,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,usage.chargeLog.chargeActiveTime,scalar,10,8,123,87.5,87.5,1,1,8.9,False,87.5,1,168bb237 2055-09-07: 44148->3832
+battery_normal_7cell,usage.chargeLog.chargeAmbientTempCustomerBins,array,10,8,123,87.5,87.5,1,1,0.0,False,87.5,1,168bb237 2055-09-07: 71->0
+battery_normal_7cell,usage.chargeLog.chargeAmbientTempPreCustomerBins,array,10,8,123,87.5,87.5,1,1,97.6,False,75.0,2,168bb237 2055-09-07: 1757->1046
+battery_normal_7cell,usage.chargeLog.chargeBandBins,array,10,8,123,87.5,87.5,1,1,8.1,False,87.5,1,168bb237 2055-09-07: 44197->3832
+battery_normal_7cell,usage.chargeLog.chargeDurationBins,array,10,8,123,87.5,87.5,1,1,11.4,False,87.5,1,168bb237 2055-09-07: 3->0
+battery_normal_7cell,usage.chargeLog.chargeMaintainCount,scalar,10,8,123,87.5,87.5,1,1,8.9,False,87.5,1,168bb237 2055-09-07: 112->0
+battery_normal_7cell,usage.chargeLog.chargeMaintainTempBins,array,10,8,123,87.5,87.5,1,1,8.9,False,87.5,1,168bb237 2055-09-07: 737->0
+battery_normal_7cell,usage.chargeLog.chargeStopEvents.chargerRemoved,scalar,10,8,123,87.5,87.5,1,1,48.8,False,87.5,1,168bb237 2055-09-07: 7->5
+battery_normal_7cell,usage.chargeLog.chargeStopEvents.chargingForLong,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,usage.chargeLog.chargeStopEvents.otherFault,scalar,10,8,123,87.5,87.5,1,1,8.9,False,87.5,1,168bb237 2055-09-07: 116->0
+battery_normal_7cell,usage.chargeLog.chargeStopEvents.overCurrent,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,usage.chargeLog.chargeStopEvents.overTemp,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,usage.chargeLog.chargeStopEvents.underTemp,scalar,10,8,123,100.0,100.0,0,0,99.2,False,100.0,0,
+battery_normal_7cell,usage.chargeLog.chargerInsertions.allTime,scalar,10,8,123,87.5,87.5,1,1,7.3,False,87.5,1,168bb237 2055-09-07: 123->5
+battery_normal_7cell,usage.chargeLog.chargerInsertions.whenFrozen,scalar,10,8,123,87.5,87.5,1,1,7.3,False,87.5,1,168bb237 2055-09-07: 123->5
+battery_normal_7cell,usage.chargeLog.everFullyCharged,scalar,10,8,123,87.5,87.5,1,1,95.1,False,87.5,1,168bb237 2055-09-07: 1->0
+battery_normal_7cell,usage.chargeLog.imbalanceAtEnd.Initial,scalar,10,8,123,87.5,87.5,1,1,95.1,False,87.5,1,168bb237 2055-09-07: 13->0
+battery_normal_7cell,usage.chargeLog.imbalanceAtEnd.Latest,scalar,10,8,123,12.5,12.5,50,50,39.8,False,25.0,50,027c084f 2026-01-15: 11->7 | 027c084f 2026-01-22: 7->4
+battery_normal_7cell,usage.chargeLog.minCellVoltAtChargeStartBins,array,10,8,123,87.5,87.5,1,1,7.3,False,87.5,1,168bb237 2055-09-07: 123->5
+battery_normal_7cell,usage.dischargeLog.dischargeBandBins,array,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 6636->30
+battery_normal_7cell,usage.dischargeLog.dischargeBtwChargesBins,array,10,8,123,87.5,87.5,1,1,8.1,False,87.5,1,168bb237 2055-09-07: 8->3
+battery_normal_7cell,usage.dischargeLog.dischargeDurationBins,array,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 37->4
+battery_normal_7cell,usage.dischargeLog.dischargeInhibitEvents.other,scalar,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 22->4
+battery_normal_7cell,usage.dischargeLog.dischargeInhibitEvents.packFlat,scalar,10,8,123,100.0,100.0,0,0,99.2,False,100.0,0,
+battery_normal_7cell,usage.dischargeLog.dischargeOffTimeBins,array,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 39->6
+battery_normal_7cell,usage.dischargeLog.dischargeSecsSinceLastCharge,scalar,10,8,123,25.0,25.0,20,20,61.0,False,25.0,20,027c084f 2025-09-27: 1220->525 | 027c084f 2025-10-04: 525->228
+battery_normal_7cell,usage.dischargeLog.dischargeStartTempBins,array,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 39->6
+battery_normal_7cell,usage.dischargeLog.dischargeStopEvents.lowVolt,scalar,10,8,123,87.5,87.5,1,1,95.1,False,87.5,1,168bb237 2055-09-07: 1->0
+battery_normal_7cell,usage.dischargeLog.dischargeStopEvents.noLoad,scalar,10,8,123,100.0,100.0,0,0,96.7,False,87.5,1,
+battery_normal_7cell,usage.dischargeLog.dischargeStopEvents.overTemp,scalar,10,8,123,100.0,100.0,0,0,100.0,True,100.0,0,
+battery_normal_7cell,usage.dischargeLog.oneSecDischarge,scalar,10,8,123,100.0,100.0,0,0,73.2,False,87.5,1,
+battery_normal_7cell,usage.dischargeLog.powerBins,array,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 6636->30
+battery_normal_7cell,usage.dischargeLog.sigDischarges.allTime,scalar,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 39->6
+battery_normal_7cell,usage.dischargeLog.sigDischarges.whenFrozen,scalar,10,8,123,87.5,87.5,1,1,0.0,False,75.0,2,168bb237 2055-09-07: 39->6

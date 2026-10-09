@@ -32,6 +32,13 @@ python src/inspect_decoded.py    # reports/profiling/decoded_data_*.{csv,txt}
 python src/dup_diagnostics.py    # dup_diff_columns.csv, battery_empty_payload.csv, fault_status_order.csv
 ```
 
+Payload parsing spec (Step 2, read-only), in this order:
+
+```bash
+python src/cumulative_check.py     # cumulative_check.csv, cumulative_gaps.csv
+python src/build_parsing_spec.py   # parsing_spec_paths.csv, spec_checks.csv, spec_tables/*.md (used in docs/parsing_spec.md)
+```
+
 TODO: remaining pipeline steps (clean, model, analysis, dashboard).
 
 ## Repo structure

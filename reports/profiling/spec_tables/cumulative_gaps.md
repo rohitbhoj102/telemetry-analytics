@@ -1,0 +1,8 @@
+| group | payload_rows | rows_after_identical_payload_dedup | serials | serials_ge2_obs | median_obs_per_serial | gap_days_p10 | gap_days_median | gap_days_p90 | pct_gaps_6_to_8_days |
+|---|---|---|---|---|---|---|---|---|---|
+| motor_normal | 470 | 470 | 76 | 54 | 6.0 | 7.57 | 21.97 | 63.86 | 15.2 |
+| motor_rr | 564 | 492 | 44 | 37 | 8.0 | 7.01 | 7.51 | 9.87 | 70.1 |
+| battery_normal | 1250 | 551 | 28 | 25 | 21.5 | 6.91 | 7.02 | 11.41 | 75.1 |
+| battery_rr_standard | 542 | 410 | 42 | 37 | 6.5 | 7.06 | 7.89 | 15.77 | 53.5 |
+| battery_normal_4cell | 1077 | 418 | 18 | 17 | 24.5 | 6.25 | 7.01 | 7.43 | 82.8 |
+| battery_normal_7cell | 173 | 133 | 10 | 8 | 11.5 | 7.03 | 7.96 | 18.81 | 50.4 |

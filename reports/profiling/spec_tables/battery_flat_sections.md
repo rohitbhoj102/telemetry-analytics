@@ -1,0 +1,40 @@
+| Section (collapsed: eventN/faultN/cellN) | Keys | % flat payloads | Value types | Candidate definition (inferred by section title) | Labels vs declared cells | First labels |
+|---|---|---|---|---|---|---|
+| `/HEADER` | 10 | 100% | str | - | - | /HEADER/BPA; /HEADER/CONFIGID; /HEADER/HARDWARE_SERIAL |
+| `/EVENT_LOGS/eventN/data` | 8 | 100% | str | - | - | /EVENT_LOGS/eventN/data/chargeReason; /EVENT_LOGS/eventN/data/dischgReason; /EVENT_LOGS/eventN/data/lockout |
+| `/EVENT_LOGS/eventN/data/inputs` | 7 | 100% | str | - | - | /EVENT_LOGS/eventN/data/inputs/charger; /EVENT_LOGS/eventN/data/inputs/chgFet; /EVENT_LOGS/eventN/data/inputs/extTrig |
+| `/EVENT_LOGS/eventN/volt` | 2 | 100% | str | - | - | /EVENT_LOGS/eventN/volt/cellN; /EVENT_LOGS/eventN/volt/pack |
+| `/EVENT_LOGS/eventN/current` | 2 | 100% | str | - | - | /EVENT_LOGS/eventN/current/pack_current; /EVENT_LOGS/eventN/current/padding |
+| `/EVENT_LOGS/eventN` | 2 | 100% | str | - | - | /EVENT_LOGS/eventN/padding; /EVENT_LOGS/eventN/temperature |
+| `/EVENT_LOGS/eventN/capacity` | 4 | 100% | str | - | - | /EVENT_LOGS/eventN/capacity/fuelGauge; /EVENT_LOGS/eventN/capacity/runtime; /EVENT_LOGS/eventN/capacity/soc |
+| `/EVENT_LOGS/faultN/data` | 8 | 100% | str | - | - | /EVENT_LOGS/faultN/data/chargeReason; /EVENT_LOGS/faultN/data/dischgReason; /EVENT_LOGS/faultN/data/lockout |
+| `/EVENT_LOGS/faultN/data/inputs` | 7 | 100% | str | - | - | /EVENT_LOGS/faultN/data/inputs/charger; /EVENT_LOGS/faultN/data/inputs/chgFet; /EVENT_LOGS/faultN/data/inputs/extTrig |
+| `/EVENT_LOGS/faultN/volt` | 2 | 100% | str | - | - | /EVENT_LOGS/faultN/volt/cellN; /EVENT_LOGS/faultN/volt/pack |
+| `/EVENT_LOGS/faultN/current` | 2 | 100% | str | - | - | /EVENT_LOGS/faultN/current/pack_current; /EVENT_LOGS/faultN/current/padding |
+| `/EVENT_LOGS/faultN` | 2 | 100% | str | - | - | /EVENT_LOGS/faultN/padding; /EVENT_LOGS/faultN/temperature |
+| `/EVENT_LOGS/faultN/capacity` | 4 | 100% | str | - | - | /EVENT_LOGS/faultN/capacity/fuelGauge; /EVENT_LOGS/faultN/capacity/runtime; /EVENT_LOGS/faultN/capacity/soc |
+| `/EVENT_LOGS` | 2 | 100% | str | - | - | /EVENT_LOGS/eventIndex; /EVENT_LOGS/faultIndex |
+| `/USAGE_LOG/Discharge/Significant discharges` | 2 | 100% | str | - | - | All time; When frozen |
+| `/USAGE_LOG/Discharge/Discharge power bins` | 3 | 100% | str | `powerBins` | 3 vs 3 | Low power; Mid power; High power |
+| `/USAGE_LOG/Discharge/Discharge operating bands` | 9 | 100% | str | `dischargeBandBins` | 9 vs 9 | cell voltage <3.3V, Temp <15 degC; cell voltage <3.3V, Temp 15-45 degC; cell voltage <3.3V, Temp >45 degC |
+| `/USAGE_LOG/Discharge/Discharge duration bins` | 24 | 100% | str | `dischargeDurationBins` | 24 vs 23  **MISMATCH** | <1 second; 1-5 seconds; 5-10 seconds |
+| `/USAGE_LOG/Discharge/Discharge start temperature bins` | 10 | 100% | str | `dischargeStartTempBins` | 10 vs 10 | 0-5 degC; 5-10 degC; 10-15 degC |
+| `/USAGE_LOG/Discharge/Discharge off time bins` | 6 | 100% | str | `dischargeOffTimeBins` | 6 vs 6 | <5 secs; 5-20 secs; 20-60 secs |
+| `/USAGE_LOG/Discharge/Discharge duration between charges bins` | 15 | 100% | str | `dischargeBtwChargesBins` | 15 vs 15 | <1 minute; 1-2 minutes; 2-4 minutes |
+| `/USAGE_LOG/Discharge/Other events` | 6 | 100% | str | - | - | Discharge stop due to no load detected; Discharge stop due to over temperature; Discharge stop due to low voltage |
+| `/USAGE_LOG/Charge/Charger insertions` | 2 | 100% | str | - | - | All time; When frozen |
+| `/USAGE_LOG/Charge/Imbalance at end of charge` | 2 | 100% | str | - | - | Initial; Latest |
+| `/USAGE_LOG/Charge/Charge time while in different phases (in seconds)` | 7 | 100% | str | `chargeMaintainTempBins` | 6 vs 6 | Maintenance phase, Temp <20 degC; Maintenance phase, Temp 20 - 25 degC; Maintenance phase, Temp 25 - 30 degC |
+| `/USAGE_LOG/Charge/Charge operating bands (total time in seconds)` | 9 | 100% | str | `chargeBandBins` | 9 vs 9 | cell voltage <3.3V, Temp <15 degC; cell voltage <3.3V, Temp 15-45 degC; cell voltage <3.3V, Temp >45 degC |
+| `/USAGE_LOG/Charge/Charge duration bins` | 17 | 100% | str | `chargeDurationBins` | 17 vs 16  **MISMATCH** | 0 mins; 0-5 mins; 5-10 mins |
+| `/USAGE_LOG/Charge/Charge ambient temperature for pre-customers` | 6 | 100% | str | `chargeAmbientTempPreCustomerBins` | 6 vs 6 | <20 degC; 20-25 degC; 25-30 degC |
+| `/USAGE_LOG/Charge/Charge ambient temperature for customers` | 6 | 100% | str | `chargeAmbientTempCustomerBins` | 6 vs 6 | <15 degC; 15-20 degC; 20-25 degC |
+| `/USAGE_LOG/Charge/Other statistics` | 6 | 100% | str | - | - | Charge stop due to over temperature; Charge stop due to under temperature; Charge stop due to fault |
+| `/USAGE_LOG/Charge/Lowest cell voltage at start of charge` | 18 | 100% | str | `minCellVoltAtChargeStartBins` | 16 vs 16 | <=2.6V; <=2.7V; <=2.8V |
+| `/USAGE_LOG/Misc/Misc Flags` | 5 | 100% | str | - | - | Pack Flat; Stats Frozen; Main Body Fault |
+| `/USAGE_LOG/Misc/Temperature` | 3 | 100% | str | - | - | Latest Ambient Temperature; Highest Ambient Temperature; padding1 |
+| `/USAGE_LOG/Misc/Runtime` | 3 | 100% | str | - | - | 1ms Runtime; 10ms Runtime; Background Runtime |
+| `/USAGE_LOG/Misc/Stack` | 1 | 100% | str | - | - | Max Stack Used |
+| `/USAGE_LOG/Misc/Resets` | 10 | 100% | str | - | - | padding1; Brown Out 12 Resets; Brown Out 33 Resets |
+| `/USAGE_LOG/Misc/State` | 9 | 100% | str | - | - | Auxiliary Power; Charger Present; DIPC Wake Alert Request Enable |
+| `/USAGE_LOG/Capacity/Capacity` | 30 | 100% | str | - | - | Avg EOD imbalance; Min Power Resistance; Low Power Resistance |

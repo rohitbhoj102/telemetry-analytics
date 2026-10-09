@@ -29,3 +29,27 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
   - Empty battery rows: Normal 9 serials / 1,516 rows (all 9 also have payload rows); RR 5 serials / 32,033 rows (two serials hold 21,316 and 10,711; 3 of 5 also have payload rows).
   - `fault_status`: within machine + fault_type, the first event by `fault_timestamp` is 1 in 130 of 182 series (Normal) and 28 of 41 (RR). 0→1 and 1→0 transitions are about equally frequent, and 1→1 is common, so the data does not behave like clean Raised/Cleared pairs. Weak, small-sample, inference only.
 - **Next**: Step 2 (DQ functions plus cleaning that applies the rules in the assumptions log). Not started.
+
+### Fri 09 Oct, 23:15
+- **Did**
+  - Housekeeping: removed the two mentions of the project instructions file from `docs/assumptions_log.md` (README and `src/` had none); recorded the user's answers to the Step 1 questions in the assumptions log.
+  - Step 2 (design only): `docs/parsing_spec.md`, built from three read-only scripts plus a loader: `src/payload_io.py` (loader), `src/cumulative_check.py`, `src/build_parsing_spec.py`; outputs in `reports/profiling/` (`cumulative_check.csv`, `cumulative_gaps.csv`, `parsing_spec_paths.csv`, `spec_checks.csv`, `spec_tables/`).
+  - Ad-hoc Step 1 checks that are not yet in a script and are **to be moved into `src/dq.py` in Step 4**: cross-table serial coverage and cohort serial overlap; fault_type / fault_value combination counts; Normal motor flattened columns vs payload bins (partly covered by `build_parsing_spec.py` now); clean-session sentinel and range counts (65535 dust, 255 charge, `charge_end` > `charge_start`, `clean_duration` = 0, `log3_time_sync_old` = 0); `session_id` sharing across serials.
+- **Why**: decide how to parse `decoded_data` before writing a parser, and test the brief's "cumulative weekly counters" statement on the data.
+- **Found**
+  - Six battery layouts/populations (not two): the return/repair "standard" group hides 26 label-keyed payloads; Normal splits into 4-cell (SV50 models) and 7-cell (SV53) populations with no shared serials.
+  - All 12 battery bin arrays and 5 of 7 motor bin arrays match their definitions by exact name, location and length; the other 2 motor arrays match only by an inferred alias.
+  - Motor bin arrays are 100% monotonic per serial; Normal battery is not (4-cell: 41–47% of serials), cause unknown.
+  - Motor Normal has a 22-day median gap between observations (others about 7–8 days).
+  - `cumulative_usage_duration_seconds` (Normal motor) is the sum of `ddm692_PowerBins`.
+  - Re-uploads are heavy: Normal battery 1,250 payload rows = 551 distinct.
+- **Next**: wait for answers to the open questions in `docs/parsing_spec.md` section 8. Step 3 (parser) is not started.
+
+### Fri 09 Oct, 23:32
+- **Did**: recorded the user's nine decisions on the Step 2 open questions in `docs/assumptions_log.md` and in a new section 9 of `docs/parsing_spec.md`. Added `dedup_effect()` to `src/cumulative_check.py` (output `reports/profiling/cumulative_dedup_effect.csv`) and ran an ad-hoc size check of the Normal 7-cell battery subset.
+- **Why**: close the Step 2 questions and test two assumptions behind the decisions (comparable subset size; whether re-uploads explain counter decreases).
+- **Found**
+  - Comparable Normal battery subset (7-cell / SV53, with payload, de-duplicated): 133 records, 10 serials (8 with at least 2 records; 2 serials not in sessions, SV53 assumed). Return/Repair standard: 410 records, 42 serials. Thin for a cohort contrast.
+  - Normal 4-cell counter decreases are unaffected by removing re-uploads (median monotonic share 41.2% in all variants; 5,092 decreasing pairs in all variants).
+  - Normal 7-cell: one record has a 2055 `hdr_timestamp`.
+- **Next**: Step 3 (parser) once the user opens it. The size check in the Found list is ad hoc and not yet in a script; move it into the DQ module in Step 4 with the other ad-hoc checks.

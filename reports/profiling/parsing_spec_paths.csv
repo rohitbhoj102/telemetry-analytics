@@ -1,0 +1,437 @@
+group,path,payloads,present,pct,class,json_types,list_lengths,definition,definition_file,match_status,match_note,declared_sizes,declared_cells,edges,declared_array_unit,meaning,monotonic_by_hdr_ts
+motor_normal,ddmUsage,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ambTempMeas,470,470,100.0,scalar,int,[],,,,,,,,,unknown,87% (7/394)
+motor_normal,ddmUsage.ambientPressure_Pa,470,470,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] ambient pressure, Pa (brief lists 'ambient pressure'). Normal `ambient_pressure_kpa` = value/1000 (verified)",1.9% (167/394)
+motor_normal,ddmUsage.ambientTemperature_mC,470,470,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] ambient temperature, milli-degC (brief lists 'ambient temperature'). Normal `ambient_temperature_C` = value/1000 (verified)",1.9% (177/394)
+motor_normal,ddmUsage.barometerDerCounter,470,470,100.0,scalar,int,[],,,,,,,,,unknown,constant
+motor_normal,ddmUsage.bmsAmbientTemperature_mC,470,470,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] ambient temperature seen by the BMS, milli-degC",1.9% (191/394)
+motor_normal,ddmUsage.ddm692_BarometerTempBins,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ddm692_BarometerTempBins.bins,470,470,100.0,bin array,list,[10],ddm692_BarTempBins,DDM_Bins.json,inferred,payload name `ddm692_BarometerTempBins` vs definition `ddm692_BarTempBins`,[10],10,"speed [krpm]: 10, 20, 30, 40, 50, 60, 70, 80, 90",second,,100% (0/394)
+motor_normal,ddmUsage.ddm692_BarometerTempBins.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,ddmUsage.ddm692_BarometerTempBins.tableSize,470,470,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_normal,ddmUsage.ddm692_ExhaustTempBins,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ddm692_ExhaustTempBins.bins,470,470,100.0,bin array,list,[10],ddm692_ExhaustTempBins,DDM_Bins.json,verified,location matches jsonLoc,[10],10,"speed [celsius]: 10, 20, 30, 40, 50, 60, 70, 80, 90",second,,100% (0/394)
+motor_normal,ddmUsage.ddm692_ExhaustTempBins.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,ddmUsage.ddm692_ExhaustTempBins.tableSize,470,470,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_normal,ddmUsage.ddm692_FisfTempBins,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ddm692_FisfTempBins.bins,470,470,100.0,bin array,list,[10],ddm692_FisfTempBins,DDM_Bins.json,verified,location matches jsonLoc,[10],10,"speed [celsius]: 14, 28, 42, 56, 70, 84, 98, 112, 126",second,,100% (0/394)
+motor_normal,ddmUsage.ddm692_FisfTempBins.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,ddmUsage.ddm692_FisfTempBins.tableSize,470,470,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_normal,ddmUsage.ddm692_NormSpeedBins,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ddm692_NormSpeedBins.bins,470,470,100.0,bin array,list,[14],ddm692_NormSpeedBins,DDM_Bins.json,verified,location matches jsonLoc,[14],14,"speed [krpm]: 109.9, 111.9, 113.9, 115.9, 117.9, 119.9, 121.9, 123.9, 125.9, 127.9, 129.9, 133, 150",second,,constant
+motor_normal,ddmUsage.ddm692_NormSpeedBins.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,ddmUsage.ddm692_NormSpeedBins.tableSize,470,470,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_normal,ddmUsage.ddm692_PowerBins,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ddm692_PowerBins.bins,470,470,100.0,bin array,list,[14],ddm692_PowerBins,DDM_Bins.json,verified,location matches jsonLoc,[14],14,"speed [watts]: 50, 75, 100, 125, 150, 200, 300, 400, 500, 600, 700, 800, 900",second,,100% (0/394)
+motor_normal,ddmUsage.ddm692_PowerBins.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,ddmUsage.ddm692_PowerBins.tableSize,470,470,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_normal,ddmUsage.ddm692_PressureBins,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ddm692_PressureBins.bins,470,470,100.0,bin array,list,[9],ddm692_PressBins,DDM_Bins.json,inferred,payload name `ddm692_PressureBins` vs definition `ddm692_PressBins`,[9],9,"speed [kilo-pascal]: 70, 75, 80, 85, 90, 95, 100, 105",second,,100% (0/394)
+motor_normal,ddmUsage.ddm692_PressureBins.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,ddmUsage.ddm692_PressureBins.tableSize,470,470,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_normal,ddmUsage.ddm692_SpeedBins,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,ddmUsage.ddm692_SpeedBins.bins,470,470,100.0,bin array,list,[25],ddm692_SpeedBins,DDM_Bins.json,verified,location matches jsonLoc,[25],25,"speed [krpm]: 45, 55, 65, 75, 85, 95, 105, 110, 115, 120, 122.5, 125, 127.5, 130, 132.5, 135, 137.5, 140, 142.5, 145, 147.5, 150, 155, 160",second,,100% (0/394)
+motor_normal,ddmUsage.ddm692_SpeedBins.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,ddmUsage.ddm692_SpeedBins.tableSize,470,470,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_normal,ddmUsage.ddmOnButNotRunTime_s,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] seconds powered on but not running,100% (0/394)
+motor_normal,ddmUsage.exhaustDerCounter,470,470,100.0,scalar,int,[],,,,,,,,,unknown,constant
+motor_normal,ddmUsage.filterStateChgCounter,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of filter state changes,constant
+motor_normal,ddmUsage.filterWashCounter,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of filter washes (brief has fault type 13 'Filter Wash'),100% (0/394)
+motor_normal,ddmUsage.filterWashStatus,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] filter-wash status; coding unknown,50% (39/394)
+motor_normal,ddmUsage.fwFilteredDeqv_mm,470,470,100.0,scalar,int,[],,,,,,,,,unknown,1.9% (211/394)
+motor_normal,ddmUsage.fwPrevFilteredDeqv_mm,470,470,100.0,scalar,int,[],,,,,,,,,unknown,1.9% (211/394)
+motor_normal,ddmUsage.motorThermalBemfDerCounter,470,470,100.0,scalar,int,[],,,,,,,,,unknown,constant
+motor_normal,ddmUsage.packVoltLow_mV,470,470,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] low pack voltage, mV",constant
+motor_normal,ddmUsage.powerReset,470,470,100.0,scalar,int,[],,,,,,,,,unknown,14.8% (82/394)
+motor_normal,ddmUsage.ppcPeakPowerTimeReset_ms,470,470,100.0,scalar,int,[],,,,,,,,,unknown,46.3% (50/394)
+motor_normal,ddmUsage.ppcPeakPowerTime_ms,470,470,100.0,scalar,int,[],,,,,,,,,unknown,90.7% (5/394)
+motor_normal,header,470,470,100.0,object,dict,[],,,,,,,,,,n/a
+motor_normal,header.checksum,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] record checksum (not a measurement),3.7% (189/394)
+motor_normal,header.dataSize,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] record size; unit unknown. Equals RR `log_size` (verified),constant
+motor_normal,header.formatId,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_normal,header.writeCount,470,470,100.0,scalar,int,[],,,,,,,,,[inferred from key name] write counter. Equals Normal `write_count` column (verified),100% (0/394)
+motor_rr,ddmUsage,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ambTempMeas,564,564,100.0,scalar,int,[],,,,,,,,,unknown,94.6% (2/448)
+motor_rr,ddmUsage.ambientPressure_Pa,564,564,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] ambient pressure, Pa (brief lists 'ambient pressure'). Normal `ambient_pressure_kpa` = value/1000 (verified)",8.1% (211/448)
+motor_rr,ddmUsage.ambientTemperature_mC,564,564,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] ambient temperature, milli-degC (brief lists 'ambient temperature'). Normal `ambient_temperature_C` = value/1000 (verified)",5.4% (212/448)
+motor_rr,ddmUsage.barometerDerCounter,564,564,100.0,scalar,int,[],,,,,,,,,unknown,constant
+motor_rr,ddmUsage.bmsAmbientTemperature_mC,564,564,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] ambient temperature seen by the BMS, milli-degC",2.7% (219/448)
+motor_rr,ddmUsage.ddm692_BarometerTempBins,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ddm692_BarometerTempBins.bins,564,564,100.0,bin array,list,[10],ddm692_BarTempBins,DDM_Bins.json,inferred,payload name `ddm692_BarometerTempBins` vs definition `ddm692_BarTempBins`,[10],10,"speed [krpm]: 10, 20, 30, 40, 50, 60, 70, 80, 90",second,,100% (0/448)
+motor_rr,ddmUsage.ddm692_BarometerTempBins.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,ddmUsage.ddm692_BarometerTempBins.tableSize,564,564,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_rr,ddmUsage.ddm692_ExhaustTempBins,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ddm692_ExhaustTempBins.bins,564,564,100.0,bin array,list,[10],ddm692_ExhaustTempBins,DDM_Bins.json,verified,location matches jsonLoc,[10],10,"speed [celsius]: 10, 20, 30, 40, 50, 60, 70, 80, 90",second,,100% (0/448)
+motor_rr,ddmUsage.ddm692_ExhaustTempBins.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,ddmUsage.ddm692_ExhaustTempBins.tableSize,564,564,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_rr,ddmUsage.ddm692_FisfTempBins,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ddm692_FisfTempBins.bins,564,564,100.0,bin array,list,[10],ddm692_FisfTempBins,DDM_Bins.json,verified,location matches jsonLoc,[10],10,"speed [celsius]: 14, 28, 42, 56, 70, 84, 98, 112, 126",second,,100% (0/448)
+motor_rr,ddmUsage.ddm692_FisfTempBins.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,ddmUsage.ddm692_FisfTempBins.tableSize,564,564,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_rr,ddmUsage.ddm692_NormSpeedBins,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ddm692_NormSpeedBins.bins,564,564,100.0,bin array,list,[14],ddm692_NormSpeedBins,DDM_Bins.json,verified,location matches jsonLoc,[14],14,"speed [krpm]: 109.9, 111.9, 113.9, 115.9, 117.9, 119.9, 121.9, 123.9, 125.9, 127.9, 129.9, 133, 150",second,,constant
+motor_rr,ddmUsage.ddm692_NormSpeedBins.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,ddmUsage.ddm692_NormSpeedBins.tableSize,564,564,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_rr,ddmUsage.ddm692_PowerBins,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ddm692_PowerBins.bins,564,564,100.0,bin array,list,[14],ddm692_PowerBins,DDM_Bins.json,verified,location matches jsonLoc,[14],14,"speed [watts]: 50, 75, 100, 125, 150, 200, 300, 400, 500, 600, 700, 800, 900",second,,100% (0/448)
+motor_rr,ddmUsage.ddm692_PowerBins.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,ddmUsage.ddm692_PowerBins.tableSize,564,564,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_rr,ddmUsage.ddm692_PressureBins,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ddm692_PressureBins.bins,564,564,100.0,bin array,list,[9],ddm692_PressBins,DDM_Bins.json,inferred,payload name `ddm692_PressureBins` vs definition `ddm692_PressBins`,[9],9,"speed [kilo-pascal]: 70, 75, 80, 85, 90, 95, 100, 105",second,,100% (0/448)
+motor_rr,ddmUsage.ddm692_PressureBins.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,ddmUsage.ddm692_PressureBins.tableSize,564,564,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_rr,ddmUsage.ddm692_SpeedBins,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,ddmUsage.ddm692_SpeedBins.bins,564,564,100.0,bin array,list,[25],ddm692_SpeedBins,DDM_Bins.json,verified,location matches jsonLoc,[25],25,"speed [krpm]: 45, 55, 65, 75, 85, 95, 105, 110, 115, 120, 122.5, 125, 127.5, 130, 132.5, 135, 137.5, 140, 142.5, 145, 147.5, 150, 155, 160",second,,100% (0/448)
+motor_rr,ddmUsage.ddm692_SpeedBins.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,ddmUsage.ddm692_SpeedBins.tableSize,564,564,100.0,scalar,int,[],,,,,,,,,[verified] equals the length of the sibling `bins` array in every row (see spec_checks.csv),constant
+motor_rr,ddmUsage.ddmOnButNotRunTime_s,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] seconds powered on but not running,100% (0/448)
+motor_rr,ddmUsage.exhaustDerCounter,564,564,100.0,scalar,int,[],,,,,,,,,unknown,constant
+motor_rr,ddmUsage.filterStateChgCounter,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of filter state changes,constant
+motor_rr,ddmUsage.filterWashCounter,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of filter washes (brief has fault type 13 'Filter Wash'),100% (0/448)
+motor_rr,ddmUsage.filterWashStatus,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] filter-wash status; coding unknown,56.8% (39/448)
+motor_rr,ddmUsage.fwFilteredDeqv_mm,564,564,100.0,scalar,int,[],,,,,,,,,unknown,10.8% (224/448)
+motor_rr,ddmUsage.fwPrevFilteredDeqv_mm,564,564,100.0,scalar,int,[],,,,,,,,,unknown,10.8% (224/448)
+motor_rr,ddmUsage.motorThermalBemfDerCounter,564,564,100.0,scalar,int,[],,,,,,,,,unknown,constant
+motor_rr,ddmUsage.packVoltLow_mV,564,564,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] low pack voltage, mV",constant
+motor_rr,ddmUsage.powerReset,564,564,100.0,scalar,int,[],,,,,,,,,unknown,18.9% (79/448)
+motor_rr,ddmUsage.ppcPeakPowerTimeReset_ms,564,564,100.0,scalar,int,[],,,,,,,,,unknown,54.1% (40/448)
+motor_rr,ddmUsage.ppcPeakPowerTime_ms,564,564,100.0,scalar,int,[],,,,,,,,,unknown,89.2% (7/448)
+motor_rr,header,564,564,100.0,object,dict,[],,,,,,,,,,n/a
+motor_rr,header.checksum,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] record checksum (not a measurement),8.1% (220/448)
+motor_rr,header.dataSize,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] record size; unit unknown. Equals RR `log_size` (verified),constant
+motor_rr,header.formatId,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] format/version id of the record or table,constant
+motor_rr,header.writeCount,564,564,100.0,scalar,int,[],,,,,,,,,[inferred from key name] write counter. Equals Normal `write_count` column (verified),100% (0/448)
+battery_normal,bpa_SNO,1250,1077,86.16,scalar,str,[],,,,,,,,,[inferred from key name] pack serial number,n/a
+battery_normal,eventLog,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,eventLog.checksum,1250,1077,86.16,scalar,int,[],,,,,,,,,[inferred from key name] record checksum (not a measurement),0% (190/400)
+battery_normal,eventLog.counter,1250,1077,86.16,scalar,int,[],,,,,,,,,[inferred from key name] record counter,47.1% (25/400)
+battery_normal,eventLog.eventFaultIndex,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] index into the fault ring,constant
+battery_normal,eventLog.eventIndex,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] index into the event ring,0% (263/523)
+battery_normal,eventLog.events,1250,1250,100.0,record list,list,[15],,,,,,,,,,n/a
+battery_normal,eventLog.events[],1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,eventLog.events[].cellVolt,1250,1250,100.0,numeric array (not a bin array),list,"[4, 7]",,,n/a,,,,,,[inferred from key name] cell voltages (brief lists 'cell voltages'); unit unknown,n/a
+battery_normal,eventLog.events[].chargeReason,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.events[].current pack,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack current; unit unknown,n/a
+battery_normal,eventLog.events[].current secondary,1250,1077,86.16,scalar,int,[],,,,,,,,,unknown,n/a
+battery_normal,eventLog.events[].dischgReason,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.events[].fuelGauge,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] fuel gauge reading; unit unknown,n/a
+battery_normal,eventLog.events[].inputOutput,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (bit field?, not documented)",n/a
+battery_normal,eventLog.events[].lockout,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.events[].packVolt,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack voltage; unit unknown,n/a
+battery_normal,eventLog.events[].reason,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.events[].runTime,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] runtime (brief lists 'runtime'); unit unknown,n/a
+battery_normal,eventLog.events[].secReason,1250,1077,86.16,scalar,int,[],,,,,,,,,unknown,n/a
+battery_normal,eventLog.events[].state,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (enumeration, coding not documented)",n/a
+battery_normal,eventLog.events[].stateOfCharge,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of charge (brief lists SoC); scale unknown,n/a
+battery_normal,eventLog.events[].stateOfHealth,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of health (brief lists SoH); scale unknown,n/a
+battery_normal,eventLog.events[].stateReason,1250,173,13.84,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.events[].temp,1250,1250,100.0,other (int or array),int|list,[3],,,,,,,,,[inferred from key name] temperature (brief lists 'battery temperature'); unit unknown,n/a
+battery_normal,eventLog.events[].time,1250,1250,100.0,scalar,int,[],,,,,,,,,unknown (time base and unit not stated),n/a
+battery_normal,eventLog.faults,1250,1250,100.0,record list,list,[2],,,,,,,,,,n/a
+battery_normal,eventLog.faults[],1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,eventLog.faults[].cellVolt,1250,1250,100.0,numeric array (not a bin array),list,"[4, 7]",,,n/a,,,,,,[inferred from key name] cell voltages (brief lists 'cell voltages'); unit unknown,n/a
+battery_normal,eventLog.faults[].chargeReason,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.faults[].current pack,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack current; unit unknown,n/a
+battery_normal,eventLog.faults[].current secondary,1250,1077,86.16,scalar,int,[],,,,,,,,,unknown,n/a
+battery_normal,eventLog.faults[].dischgReason,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.faults[].fuelGauge,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] fuel gauge reading; unit unknown,n/a
+battery_normal,eventLog.faults[].inputOutput,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (bit field?, not documented)",n/a
+battery_normal,eventLog.faults[].lockout,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.faults[].packVolt,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack voltage; unit unknown,n/a
+battery_normal,eventLog.faults[].reason,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.faults[].runTime,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] runtime (brief lists 'runtime'); unit unknown,n/a
+battery_normal,eventLog.faults[].secReason,1250,1077,86.16,scalar,int,[],,,,,,,,,unknown,n/a
+battery_normal,eventLog.faults[].state,1250,1250,100.0,scalar,int,[],,,,,,,,,"unknown (enumeration, coding not documented)",n/a
+battery_normal,eventLog.faults[].stateOfCharge,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of charge (brief lists SoC); scale unknown,n/a
+battery_normal,eventLog.faults[].stateOfHealth,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of health (brief lists SoH); scale unknown,n/a
+battery_normal,eventLog.faults[].stateReason,1250,173,13.84,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_normal,eventLog.faults[].temp,1250,1250,100.0,other (int or array),int|list,[3],,,,,,,,,[inferred from key name] temperature (brief lists 'battery temperature'); unit unknown,n/a
+battery_normal,eventLog.faults[].time,1250,1250,100.0,scalar,int,[],,,,,,,,,unknown (time base and unit not stated),n/a
+battery_normal,header,1250,173,13.84,object,dict,[],,,,,,,,,,n/a
+battery_normal,header.bpa_SNO,1250,173,13.84,scalar,str,[],,,,,,,,,[inferred from key name] pack serial number,n/a
+battery_normal,header.bpa_WIP,1250,173,13.84,scalar,str,[],,,,,,,,,[inferred from key name] pack work-in-progress id,n/a
+battery_normal,header.configID,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] configuration id,constant
+battery_normal,header.power_ups,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] number of power-ups,87.5% (1/123)
+battery_normal,header.rated_power,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] rated power; unit unknown,constant
+battery_normal,header.serial_HW,1250,173,13.84,scalar,str,[],,,,,,,,,[inferred from key name] hardware serial,n/a
+battery_normal,header.ver_FW,1250,173,13.84,scalar,str,[],,,,,,,,,[inferred from key name] firmware version string,n/a
+battery_normal,header.ver_SW,1250,173,13.84,scalar,str,[],,,,,,,,,[inferred from key name] software version string,n/a
+battery_normal,header.ver_Sibyl,1250,173,13.84,scalar,str,[],,,,,,,,,[inferred from key name] algorithm version string,n/a
+battery_normal,miscAndSibyl,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.counter,1250,1077,86.16,scalar,int,[],,,,,,,,,[inferred from key name] record counter,47.1% (25/400)
+battery_normal,miscAndSibyl.miscLog,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.chgErrors,1250,173,13.84,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.chgErrors.ChgErrPresent,1250,173,13.84,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_normal,miscAndSibyl.miscLog.chgErrors.ChgOverCurrent,1250,173,13.84,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_normal,miscAndSibyl.miscLog.chgErrors.CycleCharger,1250,173,13.84,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_normal,miscAndSibyl.miscLog.devMode,1250,1077,86.16,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.devMode.devModeUsed,1250,1077,86.16,scalar,int,[],,,,,,,,,"[inferred from key name] flag, dev mode used",constant
+battery_normal,miscAndSibyl.miscLog.flags,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.flags.Behaviour_Flags,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,96% (1/523)
+battery_normal,miscAndSibyl.miscLog.flags.Debug_Config,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_normal,miscAndSibyl.miscLog.flags.Main_Body_Fault,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_normal,miscAndSibyl.miscLog.flags.Pack_Flat,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,100% (0/523)
+battery_normal,miscAndSibyl.miscLog.flags.Stats_Frozen,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_normal,miscAndSibyl.miscLog.resets,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.resets.Brown_Out_12_Resets,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_normal,miscAndSibyl.miscLog.resets.Brown_Out_33_Resets,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_normal,miscAndSibyl.miscLog.resets.External_Resets,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,100% (0/523)
+battery_normal,miscAndSibyl.miscLog.resets.Power_On_Resets,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,60% (26/523)
+battery_normal,miscAndSibyl.miscLog.resets.RTC_Resets,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,96% (1/523)
+battery_normal,miscAndSibyl.miscLog.resets.System_Resets,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_normal,miscAndSibyl.miscLog.resets.Watchdog_Resets,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_normal,miscAndSibyl.miscLog.runtimeStats,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.runtimeStats.Max_Stack_Used,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] maximum stack used,0% (237/523)
+battery_normal,miscAndSibyl.miscLog.runtimeStats.bgnd_task,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] task runtime statistic,40% (91/523)
+battery_normal,miscAndSibyl.miscLog.runtimeStats.d_10ms_task,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] task runtime statistic,0% (253/523)
+battery_normal,miscAndSibyl.miscLog.runtimeStats.d_1ms_task,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] task runtime statistic,0% (173/523)
+battery_normal,miscAndSibyl.miscLog.shipState,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.shipState.AuxPower,1250,173,13.84,scalar,int,[],,,,,,,,,unknown (key name only),87.5% (1/123)
+battery_normal,miscAndSibyl.miscLog.shipState.ChargerPresent,1250,1250,100.0,scalar,int,[],,,,,,,,,unknown (key name only),28% (37/523)
+battery_normal,miscAndSibyl.miscLog.shipState.WakeReqEnabled,1250,173,13.84,scalar,int,[],,,,,,,,,unknown (key name only),87.5% (1/123)
+battery_normal,miscAndSibyl.miscLog.temperature,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.temperature.highest,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] highest ambient temperature (flat layout labels it 'Highest Ambient Temperature'),12% (142/523)
+battery_normal,miscAndSibyl.miscLog.temperature.latest,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] latest ambient temperature (flat layout labels it 'Latest Ambient Temperature'),8% (149/523)
+battery_normal,miscAndSibyl.miscLog.timers,1250,173,13.84,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.miscLog.timers.DisableAuxOnFlat,1250,173,13.84,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_normal,miscAndSibyl.miscLog.timers.RecAmbientTemp,1250,173,13.84,scalar,int,[],,,,,,,,,unknown (key name only),12.5% (63/123)
+battery_normal,miscAndSibyl.sibylData,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_Cmax,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,0% (449/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_G,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,0% (260/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha1,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,12% (167/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha2,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,8% (247/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_chgRs,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,8% (240/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_disRs,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,4% (253/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_SOC,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,0% (276/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf1,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,4% (262/523)
+battery_normal,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf2,1250,1250,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,4% (273/523)
+battery_normal,miscAndSibyl.sibylData.initialSoC,1250,1077,86.16,scalar,int,[],,,,,,,,,[inferred from key name] initial SoC,0% (189/400)
+battery_normal,miscAndSibyl.sibylData.maxCapacity,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] maximum capacity; unit unknown,0% (448/523)
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Avg_EOD_imbalance,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] average end-of-discharge imbalance,76% (16/523)
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Charge_flag,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,76% (9/523)
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Discharge_flag,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,76% (7/523)
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.High_Power_Resistance,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,96% (6/523)
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Initialized_flag,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Low_Power_Resistance,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,96% (1/523)
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Medium_Power_Resistance,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,88% (4/523)
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Min_Power_Resistance,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,constant
+battery_normal,miscAndSibyl.sibylData.runtimeAlgo.Peak_Power_Resistance,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,constant
+battery_normal,miscAndSibyl.sibylData.sohData,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,miscAndSibyl.sibylData.sohData.Delta_Energy,1250,1077,86.16,scalar,int,[],,,,,,,,,unknown (key name only),0% (197/400)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_High,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/523)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Low,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),64% (16/523)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Med,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),68% (16/523)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Min,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/123)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Peak,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),constant
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_High,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/523)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Low,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),44% (56/523)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Med,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),20% (122/523)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Min,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/123)
+battery_normal,miscAndSibyl.sibylData.sohData.SoH_Rs_Peak,1250,173,13.84,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),constant
+battery_normal,usage,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.chargeLog,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.chargeLog.chargeActiveTime,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] time in active charge phase; unit unknown,60% (21/523)
+battery_normal,usage.chargeLog.chargeAmbientTempCustomerBins,1250,1250,100.0,bin array,list,[6],chargeAmbientTempCustomerBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"ambient temp [celsius]: 15, 20, 25, 30, 40",count,,56% (27/523)
+battery_normal,usage.chargeLog.chargeAmbientTempPreCustomerBins,1250,1250,100.0,bin array,list,[6],chargeAmbientTempPreCustomerBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"ambient temp [celsius]: 20, 25, 30, 40, 50",count,,92% (2/523)
+battery_normal,usage.chargeLog.chargeBandBins,1250,1250,100.0,bin array,list,[9],chargeBandBins,BMS_Bins.json,verified,location matches jsonLoc,"[3, 3]",9,"voltage [volt]: 3.3, 4.15; temperature [celsius]: 15, 45",second,,56% (26/523)
+battery_normal,usage.chargeLog.chargeDurationBins,1250,1250,100.0,bin array,list,[16],chargeDurationBins,BMS_Bins.json,verified,location matches jsonLoc,[16],16,"duration [minute]: 5, 10, 15, 30, 45, 60, 75, 90, 105, 120, 150, 180, 210, 240, 270",count,,60% (21/523)
+battery_normal,usage.chargeLog.chargeMaintainCount,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of maintenance-phase charges,56% (26/523)
+battery_normal,usage.chargeLog.chargeMaintainTempBins,1250,1250,100.0,bin array,list,[6],chargeMaintainTempBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"charge maintain temp [celsius]: 20, 25, 30, 35, 40",second,,56% (26/523)
+battery_normal,usage.chargeLog.chargeStopEvents,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.chargeLog.chargeStopEvents.chargerRemoved,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of charger removals,64% (18/523)
+battery_normal,usage.chargeLog.chargeStopEvents.chargingForLong,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, charging too long",constant
+battery_normal,usage.chargeLog.chargeStopEvents.otherFault,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, other fault",56% (26/523)
+battery_normal,usage.chargeLog.chargeStopEvents.overCurrent,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, over current",constant
+battery_normal,usage.chargeLog.chargeStopEvents.overTemp,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of stops, over temperature",100% (0/523)
+battery_normal,usage.chargeLog.chargeStopEvents.underTemp,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, under temperature",100% (0/523)
+battery_normal,usage.chargeLog.chargerInsertions,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.chargeLog.chargerInsertions.allTime,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] all-time count,56% (26/523)
+battery_normal,usage.chargeLog.chargerInsertions.whenFrozen,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count when stats were frozen,56% (26/523)
+battery_normal,usage.chargeLog.everFullyCharged,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] flag, ever fully charged",96% (1/523)
+battery_normal,usage.chargeLog.imbalanceAtEnd,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.chargeLog.imbalanceAtEnd.Initial,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] initial value of imbalance at end of charge,96% (1/523)
+battery_normal,usage.chargeLog.imbalanceAtEnd.Latest,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] latest value of imbalance at end of charge,4% (171/523)
+battery_normal,usage.chargeLog.minCellVoltAtChargeStartBins,1250,1250,100.0,bin array,list,[16],minCellVoltAtChargeStartBins,BMS_Bins.json,verified,location matches jsonLoc,[16],16,"min cell voltage [volt]: 2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4.0",count,,56% (26/523)
+battery_normal,usage.checksum,1250,1077,86.16,scalar,int,[],,,,,,,,,[inferred from key name] record checksum (not a measurement),0% (361/400)
+battery_normal,usage.counter,1250,1077,86.16,scalar,int,[],,,,,,,,,[inferred from key name] record counter,47.1% (25/400)
+battery_normal,usage.dischargeLog,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.dischargeLog.dischargeBandBins,1250,1250,100.0,bin array,list,[9],dischargeBandBins,BMS_Bins.json,verified,location matches jsonLoc,"[3, 3]",9,"voltage [volt]: 3.3, 4.0; temperature [celsius]: 15, 45",second,,56% (22/523)
+battery_normal,usage.dischargeLog.dischargeBtwChargesBins,1250,1250,100.0,bin array,list,[15],dischargeBtwChargesBins,BMS_Bins.json,verified,location matches jsonLoc,[15],15,"off time [minute]: 1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 35, 40, 50, 60",count,,56% (22/523)
+battery_normal,usage.dischargeLog.dischargeDurationBins,1250,1250,100.0,bin array,list,[23],dischargeDurationBins,BMS_Bins.json,verified,location matches jsonLoc,[23],23,"duration [second]: 5, 10, 15, 20, 25, 30, 45, 60, 75, 90, 105, 120, 180, 240, 300, 360, 600, 900, 1200, 1800, 2400, 3000",second,,56% (22/523)
+battery_normal,usage.dischargeLog.dischargeInhibitEvents,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.dischargeLog.dischargeInhibitEvents.other,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of start inhibits, other reason",56% (24/523)
+battery_normal,usage.dischargeLog.dischargeInhibitEvents.packFlat,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of start inhibits, pack flat",100% (0/523)
+battery_normal,usage.dischargeLog.dischargeOffTimeBins,1250,1250,100.0,bin array,list,[6],dischargeOffTimeBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"off time [second]: 5, 20, 60, 300, 1800",count,,56% (22/523)
+battery_normal,usage.dischargeLog.dischargeSecsSinceLastCharge,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] seconds of discharge since last charge,40% (56/523)
+battery_normal,usage.dischargeLog.dischargeStartTempBins,1250,1250,100.0,bin array,list,[10],dischargeStartTempBins,BMS_Bins.json,verified,location matches jsonLoc,[10],10,"start temperature [celsius]: 5, 10, 15, 20, 25, 30, 35, 45, 60",count,,56% (22/523)
+battery_normal,usage.dischargeLog.dischargeStopEvents,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.dischargeLog.dischargeStopEvents.lowVolt,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of discharge stops, low voltage",92% (2/523)
+battery_normal,usage.dischargeLog.dischargeStopEvents.noLoad,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of discharge stops, no load",96% (1/523)
+battery_normal,usage.dischargeLog.dischargeStopEvents.overTemp,1250,1250,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of stops, over temperature",100% (0/523)
+battery_normal,usage.dischargeLog.oneSecDischarge,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of one-second discharges,80% (7/523)
+battery_normal,usage.dischargeLog.powerBins,1250,1250,100.0,bin array,list,[3],powerBins,BMS_Bins.json,verified,location matches jsonLoc,[3],3,"power [watt]: 95, 250",second,,56% (22/523)
+battery_normal,usage.dischargeLog.sigDischarges,1250,1250,100.0,object,dict,[],,,,,,,,,,n/a
+battery_normal,usage.dischargeLog.sigDischarges.allTime,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] all-time count,56% (22/523)
+battery_normal,usage.dischargeLog.sigDischarges.whenFrozen,1250,1250,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count when stats were frozen,56% (22/523)
+battery_rr_standard,eventLog,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,eventLog.eventFaultIndex,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] index into the fault ring,constant
+battery_rr_standard,eventLog.eventIndex,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] index into the event ring,10.8% (171/368)
+battery_rr_standard,eventLog.events,542,542,100.0,record list,list,[15],,,,,,,,,,n/a
+battery_rr_standard,eventLog.events[],542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,eventLog.events[].cellVolt,542,542,100.0,numeric array (not a bin array),list,[7],,,n/a,,,,,,[inferred from key name] cell voltages (brief lists 'cell voltages'); unit unknown,n/a
+battery_rr_standard,eventLog.events[].chargeReason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.events[].current pack,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack current; unit unknown,n/a
+battery_rr_standard,eventLog.events[].dischgReason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.events[].fuelGauge,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] fuel gauge reading; unit unknown,n/a
+battery_rr_standard,eventLog.events[].inputOutput,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (bit field?, not documented)",n/a
+battery_rr_standard,eventLog.events[].lockout,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.events[].packVolt,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack voltage; unit unknown,n/a
+battery_rr_standard,eventLog.events[].reason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.events[].runTime,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] runtime (brief lists 'runtime'); unit unknown,n/a
+battery_rr_standard,eventLog.events[].state,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (enumeration, coding not documented)",n/a
+battery_rr_standard,eventLog.events[].stateOfCharge,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of charge (brief lists SoC); scale unknown,n/a
+battery_rr_standard,eventLog.events[].stateOfHealth,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of health (brief lists SoH); scale unknown,n/a
+battery_rr_standard,eventLog.events[].stateReason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.events[].temp,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] temperature (brief lists 'battery temperature'); unit unknown,n/a
+battery_rr_standard,eventLog.events[].time,542,542,100.0,scalar,int,[],,,,,,,,,unknown (time base and unit not stated),n/a
+battery_rr_standard,eventLog.faults,542,542,100.0,record list,list,[2],,,,,,,,,,n/a
+battery_rr_standard,eventLog.faults[],542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,eventLog.faults[].cellVolt,542,542,100.0,numeric array (not a bin array),list,[7],,,n/a,,,,,,[inferred from key name] cell voltages (brief lists 'cell voltages'); unit unknown,n/a
+battery_rr_standard,eventLog.faults[].chargeReason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.faults[].current pack,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack current; unit unknown,n/a
+battery_rr_standard,eventLog.faults[].dischgReason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.faults[].fuelGauge,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] fuel gauge reading; unit unknown,n/a
+battery_rr_standard,eventLog.faults[].inputOutput,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (bit field?, not documented)",n/a
+battery_rr_standard,eventLog.faults[].lockout,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.faults[].packVolt,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] pack voltage; unit unknown,n/a
+battery_rr_standard,eventLog.faults[].reason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.faults[].runTime,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] runtime (brief lists 'runtime'); unit unknown,n/a
+battery_rr_standard,eventLog.faults[].state,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (enumeration, coding not documented)",n/a
+battery_rr_standard,eventLog.faults[].stateOfCharge,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of charge (brief lists SoC); scale unknown,n/a
+battery_rr_standard,eventLog.faults[].stateOfHealth,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] state of health (brief lists SoH); scale unknown,n/a
+battery_rr_standard,eventLog.faults[].stateReason,542,542,100.0,scalar,int,[],,,,,,,,,"unknown (code, not documented)",n/a
+battery_rr_standard,eventLog.faults[].temp,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] temperature (brief lists 'battery temperature'); unit unknown,n/a
+battery_rr_standard,eventLog.faults[].time,542,542,100.0,scalar,int,[],,,,,,,,,unknown (time base and unit not stated),n/a
+battery_rr_standard,header,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,header.bpa_SNO,542,542,100.0,scalar,str,[],,,,,,,,,[inferred from key name] pack serial number,n/a
+battery_rr_standard,header.bpa_WIP,542,542,100.0,scalar,str,[],,,,,,,,,[inferred from key name] pack work-in-progress id,n/a
+battery_rr_standard,header.configID,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] configuration id,constant
+battery_rr_standard,header.power_ups,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] number of power-ups,100% (0/368)
+battery_rr_standard,header.rated_power,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] rated power; unit unknown,constant
+battery_rr_standard,header.serial_HW,542,542,100.0,scalar,str,[],,,,,,,,,[inferred from key name] hardware serial,n/a
+battery_rr_standard,header.ver_FW,542,542,100.0,scalar,str,[],,,,,,,,,[inferred from key name] firmware version string,n/a
+battery_rr_standard,header.ver_SW,542,542,100.0,scalar,str,[],,,,,,,,,[inferred from key name] software version string,n/a
+battery_rr_standard,header.ver_Sibyl,542,542,100.0,scalar,str,[],,,,,,,,,[inferred from key name] algorithm version string,n/a
+battery_rr_standard,miscAndSibyl,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.chgErrors,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.chgErrors.ChgErrPresent,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_rr_standard,miscAndSibyl.miscLog.chgErrors.ChgOverCurrent,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_rr_standard,miscAndSibyl.miscLog.chgErrors.CycleCharger,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_rr_standard,miscAndSibyl.miscLog.flags,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.flags.Behaviour_Flags,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,94.6% (2/368)
+battery_rr_standard,miscAndSibyl.miscLog.flags.Debug_Config,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_rr_standard,miscAndSibyl.miscLog.flags.Main_Body_Fault,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_rr_standard,miscAndSibyl.miscLog.flags.Pack_Flat,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_rr_standard,miscAndSibyl.miscLog.flags.Stats_Frozen,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,100% (0/368)
+battery_rr_standard,miscAndSibyl.miscLog.resets,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.resets.Brown_Out_12_Resets,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_rr_standard,miscAndSibyl.miscLog.resets.Brown_Out_33_Resets,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_rr_standard,miscAndSibyl.miscLog.resets.External_Resets,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_rr_standard,miscAndSibyl.miscLog.resets.Power_On_Resets,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,100% (0/368)
+battery_rr_standard,miscAndSibyl.miscLog.resets.RTC_Resets,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,100% (0/368)
+battery_rr_standard,miscAndSibyl.miscLog.resets.System_Resets,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_rr_standard,miscAndSibyl.miscLog.resets.Watchdog_Resets,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] reset count,constant
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.Max_Stack_Used,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] maximum stack used,10.8% (158/368)
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.bgnd_task,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] task runtime statistic,constant
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.d_10ms_task,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] task runtime statistic,16.2% (176/368)
+battery_rr_standard,miscAndSibyl.miscLog.runtimeStats.d_1ms_task,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] task runtime statistic,13.5% (117/368)
+battery_rr_standard,miscAndSibyl.miscLog.shipState,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.shipState.AuxPower,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),94.6% (2/368)
+battery_rr_standard,miscAndSibyl.miscLog.shipState.ChargerPresent,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),37.8% (39/368)
+battery_rr_standard,miscAndSibyl.miscLog.shipState.WakeReqEnabled,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),94.6% (2/368)
+battery_rr_standard,miscAndSibyl.miscLog.temperature,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.temperature.highest,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] highest ambient temperature (flat layout labels it 'Highest Ambient Temperature'),8.1% (185/368)
+battery_rr_standard,miscAndSibyl.miscLog.temperature.latest,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] latest ambient temperature (flat layout labels it 'Latest Ambient Temperature'),10.8% (172/368)
+battery_rr_standard,miscAndSibyl.miscLog.timers,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.miscLog.timers.DisableAuxOnFlat,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),constant
+battery_rr_standard,miscAndSibyl.miscLog.timers.RecAmbientTemp,542,542,100.0,scalar,int,[],,,,,,,,,unknown (key name only),8.1% (184/368)
+battery_rr_standard,miscAndSibyl.sibylData,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_Cmax,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,2.7% (342/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_G,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,5.4% (218/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha1,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,29.7% (106/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_alpha2,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,13.5% (156/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_chgRs,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,8.1% (176/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_parameter_disRs,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,13.5% (188/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_SOC,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,10.8% (176/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf1,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,13.5% (192/368)
+battery_rr_standard,miscAndSibyl.sibylData.dekfSocAlgo.Dekf_state_Vf2,542,542,100.0,scalar,float,[],,,,,,,,,[inferred from key name] state/parameter of an SoC estimation algorithm (name only); unit unknown,10.8% (185/368)
+battery_rr_standard,miscAndSibyl.sibylData.maxCapacity,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] maximum capacity; unit unknown,2.7% (346/368)
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Avg_EOD_imbalance,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] average end-of-discharge imbalance,constant
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Charge_flag,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,78.4% (10/368)
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Discharge_flag,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,83.8% (6/368)
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.High_Power_Resistance,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,94.6% (2/368)
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Initialized_flag,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] flag,constant
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Low_Power_Resistance,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,91.9% (5/368)
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Medium_Power_Resistance,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,75.7% (19/368)
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Min_Power_Resistance,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,constant
+battery_rr_standard,miscAndSibyl.sibylData.runtimeAlgo.Peak_Power_Resistance,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] resistance estimate (brief lists 'battery resistance estimates'); unit unknown,constant
+battery_rr_standard,miscAndSibyl.sibylData.sohData,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_High,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Low,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Med,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Min,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Age_Peak,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),constant
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_High,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),97.3% (1/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Low,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),48.6% (68/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Med,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),51.4% (53/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Min,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),100% (0/368)
+battery_rr_standard,miscAndSibyl.sibylData.sohData.SoH_Rs_Peak,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] SoH-related resistance value; unit unknown (brief lists SoH and resistance estimates),constant
+battery_rr_standard,usage,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.chargeLog,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.chargeLog.chargeActiveTime,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] time in active charge phase; unit unknown,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeAmbientTempCustomerBins,542,542,100.0,bin array,list,[6],chargeAmbientTempCustomerBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"ambient temp [celsius]: 15, 20, 25, 30, 40",count,,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeAmbientTempPreCustomerBins,542,542,100.0,bin array,list,[6],chargeAmbientTempPreCustomerBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"ambient temp [celsius]: 20, 25, 30, 40, 50",count,,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeBandBins,542,542,100.0,bin array,list,[9],chargeBandBins,BMS_Bins.json,verified,location matches jsonLoc,"[3, 3]",9,"voltage [volt]: 3.3, 4.15; temperature [celsius]: 15, 45",second,,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeDurationBins,542,542,100.0,bin array,list,[16],chargeDurationBins,BMS_Bins.json,verified,location matches jsonLoc,[16],16,"duration [minute]: 5, 10, 15, 30, 45, 60, 75, 90, 105, 120, 150, 180, 210, 240, 270",count,,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeMaintainCount,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of maintenance-phase charges,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeMaintainTempBins,542,542,100.0,bin array,list,[6],chargeMaintainTempBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"charge maintain temp [celsius]: 20, 25, 30, 35, 40",second,,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeStopEvents,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.chargeLog.chargeStopEvents.chargerRemoved,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of charger removals,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeStopEvents.chargingForLong,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, charging too long",constant
+battery_rr_standard,usage.chargeLog.chargeStopEvents.otherFault,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, other fault",100% (0/368)
+battery_rr_standard,usage.chargeLog.chargeStopEvents.overCurrent,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, over current",constant
+battery_rr_standard,usage.chargeLog.chargeStopEvents.overTemp,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of stops, over temperature",constant
+battery_rr_standard,usage.chargeLog.chargeStopEvents.underTemp,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of charge stops, under temperature",100% (0/368)
+battery_rr_standard,usage.chargeLog.chargerInsertions,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.chargeLog.chargerInsertions.allTime,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] all-time count,100% (0/368)
+battery_rr_standard,usage.chargeLog.chargerInsertions.whenFrozen,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count when stats were frozen,100% (0/368)
+battery_rr_standard,usage.chargeLog.everFullyCharged,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] flag, ever fully charged",100% (0/368)
+battery_rr_standard,usage.chargeLog.imbalanceAtEnd,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.chargeLog.imbalanceAtEnd.Initial,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] initial value of imbalance at end of charge,100% (0/368)
+battery_rr_standard,usage.chargeLog.imbalanceAtEnd.Latest,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] latest value of imbalance at end of charge,13.5% (174/368)
+battery_rr_standard,usage.chargeLog.minCellVoltAtChargeStartBins,542,542,100.0,bin array,list,[16],minCellVoltAtChargeStartBins,BMS_Bins.json,verified,location matches jsonLoc,[16],16,"min cell voltage [volt]: 2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4.0",count,,100% (0/368)
+battery_rr_standard,usage.dischargeLog,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.dischargeLog.dischargeBandBins,542,542,100.0,bin array,list,[9],dischargeBandBins,BMS_Bins.json,verified,location matches jsonLoc,"[3, 3]",9,"voltage [volt]: 3.3, 4.0; temperature [celsius]: 15, 45",second,,100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeBtwChargesBins,542,542,100.0,bin array,list,[15],dischargeBtwChargesBins,BMS_Bins.json,verified,location matches jsonLoc,[15],15,"off time [minute]: 1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 35, 40, 50, 60",count,,100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeDurationBins,542,542,100.0,bin array,list,[23],dischargeDurationBins,BMS_Bins.json,verified,location matches jsonLoc,[23],23,"duration [second]: 5, 10, 15, 20, 25, 30, 45, 60, 75, 90, 105, 120, 180, 240, 300, 360, 600, 900, 1200, 1800, 2400, 3000",second,,100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeInhibitEvents,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.dischargeLog.dischargeInhibitEvents.other,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of start inhibits, other reason",100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeInhibitEvents.packFlat,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of start inhibits, pack flat",100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeOffTimeBins,542,542,100.0,bin array,list,[6],dischargeOffTimeBins,BMS_Bins.json,verified,location matches jsonLoc,[6],6,"off time [second]: 5, 20, 60, 300, 1800",count,,100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeSecsSinceLastCharge,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] seconds of discharge since last charge,32.4% (67/368)
+battery_rr_standard,usage.dischargeLog.dischargeStartTempBins,542,542,100.0,bin array,list,[10],dischargeStartTempBins,BMS_Bins.json,verified,location matches jsonLoc,[10],10,"start temperature [celsius]: 5, 10, 15, 20, 25, 30, 35, 45, 60",count,,100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeStopEvents,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.dischargeLog.dischargeStopEvents.lowVolt,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of discharge stops, low voltage",100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeStopEvents.noLoad,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of discharge stops, no load",100% (0/368)
+battery_rr_standard,usage.dischargeLog.dischargeStopEvents.overTemp,542,542,100.0,scalar,int,[],,,,,,,,,"[inferred from key name] count of stops, over temperature",constant
+battery_rr_standard,usage.dischargeLog.oneSecDischarge,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count of one-second discharges,100% (0/368)
+battery_rr_standard,usage.dischargeLog.powerBins,542,542,100.0,bin array,list,[3],powerBins,BMS_Bins.json,verified,location matches jsonLoc,[3],3,"power [watt]: 95, 250",second,,100% (0/368)
+battery_rr_standard,usage.dischargeLog.sigDischarges,542,542,100.0,object,dict,[],,,,,,,,,,n/a
+battery_rr_standard,usage.dischargeLog.sigDischarges.allTime,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] all-time count,100% (0/368)
+battery_rr_standard,usage.dischargeLog.sigDischarges.whenFrozen,542,542,100.0,scalar,int,[],,,,,,,,,[inferred from key name] count when stats were frozen,100% (0/368)

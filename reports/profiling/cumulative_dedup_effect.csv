@@ -1,0 +1,16 @@
+group,variant,rows_used,serials,non_constant_paths,median_pct_serials_monotonic,paths_100pct_monotonic,total_decreasing_pairs,total_pairs
+battery_normal_4cell,all_rows,1077,18,66,41.2,4,5092,69894
+battery_normal_4cell,dedup_serial_hdr_payload,418,18,70,41.2,8,5092,28000
+battery_normal_4cell,dedup_serial_payload,418,18,70,41.2,8,5092,28000
+battery_normal_7cell,all_rows,173,10,66,87.5,10,1197,10758
+battery_normal_7cell,dedup_serial_hdr_payload,133,10,66,87.5,10,1197,8118
+battery_normal_7cell,dedup_serial_payload,133,10,66,87.5,10,1197,8118
+battery_rr_standard,all_rows,542,42,67,100.0,36,3698,33500
+battery_rr_standard,dedup_serial_hdr_payload,410,42,68,100.0,37,3698,25024
+battery_rr_standard,dedup_serial_payload,407,42,68,100.0,37,3698,24820
+motor_normal,all_rows,470,76,20,88.85,9,1329,7880
+motor_normal,dedup_serial_hdr_payload,470,76,20,88.85,9,1329,7880
+motor_normal,dedup_serial_payload,470,76,20,88.85,9,1329,7880
+motor_rr,all_rows,564,44,20,92.1,9,1477,10400
+motor_rr,dedup_serial_hdr_payload,492,44,20,91.9,9,1477,8960
+motor_rr,dedup_serial_payload,488,44,20,91.65,9,1477,8880
