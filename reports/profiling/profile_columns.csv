@@ -1,0 +1,156 @@
+cohort,domain,file,column,dtype_as_read,non_null,nulls,null_pct,distinct,ts_kind,ts_min,ts_max,ts_parse_failures,num_min,num_max,num_mean,num_median,num_negatives,levels
+normal,battery,Battery_Normal Machines.csv,anonymized_serial,object,2766,0,0.0,28,,,,,,,,,,
+normal,battery,Battery_Normal Machines.csv,server_timestamp,object,2766,0,0.0,1859,text_utc,2025-05-27 00:24:36.133000,2026-06-21 22:53:53.763000,0.0,,,,,,
+normal,battery,Battery_Normal Machines.csv,hdr_timestamp,object,2766,0,0.0,1111,text_utc,2025-05-27 00:24:32,2055-09-07 16:15:43,0.0,,,,,,
+normal,battery,Battery_Normal Machines.csv,session_id,int64,2766,0,0.0,682,,,,,1.0,14657.0,1582.9215,1217.0,0.0,
+normal,battery,Battery_Normal Machines.csv,log_type,object,1250,1516,54.81,1,,,,,,,,,,"{""nan"": 1516, ""BMS"": 1250}"
+normal,battery,Battery_Normal Machines.csv,log_id,float64,1250,1516,54.81,137,,,,,1.0,160.0,36.7328,24.0,0.0,
+normal,battery,Battery_Normal Machines.csv,decoded_data,object,1250,1516,54.81,551,,,,,,,,,,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,anonymized_serial,object,40627,0,0.0,173,,,,,,,,,,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,date,object,40627,0,0.0,30826,text_utc,2025-10-18 00:10:42.158171,2026-06-30 00:04:56.841096,0.0,,,,,,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,region,object,40627,0,0.0,3,,,,,,,,,,"{""ROW-PROD"": 37404, ""CN-PROD"": 3217, ""ROW-PPE"": 6}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,session_id,int64,40627,0,0.0,11221,,,,,1.0,17536.0,6215.1637,5819.0,0.0,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,clean_duration,float64,38511,2116,5.21,1585,,,,,0.0,16776.0,261.7303,128.0,0.0,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,battery_charge_start,float64,38959,1668,4.11,23,,,,,0.0,255.0,90.8517,100.0,0.0,"{""100.0"": 26435, ""95.0"": 1860, ""90.0"": 1706, ""75.0"": 1691, ""nan"": 1668, ""80.0"": 1500, ""85.0"": 1324, ""70.0"": 796, ""65.0"": 606, ""60.0"": 434, ""35.0"": 349, ""45.0"": 341, ""40.0"": 317, ""30.0"": 303, ""50.0"": 244, ""25.0"": 213, ""20.0"": 196, ""15.0"": 173, ""55.0"": 168, ""5.0"": 141, ""10.0"": 139, ""1.0"": 20, ""255.0"": 2, ""0.0"": 1}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,battery_charge_end,float64,38959,1668,4.11,23,,,,,0.0,255.0,78.6615,90.0,0.0,"{""100.0"": 11431, ""95.0"": 5167, ""90.0"": 3470, ""85.0"": 3072, ""70.0"": 2642, ""80.0"": 2077, ""75.0"": 2065, ""nan"": 1668, ""65.0"": 1470, ""60.0"": 1064, ""45.0"": 862, ""40.0"": 762, ""35.0"": 692, ""30.0"": 665, ""25.0"": 533, ""50.0"": 498, ""0.0"": 478, ""55.0"": 394, ""20.0"": 379, ""15.0"": 363, ""10.0"": 358, ""5.0"": 278, ""1.0"": 238, ""255.0"": 1}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,battery_health,float64,38880,1747,4.3,21,,,,,80.0,100.0,96.3382,98.0,0.0,"{""99.0"": 9191, ""98.0"": 6571, ""100.0"": 4617, ""97.0"": 3686, ""96.0"": 3153, ""93.0"": 2274, ""94.0"": 2122, ""95.0"": 2044, ""nan"": 1747, ""91.0"": 1102, ""92.0"": 887, ""88.0"": 753, ""90.0"": 684, ""89.0"": 654, ""87.0"": 350, ""86.0"": 249, ""83.0"": 115, ""85.0"": 108, ""84.0"": 106, ""80.0"": 102, ""82.0"": 61, ""81.0"": 51}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,battery_temperature_hot,bool,40627,0,0.0,2,,,,,,,,,,"{""False"": 40618, ""True"": 9}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,battery_temperature_cold,bool,40627,0,0.0,1,,,,,,,,,,"{""False"": 40627}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,battery_temperature_ok,bool,40627,0,0.0,2,,,,,,,,,,"{""True"": 23988, ""False"": 16639}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,battery_soc_state,object,38865,1762,4.34,4,,,,,,,,,,"{""ok"": 37980, ""nan"": 1762, ""empty"": 485, ""low"": 277, ""critical"": 123}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,model,object,40627,0,0.0,8,,,,,,,,,,"{""SV50-AF"": 14613, ""SV53-AF"": 10521, ""SV53-AE"": 4688, ""SV50-AC"": 4245, ""SV53-AB"": 3124, ""SV50-AA"": 1639, ""SV53-AC"": 1441, ""SV53-AA"": 356}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,running_firmware_version,object,97,40530,99.76,5,,,,,,,,,,"{""nan"": 40530, ""07000B02"": 45, ""0B000C02"": 32, ""15000D01"": 12, ""0B000902"": 6, ""06000A02"": 2}"
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,ultra_fine_dust_particle_mass,float64,18888,21739,53.51,256,,,,,0.0,65535.0,17642.7909,6000.0,0.0,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,fine_dust_particle_mass,float64,18888,21739,53.51,256,,,,,0.0,65535.0,10776.4287,2400.0,0.0,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,coarse_dust_particle_mass,float64,18888,21739,53.51,255,,,,,0.0,65535.0,5640.2883,1400.0,0.0,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,large_dust_particle_mass,float64,18888,21739,53.51,256,,,,,0.0,65535.0,9039.9823,4400.0,0.0,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,log3_time_sync_old,float64,29347,11280,27.76,4707,epoch_seconds,1970-01-01 00:00:00,2026-06-29 13:05:51,0.0,0.0,1782738351.0,641281246.9988,0.0,0.0,
+normal,clean_sessions,Clean Sessions_Normal Machines.csv,log3_time_sync_new,float64,29347,11280,27.76,19806,epoch_seconds,2025-06-29 23:04:18,2026-06-29 22:55:43,0.0,1751238258.0,1782773743.0,1769342973.9902,1768315001.0,0.0,
+normal,faults,Faults_Normal Machines.csv,anonymized_serial,object,11449,0,0.0,143,,,,,,,,,,
+normal,faults,Faults_Normal Machines.csv,date,object,11449,0,0.0,2222,text_utc,2025-10-18 00:22:15.832878,2026-06-29 18:49:57.329200,0.0,,,,,,
+normal,faults,Faults_Normal Machines.csv,region,object,11449,0,0.0,2,,,,,,,,,,"{""ROW-PROD"": 10440, ""CN-PROD"": 1009}"
+normal,faults,Faults_Normal Machines.csv,session_id,int64,11449,0,0.0,2022,,,,,538.0,15120.0,8084.9132,8106.0,0.0,
+normal,faults,Faults_Normal Machines.csv,fault_type,int64,11449,0,0.0,3,,,,,11.0,13.0,12.4115,12.0,0.0,"{""12"": 6736, ""13"": 4712, ""11"": 1}"
+normal,faults,Faults_Normal Machines.csv,fault_value,int64,11449,0,0.0,2,,,,,1.0,2.0,1.2413,1.0,0.0,"{""1"": 8686, ""2"": 2763}"
+normal,faults,Faults_Normal Machines.csv,fault_timestamp,object,11442,7,0.06,3667,text_utc,2025-09-14 04:54:27.860000,2026-06-29 17:47:33.078000,0.0,,,,,,
+normal,faults,Faults_Normal Machines.csv,model,object,11449,0,0.0,8,,,,,,,,,,"{""SV50-AF"": 4264, ""SV53-AF"": 2071, ""SV50-AC"": 1631, ""SV53-AB"": 1503, ""SV50-AA"": 1040, ""SV53-AE"": 440, ""SV53-AC"": 400, ""SV53-AA"": 100}"
+normal,faults,Faults_Normal Machines.csv,product_alarm_source,object,8216,3233,28.24,8,,,,,,,,,,"{""DDM"": 4707, ""nan"": 3233, ""fum_update_mgr"": 1951, ""brush_bar_controller"": 1023, ""UI"": 403, ""BMS"": 76, ""cleaner_head"": 41, ""SC"": 11, ""svc_ble"": 4}"
+normal,faults,Faults_Normal Machines.csv,hex_error_code,object,8216,3233,28.24,21,,,,,,,,,,"{""nan"": 3233, ""03010102"": 2674, ""01CC000B"": 1935, ""03010101"": 1376, ""05010100"": 1023, ""03010100"": 657, ""01140010"": 146, ""01140006"": 90, ""01140003"": 88, ""0114000A"": 79, ""02010104"": 55, ""07010101"": 31, ""08010105"": 11, ""02010102"": 9, ""01CC0004"": 8, ""01CC0002"": 8, ""07010102"": 8, ""0201011B"": 6, ""0201011F"": 5, ""01C80000"": 4, ""07010104"": 2, ""02010107"": 1}"
+normal,faults,Faults_Normal Machines.csv,product_alarm_fault_severity,object,8216,3233,28.24,4,,,,,,,,,,"{""Critical"": 5925, ""nan"": 3233, ""Minor"": 2264, ""Major"": 16, ""Fatal"": 11}"
+normal,faults,Faults_Normal Machines.csv,fault_status,float64,8216,3233,28.24,2,,,,,0.0,1.0,0.6613,1.0,0.0,"{""1.0"": 5433, ""nan"": 3233, ""0.0"": 2783}"
+normal,faults,Faults_Normal Machines.csv,log2_time_sync_old,float64,5609,5840,51.01,157,epoch_seconds,1970-01-01 00:00:00,2026-06-28 12:28:33,0.0,0.0,1782649713.0,405775447.5044,0.0,0.0,
+normal,faults,Faults_Normal Machines.csv,log2_time_sync_new,float64,5609,5840,51.01,1071,epoch_seconds,2025-10-18 00:21:53,2026-06-29 07:58:45,0.0,1760746913.0,1782719925.0,1773581417.939,1774915577.0,0.0,
+normal,motor,Motor_Normal Machines.csv,anonymized_serial,object,470,0,0.0,76,,,,,,,,,,
+normal,motor,Motor_Normal Machines.csv,server_timestamp,object,470,0,0.0,470,text_utc,2025-09-09 12:00:54.848000,2026-06-21 22:27:41.150000,0.0,,,,,,
+normal,motor,Motor_Normal Machines.csv,hdr_timestamp,object,470,0,0.0,470,text_utc,2025-07-11 13:52:31,2026-06-21 12:25:16,0.0,,,,,,
+normal,motor,Motor_Normal Machines.csv,prefix,object,470,0,0.0,16,,,,,,,,,,"{""7RE"": 119, ""6SX"": 50, ""7RK"": 44, ""7RD"": 43, ""7RF"": 36, ""6SW"": 28, ""5SV"": 24, ""5SN"": 24, ""5ST"": 24, ""5SU"": 18, ""7ST"": 14, ""7RJ"": 12, ""7WG"": 10, ""8SC"": 9, ""5SM"": 8, ""5SS"": 7}"
+normal,motor,Motor_Normal Machines.csv,model,object,470,0,0.0,5,,,,,,,,,,"{""SV53-AF"": 241, ""SV53-AB"": 127, ""SV53-AE"": 44, ""SV53-AC"": 36, ""SV53-AA"": 22}"
+normal,motor,Motor_Normal Machines.csv,country,object,470,0,0.0,8,,,,,,,,,,"{""EU"": 198, ""UK"": 78, ""KR"": 56, ""US"": 52, ""AU"": 32, ""CN"": 31, ""XC"": 14, ""XD"": 9}"
+normal,motor,Motor_Normal Machines.csv,session_id,int64,470,0,0.0,252,,,,,1.0,952.0,153.5957,144.0,0.0,
+normal,motor,Motor_Normal Machines.csv,battery_version,object,470,0,0.0,1,,,,,,,,,,"{""DDM_S_Usage"": 470}"
+normal,motor,Motor_Normal Machines.csv,log_id,int64,470,0,0.0,107,,,,,3.0,138.0,50.4,48.0,0.0,
+normal,motor,Motor_Normal Machines.csv,decoded_data,object,470,0,0.0,470,,,,,,,,,,
+normal,motor,Motor_Normal Machines.csv,power_lt_50_seconds,int64,470,0,0.0,42,,,,,0.0,2533.0,115.5213,2.0,0.0,
+normal,motor,Motor_Normal Machines.csv,power_50_75_seconds,int64,470,0,0.0,278,,,,,0.0,101724.0,4200.5362,211.5,0.0,
+normal,motor,Motor_Normal Machines.csv,power_75_100_seconds,int64,470,0,0.0,422,,,,,2.0,80336.0,9340.9426,3958.0,0.0,
+normal,motor,Motor_Normal Machines.csv,power_100_125_seconds,int64,470,0,0.0,409,,,,,2.0,83944.0,8747.0957,3158.5,0.0,
+normal,motor,Motor_Normal Machines.csv,power_125_150_seconds,int64,470,0,0.0,362,,,,,0.0,25560.0,1260.7404,516.0,0.0,
+normal,motor,Motor_Normal Machines.csv,power_150_200_seconds,int64,470,0,0.0,408,,,,,0.0,40711.0,3481.7468,1922.0,0.0,
+normal,motor,Motor_Normal Machines.csv,power_200_300_seconds,int64,470,0,0.0,361,,,,,0.0,13883.0,1588.1553,689.5,0.0,
+normal,motor,Motor_Normal Machines.csv,power_300_400_seconds,int64,470,0,0.0,294,,,,,0.0,42117.0,2862.9426,541.0,0.0,
+normal,motor,Motor_Normal Machines.csv,power_400_500_seconds,int64,470,0,0.0,219,,,,,0.0,8875.0,589.5085,161.0,0.0,
+normal,motor,Motor_Normal Machines.csv,power_500_600_seconds,int64,470,0,0.0,1,,,,,0.0,0.0,0.0,0.0,0.0,"{""0"": 470}"
+normal,motor,Motor_Normal Machines.csv,power_600_700_seconds,int64,470,0,0.0,15,,,,,0.0,80.0,5.9489,0.0,0.0,"{""0"": 319, ""14"": 28, ""15"": 23, ""11"": 19, ""29"": 12, ""18"": 12, ""17"": 12, ""13"": 11, ""28"": 10, ""27"": 7, ""16"": 6, ""3"": 4, ""45"": 4, ""80"": 2, ""22"": 1}"
+normal,motor,Motor_Normal Machines.csv,power_700_800_seconds,int64,470,0,0.0,1,,,,,0.0,0.0,0.0,0.0,0.0,"{""0"": 470}"
+normal,motor,Motor_Normal Machines.csv,power_800_900_seconds,int64,470,0,0.0,19,,,,,0.0,181.0,2.9,0.0,0.0,"{""0"": 301, ""2"": 43, ""1"": 35, ""6"": 14, ""3"": 12, ""4"": 10, ""5"": 10, ""16"": 8, ""7"": 8, ""18"": 8, ""19"": 5, ""8"": 5, ""181"": 2, ""9"": 2, ""35"": 2, ""17"": 2, ""12"": 1, ""33"": 1, ""40"": 1}"
+normal,motor,Motor_Normal Machines.csv,power_gt_900_seconds,int64,470,0,0.0,17,,,,,0.0,141.0,2.0362,0.0,0.0,"{""0"": 332, ""2"": 39, ""1"": 29, ""3"": 15, ""6"": 13, ""10"": 12, ""11"": 6, ""7"": 5, ""12"": 4, ""4"": 3, ""141"": 2, ""17"": 2, ""22"": 2, ""8"": 2, ""23"": 2, ""19"": 1, ""5"": 1}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_lt_45_seconds,int64,470,0,0.0,4,,,,,0.0,3.0,0.1277,0.0,0.0,"{""0"": 444, ""2"": 12, ""3"": 11, ""1"": 3}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_45_55_seconds,int64,470,0,0.0,298,,,,,0.0,106843.0,4263.5511,237.0,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_55_65_seconds,int64,470,0,0.0,427,,,,,7.0,164232.0,17926.3234,7367.0,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_65_75_seconds,int64,470,0,0.0,403,,,,,0.0,53917.0,3591.7255,1733.5,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_75_85_seconds,int64,470,0,0.0,375,,,,,0.0,20220.0,2683.9277,982.5,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_85_95_seconds,int64,470,0,0.0,303,,,,,0.0,42141.0,2161.4191,563.0,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_95_105_seconds,int64,470,0,0.0,241,,,,,0.0,13184.0,1231.6851,251.0,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_105_110_seconds,int64,470,0,0.0,129,,,,,0.0,2227.0,158.6596,2.0,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_110_115_seconds,int64,470,0,0.0,46,,,,,0.0,1107.0,19.634,0.0,0.0,
+normal,motor,Motor_Normal Machines.csv,speed_bin_115_120_seconds,int64,470,0,0.0,17,,,,,0.0,29.0,5.1021,0.0,0.0,"{""0"": 318, ""15"": 24, ""14"": 22, ""11"": 19, ""29"": 12, ""18"": 12, ""13"": 11, ""3"": 10, ""17"": 8, ""27"": 7, ""19"": 6, ""16"": 6, ""28"": 6, ""1"": 5, ""24"": 2, ""6"": 1, ""22"": 1}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_120_122_5_seconds,int64,470,0,0.0,5,,,,,0.0,22.0,0.5617,0.0,0.0,"{""0"": 453, ""22"": 10, ""5"": 4, ""9"": 2, ""6"": 1}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_122_5_125_seconds,int64,470,0,0.0,4,,,,,0.0,26.0,0.1787,0.0,0.0,"{""0"": 460, ""1"": 4, ""7"": 4, ""26"": 2}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_125_127_5_seconds,int64,470,0,0.0,4,,,,,0.0,13.0,0.1319,0.0,0.0,"{""0"": 460, ""8"": 4, ""1"": 4, ""13"": 2}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_127_5_130_seconds,int64,470,0,0.0,6,,,,,0.0,8.0,0.4255,0.0,0.0,"{""0"": 372, ""1"": 43, ""2"": 29, ""3"": 13, ""4"": 11, ""8"": 2}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_130_132_5_seconds,int64,470,0,0.0,12,,,,,0.0,26.0,0.9936,0.0,0.0,"{""0"": 344, ""2"": 43, ""1"": 41, ""4"": 9, ""6"": 8, ""3"": 8, ""12"": 6, ""5"": 5, ""26"": 2, ""20"": 2, ""21"": 1, ""22"": 1}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_132_5_135_seconds,int64,470,0,0.0,11,,,,,0.0,23.0,0.6021,0.0,0.0,"{""0"": 395, ""2"": 26, ""1"": 22, ""4"": 8, ""6"": 5, ""11"": 5, ""8"": 3, ""23"": 2, ""7"": 2, ""5"": 1, ""3"": 1}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_135_137_5_seconds,int64,470,0,0.0,10,,,,,0.0,101.0,0.8404,0.0,0.0,"{""0"": 394, ""1"": 32, ""3"": 20, ""2"": 9, ""4"": 5, ""7"": 3, ""8"": 3, ""101"": 2, ""5"": 1, ""13"": 1}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_137_5_140_seconds,int64,470,0,0.0,7,,,,,0.0,88.0,0.6532,0.0,0.0,"{""0"": 408, ""1"": 38, ""2"": 10, ""6"": 7, ""7"": 3, ""88"": 2, ""5"": 2}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_140_142_5_seconds,int64,470,0,0.0,11,,,,,0.0,68.0,0.7489,0.0,0.0,"{""0"": 389, ""1"": 45, ""2"": 13, ""3"": 5, ""13"": 4, ""7"": 3, ""4"": 3, ""9"": 3, ""68"": 2, ""5"": 2, ""8"": 1}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_142_5_145_seconds,int64,470,0,0.0,8,,,,,0.0,16.0,0.4043,0.0,0.0,"{""0"": 408, ""1"": 38, ""4"": 10, ""11"": 4, ""5"": 4, ""6"": 2, ""2"": 2, ""16"": 2}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_145_147_5_seconds,int64,470,0,0.0,4,,,,,0.0,11.0,0.1191,0.0,0.0,"{""0"": 440, ""1"": 22, ""2"": 6, ""11"": 2}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_147_5_150_seconds,int64,470,0,0.0,2,,,,,0.0,1.0,0.0106,0.0,0.0,"{""0"": 465, ""1"": 5}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_150_155_seconds,int64,470,0,0.0,1,,,,,0.0,0.0,0.0,0.0,0.0,"{""0"": 470}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_155_160_seconds,int64,470,0,0.0,1,,,,,0.0,0.0,0.0,0.0,0.0,"{""0"": 470}"
+normal,motor,Motor_Normal Machines.csv,speed_bin_gt_160_seconds,int64,470,0,0.0,1,,,,,0.0,0.0,0.0,0.0,0.0,"{""0"": 470}"
+normal,motor,Motor_Normal Machines.csv,exhaust_temperature_bin_lt_10_seconds,int64,470,0,0.0,417,,,,,22.0,65535.0,13368.2106,6406.5,0.0,
+normal,motor,Motor_Normal Machines.csv,exhaust_temperature_bin_10_20_seconds,int64,470,0,0.0,454,,,,,32.0,65535.0,13007.6787,7168.0,0.0,
+normal,motor,Motor_Normal Machines.csv,exhaust_temperature_bin_20_30_seconds,int64,470,0,0.0,370,,,,,0.0,7261.0,885.8894,541.0,0.0,
+normal,motor,Motor_Normal Machines.csv,exhaust_temperature_bin_30_40_seconds,int64,470,0,0.0,360,,,,,0.0,8247.0,760.8277,454.5,0.0,
+normal,motor,Motor_Normal Machines.csv,exhaust_temperature_bin_40_50_seconds,int64,470,0,0.0,317,,,,,0.0,3837.0,372.4574,214.0,0.0,
+normal,motor,Motor_Normal Machines.csv,exhaust_temperature_bin_50_60_seconds,int64,470,0,0.0,263,,,,,0.0,2511.0,229.2511,103.5,0.0,
+normal,motor,Motor_Normal Machines.csv,exhaust_temperature_bin_60_70_seconds,int64,470,0,0.0,1,,,,,0.0,0.0,0.0,0.0,0.0,"{""0"": 470}"
+normal,motor,Motor_Normal Machines.csv,ambient_pressure_pa,int64,470,0,0.0,430,,,,,87641.0,103331.0,100067.2319,100745.5,0.0,
+normal,motor,Motor_Normal Machines.csv,ambient_temperature_mC,int64,470,0,0.0,233,,,,,10880.0,29250.0,22078.6596,22065.0,0.0,
+normal,motor,Motor_Normal Machines.csv,write_count,int64,470,0,0.0,355,,,,,5.0,3579.0,474.7681,352.0,0.0,
+normal,motor,Motor_Normal Machines.csv,ambient_temperature_C,float64,470,0,0.0,233,,,,,10.88,29.25,22.0787,22.064999999999998,0.0,
+normal,motor,Motor_Normal Machines.csv,ambient_pressure_kpa,float64,470,0,0.0,430,,,,,87.641,103.331,100.0672,100.74549999999999,0.0,
+normal,motor,Motor_Normal Machines.csv,cumulative_usage_duration_seconds,int64,470,0,0.0,438,,,,,16.0,251140.0,32198.0745,17954.5,0.0,
+return_repair,battery,Battery_Return:Repair Machines.csv,anonymized_serial,object,32614,0,0.0,45,,,,,,,,,,
+return_repair,battery,Battery_Return:Repair Machines.csv,server_timestamp,object,32614,0,0.0,20174,text_utc,2025-05-21 06:07:53.729000,2026-06-21 18:36:24.675000,0.0,,,,,,
+return_repair,battery,Battery_Return:Repair Machines.csv,hdr_timestamp,object,32614,0,0.0,23000,text_utc,2025-05-21 06:07:48,2026-06-21 16:13:59,0.0,,,,,,
+return_repair,battery,Battery_Return:Repair Machines.csv,session_id,int64,32614,0,0.0,225,,,,,1.0,2665.0,11.4755,9.0,0.0,
+return_repair,battery,Battery_Return:Repair Machines.csv,log_type,object,581,32033,98.22,2,,,,,,,,,,"{""nan"": 32033, ""BMS"": 529, ""0"": 52}"
+return_repair,battery,Battery_Return:Repair Machines.csv,log_id,float64,581,32033,98.22,96,,,,,1.0,129.0,26.6919,16.0,0.0,
+return_repair,battery,Battery_Return:Repair Machines.csv,decoded_data,object,581,32033,98.22,411,,,,,,,,,,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,anonymized_serial,object,6565,0,0.0,43,,,,,,,,,,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,date,object,6565,0,0.0,4634,text_utc,2025-10-18 06:40:15.071827,2026-06-29 14:50:47.920702,0.0,,,,,,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,region,object,6565,0,0.0,2,,,,,,,,,,"{""ROW-PROD"": 6525, ""CN-PROD"": 40}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,session_id,int64,6565,0,0.0,3101,,,,,1.0,12787.0,2607.0305,1837.0,0.0,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,clean_duration,float64,6125,440,6.7,1020,,,,,0.0,16776.0,418.2625,206.0,0.0,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,battery_charge_start,float64,6237,328,5.0,22,,,,,0.0,100.0,80.7996,90.0,0.0,"{""100.0"": 2697, ""75.0"": 555, ""85.0"": 381, ""90.0"": 371, ""nan"": 328, ""70.0"": 298, ""95.0"": 294, ""65.0"": 275, ""80.0"": 238, ""60.0"": 189, ""40.0"": 148, ""35.0"": 139, ""45.0"": 116, ""25.0"": 89, ""30.0"": 82, ""50.0"": 76, ""15.0"": 75, ""10.0"": 59, ""5.0"": 59, ""55.0"": 45, ""20.0"": 41, ""1.0"": 7, ""0.0"": 3}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,battery_charge_end,float64,6237,328,5.0,22,,,,,0.0,100.0,67.0231,75.0,0.0,"{""100.0"": 712, ""95.0"": 710, ""70.0"": 581, ""65.0"": 459, ""80.0"": 456, ""85.0"": 441, ""90.0"": 437, ""75.0"": 379, ""nan"": 328, ""60.0"": 299, ""35.0"": 238, ""40.0"": 206, ""30.0"": 182, ""45.0"": 158, ""25.0"": 151, ""5.0"": 147, ""0.0"": 141, ""50.0"": 138, ""15.0"": 104, ""20.0"": 86, ""10.0"": 82, ""55.0"": 82, ""1.0"": 48}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,battery_health,float64,6205,360,5.48,6,,,,,95.0,100.0,98.4303,99.0,0.0,"{""99.0"": 2071, ""100.0"": 1379, ""98.0"": 1344, ""97.0"": 786, ""96.0"": 502, ""nan"": 360, ""95.0"": 123}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,battery_temperature_hot,bool,6565,0,0.0,1,,,,,,,,,,"{""False"": 6565}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,battery_temperature_cold,bool,6565,0,0.0,1,,,,,,,,,,"{""False"": 6565}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,battery_temperature_ok,bool,6565,0,0.0,2,,,,,,,,,,"{""True"": 6244, ""False"": 321}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,battery_soc_state,object,6229,336,5.12,4,,,,,,,,,,"{""ok"": 5810, ""nan"": 336, ""low"": 185, ""empty"": 143, ""critical"": 91}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,model,object,6565,0,0.0,5,,,,,,,,,,"{""SV53-AB"": 4630, ""SV53-AF"": 1314, ""SV53-AC"": 396, ""SV53-AE"": 216, ""SV53-AA"": 9}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,running_firmware_version,object,121,6444,98.16,4,,,,,,,,,,"{""nan"": 6444, ""06000A02"": 59, ""0B000C02"": 35, ""07000B02"": 22, ""0B000902"": 5}"
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,ultra_fine_dust_particle_mass,float64,6434,131,2.0,250,,,,,0.0,65535.0,25151.1058,8450.0,0.0,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,fine_dust_particle_mass,float64,6434,131,2.0,250,,,,,0.0,65535.0,15073.1466,3800.0,0.0,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,coarse_dust_particle_mass,float64,6434,131,2.0,217,,,,,0.0,65535.0,5346.548,1700.0,0.0,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,large_dust_particle_mass,float64,6434,131,2.0,248,,,,,0.0,65535.0,9389.958,5900.0,0.0,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,log3_time_sync_old,float64,2366,4199,63.96,793,epoch_seconds,1970-01-01 00:00:04,2026-06-13 14:05:46,0.0,4.0,1781359546.0,1687578314.9155,1769611024.0,0.0,
+return_repair,clean_sessions,Clean Sessions_Return:Repair Machines.csv,log3_time_sync_new,float64,2366,4199,63.96,796,epoch_seconds,2025-10-08 05:58:31,2026-06-13 14:05:37,0.0,1759903111.0,1781359537.0,1769966545.5672,1769611588.0,0.0,
+return_repair,faults,Faults_Return:Repair Machines.csv,anonymized_serial,object,19957,0,0.0,33,,,,,,,,,,
+return_repair,faults,Faults_Return:Repair Machines.csv,date,object,19957,0,0.0,344,text_utc,2025-10-25 08:13:47.070819,2026-06-29 11:01:36.000939,0.0,,,,,,
+return_repair,faults,Faults_Return:Repair Machines.csv,region,object,19957,0,0.0,2,,,,,,,,,,"{""ROW-PROD"": 19911, ""CN-PROD"": 46}"
+return_repair,faults,Faults_Return:Repair Machines.csv,session_id,int64,19957,0,0.0,327,,,,,57.0,12787.0,3857.1369,2513.0,0.0,
+return_repair,faults,Faults_Return:Repair Machines.csv,fault_type,int64,19957,0,0.0,2,,,,,12.0,13.0,12.1937,12.0,0.0,"{""12"": 16092, ""13"": 3865}"
+return_repair,faults,Faults_Return:Repair Machines.csv,fault_value,int64,19957,0,0.0,2,,,,,1.0,2.0,1.3752,1.0,0.0,"{""1"": 12470, ""2"": 7487}"
+return_repair,faults,Faults_Return:Repair Machines.csv,fault_timestamp,object,19956,1,0.01,856,text_utc,2025-10-25 08:04:29.990000,2026-06-29 10:15:19.796000,0.0,,,,,,
+return_repair,faults,Faults_Return:Repair Machines.csv,model,object,19957,0,0.0,4,,,,,,,,,,"{""SV53-AB"": 11701, ""SV53-AF"": 5869, ""SV53-AE"": 1387, ""SV53-AC"": 1000}"
+return_repair,faults,Faults_Return:Repair Machines.csv,product_alarm_source,object,19357,600,3.01,7,,,,,,,,,,"{""fum_update_mgr"": 9250, ""brush_bar_controller"": 4799, ""DDM"": 4518, ""UI"": 678, ""nan"": 600, ""cleaner_head"": 68, ""BMS"": 24, ""SC"": 20}"
+return_repair,faults,Faults_Return:Repair Machines.csv,hex_error_code,object,19387,570,2.86,19,,,,,,,,,,"{""01CC000B"": 9250, ""05010100"": 4791, ""03010102"": 2653, ""03010101"": 1865, ""01140010"": 573, ""nan"": 570, ""0114000A"": 105, ""07010101"": 59, ""08010105"": 20, ""05010109"": 8, ""02010104"": 8, ""0201011B"": 8, ""01C8000E"": 8, ""00CBC108"": 8, ""07010102"": 8, ""0201011F"": 8, ""00CBC104"": 7, ""01C80078"": 5, ""00CBC109"": 2, ""07010104"": 1}"
+return_repair,faults,Faults_Return:Repair Machines.csv,product_alarm_fault_severity,object,19357,600,3.01,4,,,,,,,,,,"{""Minor"": 9928, ""Critical"": 9393, ""nan"": 600, ""Fatal"": 20, ""Major"": 16}"
+return_repair,faults,Faults_Return:Repair Machines.csv,fault_status,float64,19387,570,2.86,2,,,,,0.0,1.0,0.7481,1.0,0.0,"{""1.0"": 14504, ""0.0"": 4883, ""nan"": 570}"
+return_repair,faults,Faults_Return:Repair Machines.csv,log2_time_sync_old,float64,651,19306,96.74,15,epoch_seconds,2025-10-25 08:05:07,2026-05-31 15:50:39,0.0,1761379507.0,1780242639.0,1768252536.318,1768375629.0,0.0,"{""nan"": 19306, ""1761379507.0"": 295, ""1774250814.0"": 204, ""1780242639.0"": 44, ""1768375629.0"": 24, ""1772877759.0"": 8, ""1772877676.0"": 8, ""1772880175.0"": 8, ""1772877795.0"": 8, ""1772878023.0"": 8, ""1772880180.0"": 8, ""1772844174.0"": 8, ""1772877841.0"": 8, ""1772877892.0"": 8, ""1763301429.0"": 6, ""1763301436.0"": 6}"
+return_repair,faults,Faults_Return:Repair Machines.csv,log2_time_sync_new,float64,651,19306,96.74,15,epoch_seconds,2025-10-25 08:04:53,2026-05-31 15:51:39,0.0,1761379493.0,1780242699.0,1768252532.2657,1768375624.0,0.0,"{""nan"": 19306, ""1761379493.0"": 295, ""1774250808.0"": 204, ""1780242699.0"": 44, ""1768375624.0"": 24, ""1772877749.0"": 8, ""1772877660.0"": 8, ""1772880183.0"": 8, ""1772877790.0"": 8, ""1772878078.0"": 8, ""1772880172.0"": 8, ""1772844183.0"": 8, ""1772877836.0"": 8, ""1772877887.0"": 8, ""1763301424.0"": 6, ""1763301443.0"": 6}"
+return_repair,motor,Motor_Return:Repair Machines.csv,anonymized_serial,object,564,0,0.0,44,,,,,,,,,,
+return_repair,motor,Motor_Return:Repair Machines.csv,server_timestamp,object,564,0,0.0,547,text_utc,2025-08-26 08:29:37.224000,2026-06-28 13:44:05.461000,0.0,,,,,,
+return_repair,motor,Motor_Return:Repair Machines.csv,hdr_timestamp,object,564,0,0.0,492,text_utc,2025-07-29 09:42:18,2026-06-25 12:24:51,0.0,,,,,,
+return_repair,motor,Motor_Return:Repair Machines.csv,region,object,564,0,0.0,2,,,,,,,,,,"{""ROW-PROD"": 545, ""CN-PROD"": 19}"
+return_repair,motor,Motor_Return:Repair Machines.csv,model,object,564,0,0.0,7,,,,,,,,,,"{""SV53-AB"": 298, ""SV53-AF"": 126, ""SV53-AC"": 47, ""SV53-AE"": 40, ""683"": 39, ""692B"": 13, ""SV53-AA"": 1}"
+return_repair,motor,Motor_Return:Repair Machines.csv,session_id,int64,564,0,0.0,237,,,,,1.0,2665.0,136.5496,77.0,0.0,
+return_repair,motor,Motor_Return:Repair Machines.csv,battery_version,object,564,0,0.0,1,,,,,,,,,,"{""DDM_S_Usage"": 564}"
+return_repair,motor,Motor_Return:Repair Machines.csv,log_type,object,564,0,0.0,1,,,,,,,,,,"{""DDM_User"": 564}"
+return_repair,motor,Motor_Return:Repair Machines.csv,log_id,int64,564,0,0.0,102,,,,,3.0,134.0,32.5248,24.0,0.0,
+return_repair,motor,Motor_Return:Repair Machines.csv,log_size,int64,564,0,0.0,1,,,,,512.0,512.0,512.0,512.0,0.0,"{""512"": 564}"
+return_repair,motor,Motor_Return:Repair Machines.csv,decoded_data,object,564,0,0.0,488,,,,,,,,,,

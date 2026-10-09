@@ -1,0 +1,67 @@
+domain,cohort,bin_definition,declared_sizes,declared_cells,status,payload_path,observed_array_lengths
+motor,normal,powerOnModeBins,[3],3.0,no matching key in payload,,
+motor,normal,longestOperatingDurationBins,"[3, 3]",9.0,no matching key in payload,,
+motor,normal,ddm683_UsageDurationBins,"[3, 3, 6]",54.0,no matching key in payload,,
+motor,normal,ddm683_UsageBins,"[3, 3]",9.0,no matching key in payload,,
+motor,normal,ddm683_pwrOnFwiCountBins,"[2, 3]",6.0,no matching key in payload,,
+motor,normal,ddm683_usageFwiStateBins,"[2, 3]",6.0,no matching key in payload,,
+motor,normal,ddm683_SpeedBins,[24],24.0,no matching key in payload,,
+motor,normal,ddm683_AmbPressBins,[7],7.0,no matching key in payload,,
+motor,normal,ddm683_AmbTempBins,[7],7.0,no matching key in payload,,
+motor,normal,ddm683_ExhaustTempBins,[7],7.0,no matching key in payload,,
+motor,normal,ddm683_normDPressOnFwiOffBins,[25],25.0,no matching key in payload,,
+motor,normal,ddm692_SpeedBins,[25],25.0,length matches declared cells,ddmUsage.ddm692_SpeedBins,"{""25"": 470}"
+motor,normal,ddm692_PressBins,[9],9.0,no matching key in payload,,
+motor,normal,ddm692_BarTempBins,[10],10.0,no matching key in payload,,
+motor,normal,ddm692_FisfTempBins,[10],10.0,length matches declared cells,ddmUsage.ddm692_FisfTempBins,"{""10"": 470}"
+motor,normal,ddm692_PowerBins,[14],14.0,length matches declared cells,ddmUsage.ddm692_PowerBins,"{""14"": 470}"
+motor,normal,ddm692_NormSpeedBins,[14],14.0,length matches declared cells,ddmUsage.ddm692_NormSpeedBins,"{""14"": 470}"
+motor,normal,ddm692_ExhaustTempBins,[10],10.0,length matches declared cells,ddmUsage.ddm692_ExhaustTempBins,"{""10"": 470}"
+motor,normal,ddm590_SpeedBins,[24],24.0,no matching key in payload,,
+motor,normal,(none),,,payload bin container with NO definition in bin JSON,ddmUsage.ddm692_PressureBins,"{""9"": 470}"
+motor,normal,(none),,,payload bin container with NO definition in bin JSON,ddmUsage.ddm692_BarometerTempBins,"{""10"": 470}"
+motor,return_repair,powerOnModeBins,[3],3.0,no matching key in payload,,
+motor,return_repair,longestOperatingDurationBins,"[3, 3]",9.0,no matching key in payload,,
+motor,return_repair,ddm683_UsageDurationBins,"[3, 3, 6]",54.0,no matching key in payload,,
+motor,return_repair,ddm683_UsageBins,"[3, 3]",9.0,no matching key in payload,,
+motor,return_repair,ddm683_pwrOnFwiCountBins,"[2, 3]",6.0,no matching key in payload,,
+motor,return_repair,ddm683_usageFwiStateBins,"[2, 3]",6.0,no matching key in payload,,
+motor,return_repair,ddm683_SpeedBins,[24],24.0,no matching key in payload,,
+motor,return_repair,ddm683_AmbPressBins,[7],7.0,no matching key in payload,,
+motor,return_repair,ddm683_AmbTempBins,[7],7.0,no matching key in payload,,
+motor,return_repair,ddm683_ExhaustTempBins,[7],7.0,no matching key in payload,,
+motor,return_repair,ddm683_normDPressOnFwiOffBins,[25],25.0,no matching key in payload,,
+motor,return_repair,ddm692_SpeedBins,[25],25.0,length matches declared cells,ddmUsage.ddm692_SpeedBins,"{""25"": 564}"
+motor,return_repair,ddm692_PressBins,[9],9.0,no matching key in payload,,
+motor,return_repair,ddm692_BarTempBins,[10],10.0,no matching key in payload,,
+motor,return_repair,ddm692_FisfTempBins,[10],10.0,length matches declared cells,ddmUsage.ddm692_FisfTempBins,"{""10"": 564}"
+motor,return_repair,ddm692_PowerBins,[14],14.0,length matches declared cells,ddmUsage.ddm692_PowerBins,"{""14"": 564}"
+motor,return_repair,ddm692_NormSpeedBins,[14],14.0,length matches declared cells,ddmUsage.ddm692_NormSpeedBins,"{""14"": 564}"
+motor,return_repair,ddm692_ExhaustTempBins,[10],10.0,length matches declared cells,ddmUsage.ddm692_ExhaustTempBins,"{""10"": 564}"
+motor,return_repair,ddm590_SpeedBins,[24],24.0,no matching key in payload,,
+motor,return_repair,(none),,,payload bin container with NO definition in bin JSON,ddmUsage.ddm692_PressureBins,"{""9"": 564}"
+motor,return_repair,(none),,,payload bin container with NO definition in bin JSON,ddmUsage.ddm692_BarometerTempBins,"{""10"": 564}"
+battery,normal,powerBins,[3],3.0,length matches declared cells,usage.dischargeLog.powerBins,"{""3"": 1250}"
+battery,normal,dischargeBandBins,"[3, 3]",9.0,length matches declared cells,usage.dischargeLog.dischargeBandBins,"{""9"": 1250}"
+battery,normal,dischargeDurationBins,[23],23.0,length matches declared cells,usage.dischargeLog.dischargeDurationBins,"{""23"": 1250}"
+battery,normal,dischargeStartTempBins,[10],10.0,length matches declared cells,usage.dischargeLog.dischargeStartTempBins,"{""10"": 1250}"
+battery,normal,dischargeOffTimeBins,[6],6.0,length matches declared cells,usage.dischargeLog.dischargeOffTimeBins,"{""6"": 1250}"
+battery,normal,dischargeBtwChargesBins,[15],15.0,length matches declared cells,usage.dischargeLog.dischargeBtwChargesBins,"{""15"": 1250}"
+battery,normal,chargeMaintainTempBins,[6],6.0,length matches declared cells,usage.chargeLog.chargeMaintainTempBins,"{""6"": 1250}"
+battery,normal,chargeBandBins,"[3, 3]",9.0,length matches declared cells,usage.chargeLog.chargeBandBins,"{""9"": 1250}"
+battery,normal,chargeDurationBins,[16],16.0,length matches declared cells,usage.chargeLog.chargeDurationBins,"{""16"": 1250}"
+battery,normal,chargeAmbientTempPreCustomerBins,[6],6.0,length matches declared cells,usage.chargeLog.chargeAmbientTempPreCustomerBins,"{""6"": 1250}"
+battery,normal,chargeAmbientTempCustomerBins,[6],6.0,length matches declared cells,usage.chargeLog.chargeAmbientTempCustomerBins,"{""6"": 1250}"
+battery,normal,minCellVoltAtChargeStartBins,[16],16.0,length matches declared cells,usage.chargeLog.minCellVoltAtChargeStartBins,"{""16"": 1250}"
+battery,return_repair,powerBins,[3],3.0,length matches declared cells,usage.dischargeLog.powerBins,"{""3"": 542}"
+battery,return_repair,dischargeBandBins,"[3, 3]",9.0,length matches declared cells,usage.dischargeLog.dischargeBandBins,"{""9"": 542}"
+battery,return_repair,dischargeDurationBins,[23],23.0,length matches declared cells,usage.dischargeLog.dischargeDurationBins,"{""23"": 542}"
+battery,return_repair,dischargeStartTempBins,[10],10.0,length matches declared cells,usage.dischargeLog.dischargeStartTempBins,"{""10"": 542}"
+battery,return_repair,dischargeOffTimeBins,[6],6.0,length matches declared cells,usage.dischargeLog.dischargeOffTimeBins,"{""6"": 542}"
+battery,return_repair,dischargeBtwChargesBins,[15],15.0,length matches declared cells,usage.dischargeLog.dischargeBtwChargesBins,"{""15"": 542}"
+battery,return_repair,chargeMaintainTempBins,[6],6.0,length matches declared cells,usage.chargeLog.chargeMaintainTempBins,"{""6"": 542}"
+battery,return_repair,chargeBandBins,"[3, 3]",9.0,length matches declared cells,usage.chargeLog.chargeBandBins,"{""9"": 542}"
+battery,return_repair,chargeDurationBins,[16],16.0,length matches declared cells,usage.chargeLog.chargeDurationBins,"{""16"": 542}"
+battery,return_repair,chargeAmbientTempPreCustomerBins,[6],6.0,length matches declared cells,usage.chargeLog.chargeAmbientTempPreCustomerBins,"{""6"": 542}"
+battery,return_repair,chargeAmbientTempCustomerBins,[6],6.0,length matches declared cells,usage.chargeLog.chargeAmbientTempCustomerBins,"{""6"": 542}"
+battery,return_repair,minCellVoltAtChargeStartBins,[16],16.0,length matches declared cells,usage.chargeLog.minCellVoltAtChargeStartBins,"{""16"": 542}"
