@@ -1,0 +1,741 @@
+"""Step 7: final insights. All numbers, key_numbers.csv and the final charts come from here.
+
+Reads data/model/ for every analysis number. The DQ headline numbers (raw vs analysis rows, % exact
+copies, % empty payloads) are not in the model tables, so they are read from the generated Step 3/4
+reports (reports/profiling/parse_summary.csv, reports/dq/dq_summary.csv) and cross-checked against
+data/model/. Python 3.8 compatible. Nothing here changes the pipeline or earlier outputs.
+
+Method rules (project decisions):
+- Fault rates are pooled (total faults / total sessions x 100); intervals are 95% percentile
+  bootstraps resampling machines within each group (2,000 resamples, fixed seed).
+- Continuous measures use machine-level medians with the same bootstrap.
+- Machines are the unit. Same thresholds as Step 6 (rate-eligible = >= 10 analysis sessions).
+- Return/Repair (RR) is a selected population; nothing here claims a cause.
+- Filter Wash (13/1) as a "maintenance alert" is our analytical grouping, not the brief's.
+"""
+import sys
+import textwrap
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import eda_helpers as h  # noqa: E402
+
+ROOT = h.ROOT
+OUT_DIR = ROOT / "reports" / "insights"
+FIG_DIR = ROOT / "reports" / "figures" / "final"
+N_BOOT, SEED = h.N_BOOT, h.SEED
+NORMAL, RR = h.NORMAL, h.RR
+FW_LABEL = "Filter Wash 13/1 (maintenance alert; our grouping)"
+KEY_COLS = ["id", "insight", "metric", "group", "value", "interval_low", "interval_high",
+            "n_machines", "n_events_or_sessions", "n_denominator", "denominator_unit", "unit", "script_or_cell", "note"]
+
+
+# ---------------------------------------------------------------------------
+# Statistics
+# ---------------------------------------------------------------------------
+def pooled_ci(d, num_cols, den_col, scale=100.0, n_boot=N_BOOT, seed=SEED):
+    """Pooled rate (sum num / sum den x scale) per count column with a 95% machine bootstrap.
+
+    All count columns share the same resamples, so components and totals are consistent.
+    Returns {col: (rate, lo, hi)} plus the machine count, summed counts and summed denominator.
+    """
+    d = d.dropna(subset=list(num_cols) + [den_col])
+    x = d[list(num_cols)].values.astype(float)
+    den = d[den_col].values.astype(float)
+    idx = np.random.RandomState(seed).randint(0, len(d), size=(n_boot, len(d)))
+    den_b = den[idx].sum(axis=1)
+    out = {}
+    for j, c in enumerate(num_cols):
+        b = scale * x[:, j][idx].sum(axis=1) / den_b
+        lo, hi = np.percentile(b, [2.5, 97.5])
+        out[c] = (scale * x[:, j].sum() / den.sum(), float(lo), float(hi))
+    meta = {"n_machines": len(d), "counts": dict(zip(num_cols, x.sum(axis=0))), "denominator": float(den.sum())}
+    return out, meta
+
+
+def median_ci(values, n_boot=N_BOOT, seed=SEED):
+    """Median of a machine-level sample with a 95% bootstrap interval (median, lo, hi)."""
+    return h.one_sample_ci(values, n_boot=n_boot, seed=seed)
+
+
+def about(ratio):
+    """Ratio rounded for text: 'about 5x'."""
+    if pd.isna(ratio):
+        return "n/a"
+    return "about %dx" % int(round(ratio)) if ratio >= 1.5 else "about %.1fx" % ratio
+
+
+class KeyNumbers(object):
+    """Collects one row per number used downstream."""
+
+    def __init__(self):
+        self.rows = []
+
+    def add(self, id_, insight, metric, group, value, lo=np.nan, hi=np.nan, n_machines=np.nan,
+            n_events=np.nan, unit="", src="", note="", den=np.nan, den_unit=""):
+        self.rows.append(dict(id=id_, insight=insight, metric=metric, group=group, value=value,
+                              interval_low=lo, interval_high=hi, n_machines=n_machines,
+                              n_events_or_sessions=n_events, n_denominator=den, denominator_unit=den_unit, unit=unit, script_or_cell=src, note=note))
+
+    def frame(self):
+        df = pd.DataFrame(self.rows)[KEY_COLS]
+        assert df["id"].is_unique, "duplicate key_numbers ids: %s" % df.loc[df["id"].duplicated(), "id"].tolist()
+        return df
+
+
+# ---------------------------------------------------------------------------
+# Data preparation (data/model only)
+# ---------------------------------------------------------------------------
+FAULT_COLS = {"t11_v2": "n_faults_t11_v2_primary", "t12_v1": "n_faults_t12_v1_primary",
+              "t12_v2": "n_faults_t12_v2_primary", "t13_v1": "n_faults_t13_v1_primary"}
+
+
+def prepare(t):
+    ms, ff, motor = t["summary"], t["fault"], t["motor"]
+    # the four fault type/value pairs in the model must be exactly the ones counted below
+    pairs = set(map(tuple, ff[["fault_type", "fault_value"]].drop_duplicates().values.tolist()))
+    assert pairs == {(11, 2), (12, 1), (12, 2), (13, 1)}, pairs
+    elig = ms[ms.rate_eligible].copy()
+    for k, c in FAULT_COLS.items():
+        elig["n_" + k] = elig[c]
+    elig["n_t12"] = elig.n_t12_v1 + elig.n_t12_v2
+    elig["n_all"] = elig.n_t11_v2 + elig.n_t12 + elig.n_t13_v1
+    elig["n_other"] = elig.n_all - elig.n_t13_v1
+    assert (elig.n_all == elig.n_faults_primary).all()
+    elig["family"] = elig.model.fillna("").str[:4]
+    elig["grp"] = elig.cohort + "|" + elig.family
+
+    c4c = ms[ms.motor_runtime_s_per_day.notna()].copy()
+    c4c["motor_min_per_day"] = c4c.motor_runtime_s_per_day / 60.0
+    assert len(h.sv53(c4c)) == len(c4c), "motor-runtime machines are not all SV53"
+
+    mv = motor[motor.delta_valid & (motor.days_elapsed > 0)].copy()
+    return dict(ms=ms, ff=ff, elig=elig, c4c=c4c, mv=mv)
+
+
+def exposure_table(P):
+    """SV53 machines in the faults table with a valid motor period; faults inside the motor window."""
+    ms, ff, mv = P["ms"], P["ff"], P["mv"]
+    win = mv.groupby("anonymized_serial").agg(ws=("period_start_ts", "min"), we=("period_end_ts", "max"),
+                                              rt_s=("delta_runtime_s", "sum"))
+    f12 = ff[ff.fault_type == 12][["anonymized_serial", "fault_timestamp", "fault_value"]].merge(
+        win, left_on="anonymized_serial", right_index=True)
+    f12 = f12[(f12.fault_timestamp >= f12.ws) & (f12.fault_timestamp <= f12.we)]
+    n12 = f12.groupby("anonymized_serial").size().rename("n_t12_win")
+    n1 = f12[f12.fault_value == 1].groupby("anonymized_serial").size().rename("n_t12_1_win")
+    n2 = f12[f12.fault_value == 2].groupby("anonymized_serial").size().rename("n_t12_2_win")
+    e = (ms[["anonymized_serial", "cohort", "model", "has_fault_analysis_rows"]]
+         .join(win, on="anonymized_serial", how="inner").join(n12, on="anonymized_serial")
+         .join(n1, on="anonymized_serial").join(n2, on="anonymized_serial"))
+    cnt = ["n_t12_win", "n_t12_1_win", "n_t12_2_win"]
+    e[cnt] = e[cnt].fillna(0)
+    assert (e.n_t12_win == e.n_t12_1_win + e.n_t12_2_win).all()
+    e["hours"] = e.rt_s / 3600.0
+    e = h.sv53(e[e.has_fault_analysis_rows])
+    return e[e.hours >= 1].copy()
+
+
+def common_month_motor(mv, min_machines=10):
+    """Per-machine motor min/day over the common calendar months (same logic as Step 6b-d)."""
+    recs = []
+    for _, r in mv.iterrows():
+        cur = r.period_start_ts.normalize().replace(day=1)
+        while cur < r.period_end_ts:
+            nxt = cur + pd.offsets.MonthBegin(1)
+            ov = (min(nxt, r.period_end_ts) - max(cur, r.period_start_ts)).total_seconds() / 86400.0
+            if ov > 0:
+                recs.append((r.anonymized_serial, r.cohort, cur.strftime("%Y-%m"), ov,
+                             r.delta_runtime_s * ov / r.days_elapsed))
+            cur = nxt
+    lm = pd.DataFrame(recs, columns=["anonymized_serial", "cohort", "month", "days", "runtime_s"])
+    mc = (lm.groupby(["month", "cohort"]).anonymized_serial.nunique().unstack(fill_value=0)
+          .reindex(columns=[NORMAL, RR]).fillna(0).astype(int))
+    common = list(mc.index[(mc[NORMAL] >= min_machines) & (mc[RR] >= min_machines)])
+    assert common == list(pd.period_range(common[0], common[-1], freq="M").astype(str)), "months not contiguous"
+    ws = pd.Timestamp(common[0] + "-01")
+    we = pd.Timestamp(common[-1] + "-01") + pd.offsets.MonthBegin(1)
+    w1 = mv[(mv.period_start_ts >= ws) & (mv.period_end_ts <= we)]
+    g1 = w1.groupby(["anonymized_serial", "cohort"]).agg(rt=("delta_runtime_s", "sum"), dd=("days_elapsed", "sum")).reset_index()
+    g1["motor_min_per_day"] = g1.rt / g1.dd / 60.0
+    l2 = lm[lm.month.isin(common)]
+    g2 = l2.groupby(["anonymized_serial", "cohort"]).agg(rt=("runtime_s", "sum"), dd=("days", "sum")).reset_index()
+    g2["motor_min_per_day"] = g2.rt / g2.dd / 60.0
+    return common, g1, g2
+
+
+# ---------------------------------------------------------------------------
+# Data-quality headline numbers
+# ---------------------------------------------------------------------------
+def dq_numbers(t):
+    ps = pd.read_csv(ROOT / "reports" / "profiling" / "parse_summary.csv")
+    dq = pd.read_csv(ROOT / "reports" / "dq" / "dq_summary.csv").drop_duplicates()
+    tabs = ["clean_sessions", "faults", "motor", "battery"]
+    rows = []
+    for tb in tabs:
+        for c in (NORMAL, RR):
+            raw = int(ps[(ps.table == tb) & (ps.cohort == c)].raw_rows_in.iloc[0])
+            sel = dq[(dq.table == tb) & (dq.cohort == c) & dq.check.str.startswith("is_analysis_row")
+                     & ~dq.check.str.contains("status_rule")]
+            assert len(sel) == 1, (tb, c, len(sel))
+            rows.append(dict(table=tb, cohort=c, raw_rows=raw, analysis_rows=int(sel.rows_affected.iloc[0])))
+    d = pd.DataFrame(rows)
+    d["pct_kept"] = 100.0 * d.analysis_rows / d.raw_rows
+
+    # cross-checks against data/model
+    nrm = {(r.cohort): r.rows for r in pd.read_csv(ROOT / "reports" / "model" / "table_row_counts.csv").itertuples()
+           if r.table == "fact_session"}
+    for c in (NORMAL, RR):
+        assert int(d[(d.table == "clean_sessions") & (d.cohort == c)].analysis_rows.iloc[0]) == len(t["session"][t["session"].cohort == c])
+        assert int(d[(d.table == "faults") & (d.cohort == c)].analysis_rows.iloc[0]) == len(t["fault"][t["fault"].cohort == c])
+        assert int(d[(d.table == "motor") & (d.cohort == c)].analysis_rows.iloc[0]) == int(t["summary"][t["summary"].cohort == c].n_motor_snapshots.sum())
+        assert int(d[(d.table == "battery") & (d.cohort == c)].analysis_rows.iloc[0]) == int(t["summary"][t["summary"].cohort == c].n_battery_snapshots.sum())
+
+    def one(check, tb, c):
+        r = dq[(dq.check.str.startswith(check)) & (dq.table == tb) & (dq.cohort == c)]
+        assert len(r) == 1, (check, tb, c)
+        return int(r.rows_affected.iloc[0])
+
+    extra = []
+    for c in (NORMAL, RR, "all"):
+        raw_f = int(d[(d.table == "faults")].raw_rows.sum()) if c == "all" else int(d[(d.table == "faults") & (d.cohort == c)].raw_rows.iloc[0])
+        raw_b = int(d[(d.table == "battery")].raw_rows.sum()) if c == "all" else int(d[(d.table == "battery") & (d.cohort == c)].raw_rows.iloc[0])
+        n_ex = one("dup_class=exact_copy, not kept", "faults", c)
+        n_em = one("parse_status=empty_payload", "battery", c)
+        extra.append(dict(cohort=c, exact_copy_rows=n_ex, fault_raw=raw_f, pct_exact_copy=100.0 * n_ex / raw_f,
+                          empty_rows=n_em, battery_raw=raw_b, pct_empty=100.0 * n_em / raw_b))
+    return d, pd.DataFrame(extra)
+
+
+# ---------------------------------------------------------------------------
+# Main computation
+# ---------------------------------------------------------------------------
+def compute(t=None):
+    t = t or h.load_model()
+    P = prepare(t)
+    elig, c4c, ms, dim = P["elig"], P["c4c"], P["ms"], t["dim"]
+    K = KeyNumbers()
+    R = {"P": P}
+    SRC = "src/insights.py"
+
+    # ---- DQ + counts --------------------------------------------------------
+    dqt, dqx = dq_numbers(t)
+    R["dq_table"], R["dq_extra"] = dqt, dqx
+    for r in dqt.itertuples():
+        K.add("dq_raw_%s_%s" % (r.table, r.cohort), "DQ", "raw rows", "%s / %s" % (r.table, h.LABELS[r.cohort]),
+              r.raw_rows, unit="rows", src=SRC + ":dq_numbers | reports/profiling/parse_summary.csv", note="column raw_rows_in")
+        K.add("dq_analysis_%s_%s" % (r.table, r.cohort), "DQ", "analysis rows", "%s / %s" % (r.table, h.LABELS[r.cohort]),
+              r.analysis_rows, unit="rows", src=SRC + ":dq_numbers | reports/dq/dq_summary.csv",
+              note="check is_analysis_row (faults: primary count); cross-checked with data/model")
+        K.add("dq_pct_kept_%s_%s" % (r.table, r.cohort), "DQ", "analysis rows as % of raw rows",
+              "%s / %s" % (r.table, h.LABELS[r.cohort]), r.pct_kept, unit="%", src=SRC + ":dq_numbers | reports/dq/dq_summary.csv, reports/profiling/parse_summary.csv",
+              n_events=r.analysis_rows, den=r.raw_rows, den_unit="raw rows")
+    for tb, g in dqt.groupby("table"):
+        K.add("dq_raw_%s_all" % tb, "DQ", "raw rows", "%s / both cohorts" % tb, int(g.raw_rows.sum()), unit="rows", src=SRC + ":dq_numbers | reports/profiling/parse_summary.csv", note="sum of cohorts")
+        K.add("dq_analysis_%s_all" % tb, "DQ", "analysis rows", "%s / both cohorts" % tb, int(g.analysis_rows.sum()), unit="rows", src=SRC + ":dq_numbers | reports/dq/dq_summary.csv", note="sum of cohorts")
+        K.add("dq_pct_kept_%s_all" % tb, "DQ", "analysis rows as % of raw rows", "%s / both cohorts" % tb,
+              100.0 * g.analysis_rows.sum() / g.raw_rows.sum(), unit="%",
+              src=SRC + ":dq_numbers | reports/dq/dq_summary.csv, reports/profiling/parse_summary.csv",
+              n_events=int(g.analysis_rows.sum()), den=int(g.raw_rows.sum()), den_unit="raw rows")
+    for r in dqx.itertuples():
+        lab = "all" if r.cohort == "all" else h.LABELS[r.cohort]
+        K.add("dq_exact_copy_faults_" + r.cohort, "DQ", "faults: exact copies not kept, % of raw rows", lab,
+              r.pct_exact_copy, unit="%", n_events=r.exact_copy_rows, den=r.fault_raw, den_unit="raw fault rows",
+              src=SRC + ":dq_numbers | reports/dq/dq_summary.csv, reports/profiling/parse_summary.csv",
+              note="%d of %d raw fault rows; identical in all 14 raw columns" % (r.exact_copy_rows, r.fault_raw))
+        K.add("dq_empty_battery_" + r.cohort, "DQ", "battery: empty payloads, % of raw rows", lab,
+              r.pct_empty, unit="%", n_events=r.empty_rows, den=r.battery_raw, den_unit="raw battery rows",
+              src=SRC + ":dq_numbers | reports/dq/dq_summary.csv, reports/profiling/parse_summary.csv",
+              note="%d of %d raw battery rows have no decoded_data" % (r.empty_rows, r.battery_raw))
+
+    def cnt(mask_df):
+        return mask_df.groupby("cohort").anonymized_serial.nunique().reindex([NORMAL, RR]).fillna(0).astype(int)
+
+    mach = {"machines_all": ("machines in dim_machine", cnt(dim)),
+            "machines_rate_eligible": ("rate-eligible machines (>= 10 analysis sessions)", cnt(elig)),
+            "machines_motor_runtime": ("machines with a valid motor runtime per day", cnt(c4c))}
+    for k, (m, s) in mach.items():
+        for c in (NORMAL, RR):
+            K.add("%s_%s" % (k, c), "counts", m, h.LABELS[c], int(s[c]), n_machines=int(s[c]), unit="machines", src=SRC + ":compute")
+    fam_n = elig.groupby(["cohort", "family"]).size()
+    for (c, fam), n in fam_n.items():
+        K.add("machines_eligible_%s_%s" % (c, fam), "counts", "rate-eligible machines by model family",
+              "%s %s" % (h.LABELS[c], fam), int(n), n_machines=int(n), unit="machines", src=SRC + ":compute")
+    R["machine_counts"] = pd.DataFrame({v[0]: v[1] for v in mach.values()}).T.rename(columns=h.LABELS)
+
+    # ---- Insight 1: model effect ---------------------------------------------
+    groups1 = [("normal|SV50", "Normal SV50"), ("normal|SV53", "Normal SV53"), ("return_repair|SV53", "Return/Repair SV53")]
+    comp = ["n_all", "n_t13_v1", "n_other"]
+    rows1 = []
+    for key, lab in groups1:
+        d = elig[elig.grp == key]
+        res, meta = pooled_ci(d, comp + ["n_t12_v1", "n_t12_v2", "n_t11_v2"], "n_sessions")
+        slug = key.replace("|", "_")
+        for col, name, idn in [("n_all", "all fault types", "total"), ("n_t13_v1", FW_LABEL, "fw"),
+                               ("n_other", "all other faults (excl. 13/1)", "other"),
+                               ("n_t12_v1", "12/1 inlet blocked, motor still running", "t12v1"),
+                               ("n_t12_v2", "12/2 inlet blocked and in error", "t12v2"),
+                               ("n_t11_v2", "11/2 Battery Temperature HOT", "t11v2")]:
+            v, lo, hi = res[col]
+            rows1.append(dict(group=lab, measure=name, rate=v, lo=lo, hi=hi, machines=meta["n_machines"],
+                              faults=int(meta["counts"][col]), sessions=int(meta["denominator"])))
+            K.add("i1_%s_%s" % (idn, slug), "Insight 1", "pooled faults per 100 sessions: " + name, lab, v, lo, hi,
+                  meta["n_machines"], int(meta["counts"][col]), "per 100 sessions", SRC + ":compute (insight 1)",
+                  "denominator %d clean sessions; rate-eligible machines" % meta["denominator"]
+                  + ("; 13/1 grouping is ours, not the brief's" if idn in ("fw", "other") else ""),
+                  den=meta["denominator"], den_unit="clean sessions")
+    R["i1_rates"] = pd.DataFrame(rows1)
+
+    def pdiff(d, num, a_val, b_val, scale=100.0, den="n_sessions", grp="grp"):
+        r = h.compare_pooled(d, num, den, scale=scale, group=grp, a_val=a_val, b_val=b_val)
+        return r
+
+    diffs1 = []
+    for cmp_id, (a, b, lab) in {"normal_sv53_minus_sv50": ("normal|SV50", "normal|SV53", "Normal: SV53 minus SV50"),
+                                "rr_minus_normal_sv53": ("normal|SV53", "return_repair|SV53", "SV53: Return/Repair minus Normal")}.items():
+        for col, name, idn in [("n_all", "all fault types", "total"), ("n_t13_v1", FW_LABEL, "fw"),
+                               ("n_other", "all other faults (excl. 13/1)", "other")]:
+            r = pdiff(elig, col, a, b)
+            diffs1.append(dict(comparison=lab, measure=name, a=r["normal"], b=r["rr"], diff=r["diff"], ratio=r["ratio"],
+                               lo=r["ci_lo"], hi=r["ci_hi"], n_a=r["n_normal"], n_b=r["n_rr"]))
+            K.add("i1_diff_%s_%s" % (idn, cmp_id), "Insight 1", "difference in pooled faults per 100 sessions: " + name, lab,
+                  r["diff"], r["ci_lo"], r["ci_hi"], r["n_normal"] + r["n_rr"], np.nan, "per 100 sessions",
+                  SRC + ":compute (insight 1)", "n machines %d vs %d; ratio %.2f (%s)" % (r["n_normal"], r["n_rr"], r["ratio"], about(r["ratio"])))
+    R["i1_diffs"] = pd.DataFrame(diffs1)
+    g = R["i1_diffs"].set_index(["comparison", "measure"])
+    gap_t = g.loc[("Normal: SV53 minus SV50", "all fault types"), "diff"]
+    gap_f = g.loc[("Normal: SV53 minus SV50", FW_LABEL), "diff"]
+    R["i1_fw_share"] = gap_f / gap_t
+    K.add("i1_fw_share_of_gap", "Insight 1", "share of the Normal SV50-vs-SV53 gap in pooled rate that is Filter Wash 13/1",
+          "Normal: SV53 minus SV50", 100.0 * R["i1_fw_share"], unit="%", src=SRC + ":compute (insight 1)",
+          note="ratio of point differences (no interval); 13/1 grouping is ours")
+
+    # ---- Insight 2: airway blockage, SV53 only -------------------------------
+    s53 = h.sv53(elig)
+    cols2 = ["n_t12", "n_t12_v1", "n_t12_v2"]
+    names2 = {"n_t12": "type 12 airway blockage (values 1+2)", "n_t12_v1": "12/1 inlet blocked, motor still running",
+              "n_t12_v2": "12/2 inlet blocked and in error"}
+    rows2 = []
+    subsets = [("SV53", s53), ("SV53, ROW-PROD only", s53[s53.region == "ROW-PROD"]),
+               ("SV53-AB only", s53[s53.model == "SV53-AB"]),
+               ("SV53-AB, ROW-PROD only", s53[(s53.model == "SV53-AB") & (s53.region == "ROW-PROD")])]
+    tag = {"SV53": "main", "SV53, ROW-PROD only": "rowprod", "SV53-AB only": "ab", "SV53-AB, ROW-PROD only": "ab_rowprod"}
+    for sname, sd in subsets:
+        for c in (NORMAL, RR):
+            d = sd[sd.cohort == c]
+            res, meta = pooled_ci(d, cols2, "n_sessions")
+            for col in cols2:
+                v, lo, hi = res[col]
+                rows2.append(dict(subset=sname, cohort=h.LABELS[c], measure=names2[col], col=col, rate=v, lo=lo, hi=hi,
+                                  machines=meta["n_machines"], faults=int(meta["counts"][col]), sessions=int(meta["denominator"])))
+                K.add("i2_%s_%s_%s" % (col[2:], tag[sname], c), "Insight 2", "pooled faults per 100 sessions: " + names2[col],
+                      "%s / %s" % (h.LABELS[c], sname), v, lo, hi, meta["n_machines"], int(meta["counts"][col]),
+                      "per 100 sessions", SRC + ":compute (insight 2)", "denominator %d clean sessions" % meta["denominator"],
+                      den=meta["denominator"], den_unit="clean sessions")
+        for col in ("n_t12", "n_t12_v2"):
+            r = pdiff(sd, col, NORMAL, RR, grp="cohort")
+            K.add("i2_diff_%s_%s" % (col[2:], tag[sname]), "Insight 2", "difference (RR minus Normal), pooled per 100 sessions: " + names2[col],
+                  sname, r["diff"], r["ci_lo"], r["ci_hi"], r["n_normal"] + r["n_rr"], np.nan, "per 100 sessions",
+                  SRC + ":compute (insight 2)", "n machines %d vs %d; ratio %.2f (%s)" % (r["n_normal"], r["n_rr"], r["ratio"], about(r["ratio"])))
+            K.add("i2_ratio_%s_%s" % (col[2:], tag[sname]), "Insight 2", "ratio RR / Normal, pooled per 100 sessions: " + names2[col],
+                  sname, r["ratio"], unit="ratio", src=SRC + ":compute (insight 2)", note="rounded in text: " + about(r["ratio"]))
+    R["i2_rates"] = pd.DataFrame(rows2)
+
+    e = exposure_table(P)
+    R["exposure"] = e
+    cols_h = ["n_t12_win", "n_t12_1_win", "n_t12_2_win"]
+    names_h = {"n_t12_win": names2["n_t12"], "n_t12_1_win": names2["n_t12_v1"], "n_t12_2_win": names2["n_t12_v2"]}
+    rows2h = []
+    for c in (NORMAL, RR):
+        d = e[e.cohort == c]
+        res, meta = pooled_ci(d, cols_h, "hours", scale=1.0)
+        for col in cols_h:
+            v, lo, hi = res[col]
+            rows2h.append(dict(cohort=h.LABELS[c], measure=names_h[col], col=col, rate=v, lo=lo, hi=hi,
+                               machines=meta["n_machines"], faults=int(meta["counts"][col]), hours=meta["denominator"]))
+            K.add("i2h_%s_%s" % (col, c), "Insight 2", "pooled faults per motor runtime hour: " + names_h[col], h.LABELS[c],
+                  v, lo, hi, meta["n_machines"], int(meta["counts"][col]), "per runtime hour", SRC + ":compute (insight 2, exposure)",
+                  "runtime %.1f h; SV53 machines in the faults table with >= 1 h valid motor runtime; faults inside each machine's motor window" % meta["denominator"],
+                  den=meta["denominator"], den_unit="motor runtime hours")
+    for col, idn in (("n_t12_win", "t12"), ("n_t12_2_win", "t12v2")):
+        r = h.compare_pooled(e, col, "hours", scale=1.0)
+        K.add("i2h_diff_" + idn, "Insight 2", "difference (RR minus Normal), pooled per motor runtime hour: " + names_h[col], "SV53 exposure sample",
+              r["diff"], r["ci_lo"], r["ci_hi"], r["n_normal"] + r["n_rr"], np.nan, "per runtime hour", SRC + ":compute (insight 2, exposure)",
+              "n machines %d vs %d; ratio %.2f (%s)" % (r["n_normal"], r["n_rr"], r["ratio"], about(r["ratio"])))
+        K.add("i2h_ratio_" + idn, "Insight 2", "ratio RR / Normal per motor runtime hour: " + names_h[col], "SV53 exposure sample",
+              r["ratio"], unit="ratio", src=SRC + ":compute (insight 2, exposure)", note="rounded in text: " + about(r["ratio"]))
+    R["i2_hour"] = pd.DataFrame(rows2h)
+    R["i2_mix"] = pd.crosstab(s53.model, s53.cohort.map(h.LABELS)).assign(Total=lambda x: x.sum(axis=1))
+    R["i2_region"] = pd.crosstab(s53.region.fillna("(not available)"), s53.cohort.map(h.LABELS))
+
+    # ---- Insight 3: motor runtime per day --------------------------------------
+    rows3 = []
+    for c in (NORMAL, RR):
+        v = c4c.loc[c4c.cohort == c, "motor_min_per_day"]
+        m, lo, hi = median_ci(v)
+        rows3.append(dict(cohort=h.LABELS[c], median=m, lo=lo, hi=hi, machines=len(v)))
+        K.add("i3_median_main_" + c, "Insight 3", "median motor runtime, minutes per day (machine-level median)", h.LABELS[c],
+              m, lo, hi, len(v), np.nan, "min/day", SRC + ":compute (insight 3)", "all motor-runtime machines are SV53")
+        K.add("i3_valid_days_" + c, "Insight 3", "median observation window: valid motor days per machine", h.LABELS[c],
+              float(c4c.loc[c4c.cohort == c, "motor_valid_days"].median()), n_machines=len(v), unit="days", src=SRC + ":compute (insight 3)",
+              note="windows differ by cohort")
+    R["i3_medians"] = pd.DataFrame(rows3)
+    common, g1, g2 = common_month_motor(P["mv"])
+    R["i3_common_months"] = common
+    variants3 = [("main", "all valid periods", c4c), ("rowprod", "ROW-PROD only", c4c[c4c.region == "ROW-PROD"]),
+                 ("ab", "SV53-AB only", c4c[c4c.model == "SV53-AB"]),
+                 ("ab_rowprod", "SV53-AB, ROW-PROD only", c4c[(c4c.model == "SV53-AB") & (c4c.region == "ROW-PROD")]),
+                 ("window", "whole periods inside common months %s to %s" % (common[0], common[-1]), g1),
+                 ("prorated", "pro-rated to common months %s to %s" % (common[0], common[-1]), g2)]
+    rows3d = []
+    for tg, lab, d in variants3:
+        r = h.compare(d, "motor_min_per_day")
+        rows3d.append(dict(variant=lab, n_normal=r["n_normal"], n_rr=r["n_rr"], normal=r["normal"], rr=r["rr"], diff=r["diff"],
+                           ratio=r["ratio"], ci_lo=r["ci_lo"], ci_hi=r["ci_hi"]))
+        if tg != "main":
+            for c, val in ((NORMAL, r["normal"]), (RR, r["rr"])):
+                K.add("i3_median_%s_%s" % (tg, c), "Insight 3", "median motor runtime, minutes per day", "%s / %s" % (h.LABELS[c], lab),
+                      val, n_machines=r["n_" + ("normal" if c == NORMAL else "rr")], unit="min/day", src=SRC + ":compute (insight 3)",
+                      note="robustness variant; interval is on the difference")
+        K.add("i3_diff_" + tg, "Insight 3", "difference (RR minus Normal) in median motor minutes per day", lab,
+              r["diff"], r["ci_lo"], r["ci_hi"], r["n_normal"] + r["n_rr"], np.nan, "min/day", SRC + ":compute (insight 3)",
+              "n machines %d vs %d; ratio %.2f (%s)" % (r["n_normal"], r["n_rr"], r["ratio"], about(r["ratio"])))
+        K.add("i3_ratio_" + tg, "Insight 3", "ratio RR / Normal, median motor minutes per day", lab, r["ratio"], unit="ratio",
+              src=SRC + ":compute (insight 3)", note="rounded in text: " + about(r["ratio"]))
+    R["i3_variants"] = pd.DataFrame(rows3d)
+    R["i3_data"] = c4c
+    R["i3_mix"] = pd.crosstab(c4c.model, c4c.cohort.map(h.LABELS)).assign(Total=lambda x: x.sum(axis=1))
+
+    R["key"] = K.frame()
+    R["step6_check"] = check_against_step6(R["key"])
+    return R
+
+
+# ---------------------------------------------------------------------------
+# Consistency with Step 6 / 6b (values as printed in reports/eda/shortlist.md)
+# ---------------------------------------------------------------------------
+# (key_numbers id, field, printed value, shortlist reference)
+STEP6_EXPECTED = [
+    ("i1_total_normal_SV50", "value", "16.535", "6b-a all fault types pooled, SV50"),
+    ("i1_total_normal_SV53", "value", "4.286", "6b-a all fault types pooled, SV53"),
+    ("i1_fw_normal_SV50", "value", "11.440", "6b-a 13/1 pooled, SV50"),
+    ("i1_fw_normal_SV53", "value", "1.474", "6b-a 13/1 pooled, SV53"),
+    ("i1_other_normal_SV50", "value", "5.095", "6b-a excluding 13/1 pooled, SV50"),
+    ("i1_other_normal_SV53", "value", "2.812", "6b-a excluding 13/1 pooled, SV53"),
+    ("i1_diff_total_normal_sv53_minus_sv50", "value", "-12.249", "6b-a all fault types pooled gap"),
+    ("i1_diff_total_normal_sv53_minus_sv50", "interval_low", "-17.877", "6b-a all fault types pooled gap, lower"),
+    ("i1_diff_total_normal_sv53_minus_sv50", "interval_high", "-7.258", "6b-a all fault types pooled gap, upper"),
+    ("i1_diff_other_normal_sv53_minus_sv50", "value", "-2.283", "6b-a excluding 13/1 gap"),
+    ("i1_diff_other_normal_sv53_minus_sv50", "interval_low", "-5.334", "6b-a excluding 13/1 gap, lower"),
+    ("i1_diff_other_normal_sv53_minus_sv50", "interval_high", "0.714", "6b-a excluding 13/1 gap, upper"),
+    ("i1_total_return_repair_SV53", "value", "18.678", "6b-0 all fault types pooled, RR SV53"),
+    ("i1_other_return_repair_SV53", "value", "13.090", "6b-0 excluding 13/1 pooled, RR SV53"),
+    ("i1_fw_return_repair_SV53", "value", "5.588", "6b-0 13/1 pooled, RR SV53"),
+    ("i1_diff_fw_rr_minus_normal_sv53", "interval_low", "0.176", "6b-0 13/1 pooled, SV53 only, lower"),
+    ("i1_diff_fw_rr_minus_normal_sv53", "interval_high", "9.744", "6b-0 13/1 pooled, SV53 only, upper"),
+    ("i2_t12_main_normal", "value", "2.812", "6b-b type 12 pooled, SV53 Normal"),
+    ("i2_t12_main_return_repair", "value", "13.090", "6b-b type 12 pooled, SV53 RR"),
+    ("i2_diff_t12_main", "value", "10.278", "6b-b type 12 pooled diff, SV53"),
+    ("i2_diff_t12_main", "interval_low", "1.658", "6b-b type 12 pooled diff, lower"),
+    ("i2_diff_t12_main", "interval_high", "24.744", "6b-b type 12 pooled diff, upper"),
+    ("i2_t12_v2_main_normal", "value", "1.106", "6b-b 12/2 pooled, SV53 Normal"),
+    ("i2_t12_v2_main_return_repair", "value", "6.501", "6b-b 12/2 pooled, SV53 RR"),
+    ("i2_diff_t12_v2_main", "interval_low", "1.484", "6b-b 12/2 pooled diff, lower"),
+    ("i2_diff_t12_v2_main", "interval_high", "11.482", "6b-b 12/2 pooled diff, upper"),
+    ("i2_t12_rowprod_normal", "value", "2.380", "6b-c type 12, ROW-PROD Normal"),
+    ("i2_t12_rowprod_return_repair", "value", "13.073", "6b-c type 12, ROW-PROD RR"),
+    ("i2_diff_t12_rowprod", "interval_low", "1.960", "6b-c type 12 diff, ROW-PROD, lower"),
+    ("i2_diff_t12_rowprod", "interval_high", "24.450", "6b-c type 12 diff, ROW-PROD, upper"),
+    ("i2_t12_ab_normal", "value", "8.159", "6b-c type 12, SV53-AB Normal"),
+    ("i2_t12_ab_return_repair", "value", "17.038", "6b-c type 12, SV53-AB RR"),
+    ("i2_diff_t12_ab", "interval_low", "-8.588", "6b-c type 12 diff, SV53-AB, lower"),
+    ("i2_diff_t12_ab", "interval_high", "33.822", "6b-c type 12 diff, SV53-AB, upper"),
+    ("i2_diff_t12_v2_ab", "interval_low", "0.217", "6b-c 12/2 diff, SV53-AB, lower"),
+    ("i2_diff_t12_v2_ab", "interval_high", "15.643", "6b-c 12/2 diff, SV53-AB, upper"),
+    ("i2h_n_t12_win_normal", "value", "0.321", "6b-e type 12 per runtime hour, Normal (main)"),
+    ("i2h_n_t12_win_return_repair", "value", "1.732", "6b-e type 12 per runtime hour, RR (main)"),
+    ("i2h_diff_t12", "interval_low", "0.173", "6b-e type 12 per runtime hour diff, lower"),
+    ("i2h_diff_t12", "interval_high", "3.121", "6b-e type 12 per runtime hour diff, upper"),
+    ("i2h_n_t12_2_win_normal", "value", "0.090", "6b-e 12/2 per runtime hour, Normal"),
+    ("i2h_n_t12_2_win_return_repair", "value", "0.873", "6b-e 12/2 per runtime hour, RR"),
+    ("i2h_diff_t12v2", "interval_low", "0.232", "6b-e 12/2 per runtime hour diff, lower"),
+    ("i2h_diff_t12v2", "interval_high", "1.514", "6b-e 12/2 per runtime hour diff, upper"),
+    ("i3_median_main_normal", "value", "2.384", "C4c motor min/day, Normal"),
+    ("i3_median_main_return_repair", "value", "4.869", "C4c motor min/day, RR"),
+    ("i3_diff_main", "value", "2.485", "C4c diff"),
+    ("i3_diff_main", "interval_low", "0.430", "C4c diff, lower"),
+    ("i3_diff_main", "interval_high", "3.979", "C4c diff, upper"),
+    ("i3_diff_rowprod", "interval_low", "0.291", "6b-c C4c ROW-PROD diff, lower"),
+    ("i3_diff_rowprod", "interval_high", "4.074", "6b-c C4c ROW-PROD diff, upper"),
+    ("i3_diff_ab", "interval_low", "-0.447", "6b-c C4c SV53-AB diff, lower"),
+    ("i3_diff_ab", "interval_high", "5.377", "6b-c C4c SV53-AB diff, upper"),
+    ("i3_diff_window", "value", "2.279", "6b-d whole periods inside common window diff"),
+    ("i3_diff_window", "interval_low", "0.488", "6b-d whole periods diff, lower"),
+    ("i3_diff_window", "interval_high", "3.905", "6b-d whole periods diff, upper"),
+    ("i3_diff_prorated", "value", "2.581", "6b-d pro-rated diff"),
+    ("i3_diff_prorated", "interval_low", "0.544", "6b-d pro-rated diff, lower"),
+    ("i3_diff_prorated", "interval_high", "3.957", "6b-d pro-rated diff, upper"),
+    ("i3_valid_days_normal", "value", "240", "Final selection: valid motor days, median Normal (printed to 3 digits)"),
+    ("i3_valid_days_return_repair", "value", "91", "Final selection: valid motor days, median RR (printed to 2 digits)"),
+]
+
+
+def check_against_step6(key):
+    k = key.set_index("id")
+    rows = []
+    for id_, field, printed, ref in STEP6_EXPECTED:
+        if id_ not in k.index:
+            rows.append(dict(id=id_, field=field, step6_printed=printed, step7=np.nan, matches=False, reference=ref + " (id missing)"))
+            continue
+        val = float(k.loc[id_, field])
+        dec = len(printed.split(".")[1]) if "." in printed else 0
+        step7 = round(val, dec)
+        ok = abs(step7 - float(printed)) < 10 ** (-dec) * 0.51 if dec else (abs(round(val, 0) - float(printed)) < 0.5)
+        rows.append(dict(id=id_, field=field, step6_printed=printed, step7=val, matches=bool(ok), reference=ref))
+    return pd.DataFrame(rows)
+
+
+def write_key_numbers(R):
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    path = OUT_DIR / "key_numbers.csv"
+    R["key"].to_csv(path, index=False, float_format="%.6g")
+    R["step6_check"].to_csv(OUT_DIR / "step6_consistency.csv", index=False, float_format="%.6g")
+    return path
+
+
+# ---------------------------------------------------------------------------
+# Charts (16:9, 13.33 x 7.5 in, 200 dpi). Same two cohort colours as the EDA charts.
+# ---------------------------------------------------------------------------
+GREY, INK = "#5F6368", "#202124"
+SV50_BLUE = "#1B4478"          # darker shade of the Normal blue for SV50 (shade, not a new hue)
+
+
+def _setup():
+    import matplotlib
+    matplotlib.use("Agg", force=False)
+    import matplotlib.pyplot as plt
+    plt.rcParams.update({"font.size": 14, "axes.labelsize": 14, "xtick.labelsize": 14, "ytick.labelsize": 13,
+                         "axes.spines.top": False, "axes.spines.right": False, "axes.grid": False,
+                         "figure.dpi": 100, "svg.fonttype": "path"})
+    return plt
+
+
+def _frame(plt, title, subtitle, source, rect=None):
+    fig = plt.figure(figsize=(13.333, 7.5))
+    tl = textwrap.wrap(title, 60)
+    sl = textwrap.wrap(subtitle, 108)
+    fig.text(0.04, 0.955, "\n".join(tl), fontsize=22, fontweight="bold", color=INK, va="top")
+    ys = 0.955 - 0.052 * len(tl) - 0.008
+    fig.text(0.04, ys, "\n".join(sl), fontsize=14, color=GREY, va="top")
+    fig.text(0.04, 0.025, "\n".join(textwrap.wrap(source, 118)), fontsize=12, color=GREY, va="bottom")
+    return fig
+
+
+def _tint(color, amount=0.55):
+    import matplotlib.colors as mc
+    r = np.array(mc.to_rgb(color))
+    return tuple(r + (1 - r) * amount)
+
+
+def _save(fig, name):
+    FIG_DIR.mkdir(parents=True, exist_ok=True)
+    out = []
+    for ext in ("png", "svg"):
+        p = FIG_DIR / ("%s.%s" % (name, ext))
+        fig.savefig(str(p), dpi=200)
+        out.append(p)
+    return out
+
+
+def _fmt(v, nd=1):
+    return ("%." + str(nd) + "f") % v
+
+
+def chart_dq(R):
+    plt = _setup()
+    d = R["dq_table"]
+    fig = _frame(plt, "Only 14% of raw fault rows and 3% of raw battery rows are analysis rows",
+                 "Raw rows vs analysis rows, by table and cohort (all four tables, both cohorts)",
+                 "Source: parse_summary.csv (raw rows), dq_summary.csv (analysis rows, cross-checked with data/model); "
+                 "faults use the primary count")
+    titles = {"clean_sessions": "Clean sessions", "faults": "Faults", "motor": "Motor snapshots", "battery": "Battery snapshots"}
+    gs = fig.add_gridspec(2, 2, left=0.13, right=0.97, top=0.76, bottom=0.12, hspace=0.75, wspace=0.42)
+    for i, tb in enumerate(["clean_sessions", "faults", "motor", "battery"]):
+        ax = fig.add_subplot(gs[i // 2, i % 2])
+        sub = d[d.table == tb].set_index("cohort").reindex([NORMAL, RR])
+        ymax = sub.raw_rows.max()
+        for j, c in enumerate([NORMAL, RR]):
+            y = 1 - j
+            ax.barh(y + 0.2, sub.loc[c, "raw_rows"], height=0.36, color=_tint(h.COLORS[c], 0.65), edgecolor=h.COLORS[c], linewidth=1)
+            ax.barh(y - 0.2, sub.loc[c, "analysis_rows"], height=0.36, color=h.COLORS[c])
+            ax.text(sub.loc[c, "raw_rows"] + ymax * 0.015, y + 0.2, "{:,} raw".format(int(sub.loc[c, "raw_rows"])), va="center", fontsize=12, color=INK)
+            ax.text(sub.loc[c, "analysis_rows"] + ymax * 0.015, y - 0.2, "{:,} analysis ({:.0f}%)".format(int(sub.loc[c, "analysis_rows"]), sub.loc[c, "pct_kept"]),
+                    va="center", fontsize=12, color=INK, fontweight="bold")
+        ax.set_yticks([1, 0])
+        ax.set_yticklabels(["Normal", "Return/\nRepair"])
+        ax.set_xlim(0, ymax * 1.75)
+        ax.set_xticks([])
+        ax.spines["bottom"].set_visible(False)
+        ax.set_title(titles[tb], fontsize=14, loc="left", color=INK)
+    return fig, _save(fig, "01_dq_raw_vs_analysis_rows")
+
+
+def chart_insight1(R):
+    plt = _setup()
+    r = R["i1_rates"]
+    order = [("Normal SV50", h.COLORS[NORMAL], SV50_BLUE), ("Normal SV53", h.COLORS[NORMAL], h.COLORS[NORMAL]),
+             ("Return/Repair SV53", h.COLORS[RR], h.COLORS[RR])]
+    n = {g: int(r[r.group == g].machines.iloc[0]) for g, _, _ in order}
+    gap = R["i1_diffs"].set_index(["comparison", "measure"])
+    fig = _frame(plt, "Filter Wash alerts account for most of the SV50 vs SV53 fault-rate gap",
+                 "Pooled faults per 100 clean sessions with 95%% intervals (machines resampled); rate-eligible machines "
+                 "(>= 10 sessions): %d Normal SV50, %d Normal SV53, %d Return/Repair SV53" % (n["Normal SV50"], n["Normal SV53"], n["Return/Repair SV53"]),
+                 "Source: fact_session, fact_fault, analysis rows; pooled rate, 2,000 machine-bootstrap resamples. "
+                 "Filter Wash 13/1 as a 'maintenance alert' is our grouping, not the brief's.")
+    ax = fig.add_axes([0.08, 0.21, 0.58, 0.50])
+    for i, (g, hue, shade) in enumerate(order):
+        sub = r[r.group == g].set_index("measure")
+        oth, fw, tot = sub.loc["all other faults (excl. 13/1)"], sub.loc[FW_LABEL], sub.loc["all fault types"]
+        ax.bar(i, oth.rate, width=0.55, color=shade)
+        ax.bar(i, fw.rate, bottom=oth.rate, width=0.55, color=_tint(shade, 0.55), edgecolor=shade, hatch="//", linewidth=1)
+        ax.errorbar(i + 0.14, tot.rate, yerr=[[tot.rate - tot.lo], [tot.hi - tot.rate]], color=INK, capsize=7, lw=2, zorder=5)
+        ax.text(i, tot.hi + 0.6, "%s\n[%s to %s]" % (_fmt(tot.rate), _fmt(tot.lo), _fmt(tot.hi)), ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
+        ax.text(i - 0.08, oth.rate / 2.0, _fmt(oth.rate), ha="center", va="center", fontsize=13, color="white", fontweight="bold")
+        if fw.rate > 1.5:
+            ax.text(i - 0.08, oth.rate + fw.rate / 2.0, _fmt(fw.rate), ha="center", va="center", fontsize=13, color=INK, fontweight="bold")
+        else:
+            ax.text(i - 0.08, oth.rate + fw.rate + 0.3, _fmt(fw.rate), ha="center", va="bottom", fontsize=13, color=INK)
+    ax.set_xticks(range(3))
+    ax.set_xticklabels(["%s\n(%d machines)" % (g, n[g]) for g, _, _ in order])
+    ax.set_ylabel("Faults per 100 clean sessions")
+    ax.set_ylim(0, r[r.measure == "all fault types"].hi.max() * 1.25)
+    from matplotlib.patches import Patch
+    fig.legend(handles=[Patch(facecolor="#777777", label="All other faults (11/2, 12/1, 12/2)"),
+                        Patch(facecolor="#CCCCCC", edgecolor="#777777", hatch="//", label="Filter Wash 13/1\n(maintenance alert; our grouping)")],
+               loc="upper left", bbox_to_anchor=(0.69, 0.71), frameon=False, fontsize=12)
+    tot = gap.loc[("Normal: SV53 minus SV50", "all fault types")]
+    fw = gap.loc[("Normal: SV53 minus SV50", FW_LABEL)]
+    oth = gap.loc[("Normal: SV53 minus SV50", "all other faults (excl. 13/1)")]
+    note = ("Within Normal, SV53 minus SV50\n(per 100 sessions, 95%% interval):\n"
+            "All faults: %s [%s, %s]\nFilter Wash: %s [%s, %s]\nAll other: %s [%s, %s]\n\n"
+            "Filter Wash is %.0f%% of the gap;\nexcluding it, the interval spans 0." %
+            (_fmt(tot["diff"]), _fmt(tot.lo), _fmt(tot.hi), _fmt(fw["diff"]), _fmt(fw.lo), _fmt(fw.hi),
+             _fmt(oth["diff"]), _fmt(oth.lo), _fmt(oth.hi), 100 * R["i1_fw_share"]))
+    fig.text(0.69, 0.50, note, fontsize=13, color=INK, va="top")
+    lf = gap.loc[("SV53: Return/Repair minus Normal", "all fault types")]
+    fig.text(0.69, 0.255, "Like-for-like comparison:\nReturn/Repair SV53 vs Normal SV53\n(not vs Normal SV50).\nDifference %s [%s, %s]" %
+             (_fmt(lf["diff"]), _fmt(lf.lo), _fmt(lf.hi)), fontsize=13, color=INK, va="top", fontweight="bold")
+    ax.annotate("", xy=(2, ax.get_ylim()[1] * 0.97), xytext=(1, ax.get_ylim()[1] * 0.97),
+                arrowprops=dict(arrowstyle="<->", color=INK, lw=1.8))
+    ax.text(1.5, ax.get_ylim()[1] * 0.99, "like-for-like", ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
+    return fig, _save(fig, "02_insight1_model_effect_fault_rate")
+
+
+def _grouped_panel(ax, rows, categories, ylabel, nd, ymax_pad=1.35):
+    """rows: DataFrame with cohort label, measure, rate, lo, hi. categories: list of (measure, tick label)."""
+    w = 0.36
+    top = 0
+    for j, c in enumerate((NORMAL, RR)):
+        for i, (meas, _) in enumerate(categories):
+            x = rows[(rows.cohort == h.LABELS[c]) & (rows.measure == meas)].iloc[0]
+            xp = i + (j - 0.5) * (w + 0.04)
+            tint = 0.5 if meas.startswith("12/1") else 0
+            ax.bar(xp, x.rate, width=w, color=_tint(h.COLORS[c], tint) if tint else h.COLORS[c],
+                   edgecolor=h.COLORS[c], hatch="//" if tint else None, linewidth=1)
+            ax.errorbar(xp, x.rate, yerr=[[x.rate - x.lo], [x.hi - x.rate]], color=INK, capsize=6, lw=1.8, zorder=5)
+            ax.text(xp, x.hi + 0.02 * max(1, rows.hi.max()), _fmt(x.rate, nd), ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
+            top = max(top, x.hi)
+    ax.set_xticks(range(len(categories)))
+    ax.set_xticklabels([c[1] for c in categories])
+    ax.set_ylabel(ylabel)
+    ax.set_ylim(0, top * ymax_pad)
+
+
+def chart_insight2(R):
+    plt = _setup()
+    from matplotlib.patches import Patch
+    r = R["i2_rates"]
+    r = r[r.subset == "SV53"]
+    nn = {h.LABELS[c]: int(r[r.cohort == h.LABELS[c]].machines.iloc[0]) for c in (NORMAL, RR)}
+    hr = R["i2_hour"]
+    nh = {h.LABELS[c]: int(hr[hr.cohort == h.LABELS[c]].machines.iloc[0]) for c in (NORMAL, RR)}
+    key = R["key"].set_index("id")
+    d1 = key.loc["i2_diff_t12_main"]
+    fig = _frame(plt, "Among SV53 machines, Return/Repair log about 5x the airway-blockage rate of Normal",
+                 "Airway blockage (type 12) per 100 clean sessions (left) and per motor runtime hour (right), pooled, with 95%% intervals. "
+                 "Left: %d Normal, %d Return/Repair machines; right: %d and %d" % (nn["Normal"], nn["Return/Repair"], nh["Normal"], nh["Return/Repair"]),
+                 "Source: fact_session, fact_fault, fact_motor_period, analysis rows; SV53 only; pooled rate, 2,000 machine-bootstrap resamples. "
+                 "Return/Repair is a selected population.")
+    ax1 = fig.add_axes([0.075, 0.22, 0.50, 0.49])
+    cats = [("12/1 inlet blocked, motor still running", "12/1\ninlet blocked,\nmotor running"),
+            ("12/2 inlet blocked and in error", "12/2\ninlet blocked\nand in error"),
+            ("type 12 airway blockage (values 1+2)", "All type 12\n(12/1 + 12/2)")]
+    _grouped_panel(ax1, r, cats, "Faults per 100 clean sessions", 1)
+    ax1.set_title("Per 100 sessions", fontsize=14, loc="left", color=INK)
+    ax2 = fig.add_axes([0.665, 0.22, 0.31, 0.49])
+    hrr = hr.copy()
+    cats2 = [("12/2 inlet blocked and in error", "12/2"), ("type 12 airway blockage (values 1+2)", "All type 12")]
+    _grouped_panel(ax2, hrr, cats2, "Faults per motor runtime hour", 2)
+    ax2.set_title("Per hour of motor runtime", fontsize=14, loc="left", color=INK)
+    handles = [Patch(color=h.COLORS[NORMAL], label="Normal"), Patch(color=h.COLORS[RR], label="Return/Repair"),
+               Patch(facecolor="#DDDDDD", edgecolor="#777777", hatch="//", label="12/1 shown lighter and hatched")]
+    ax1.legend(handles=handles, loc="upper left", frameon=False, fontsize=12)
+    return fig, _save(fig, "03_insight2_airway_blockage_sv53")
+
+
+def chart_insight3(R):
+    plt = _setup()
+    d, med = R["i3_data"], R["i3_medians"].set_index("cohort")
+    n = {c: int(med.loc[h.LABELS[c], "machines"]) for c in (NORMAL, RR)}
+    key = R["key"].set_index("id")
+    fig = _frame(plt, "Return/Repair machines run about 2x the motor minutes per day of Normal machines",
+                 "Motor runtime, minutes per day, one dot per machine; bar = median with 95%% interval. SV53 machines with a valid motor period: "
+                 "%d Normal, %d Return/Repair" % (n[NORMAL], n[RR]),
+                 "Source: fact_motor_period, analysis rows, valid periods; machine-level median, 2,000 machine-bootstrap resamples. "
+                 "Observation windows differ (median valid days: %d Normal, %d Return/Repair)." %
+                 (key.loc["i3_valid_days_normal", "value"], key.loc["i3_valid_days_return_repair", "value"]))
+    ax = fig.add_axes([0.10, 0.20, 0.58, 0.52])
+    rng = np.random.RandomState(1)
+    for i, c in enumerate((NORMAL, RR)):
+        v = d.loc[d.cohort == c, "motor_min_per_day"].values
+        ax.scatter(i + rng.uniform(-0.22, 0.22, len(v)), v, s=46, color=h.COLORS[c], alpha=0.6, linewidths=0, zorder=2)
+        m = med.loc[h.LABELS[c]]
+        ax.hlines(m["median"], i - 0.34, i + 0.34, color=INK, lw=3, zorder=4)
+        ax.errorbar(i + 0.42, m["median"], yerr=[[m["median"] - m["lo"]], [m["hi"] - m["median"]]], color=INK, capsize=7, lw=2, zorder=4)
+        ax.text(i + 0.50, m["median"], "median %s\n[%s to %s]" % (_fmt(m["median"], 2), _fmt(m["lo"], 2), _fmt(m["hi"], 2)),
+                ha="left", va="center", fontsize=13, fontweight="bold", color=INK)
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels(["Normal\n(%d machines)" % n[NORMAL], "Return/Repair\n(%d machines)" % n[RR]])
+    ax.set_xlim(-0.6, 2.1)
+    ax.set_ylim(0, d.motor_min_per_day.max() * 1.05)
+    ax.set_ylabel("Motor runtime (minutes per day)")
+    dd = key.loc["i3_diff_main"]
+    fig.text(0.72, 0.70, "Return/Repair minus Normal:\n%s min/day\n[%s to %s]\nratio %s\n\nDirection also holds:\n"
+             "ROW-PROD only, common calendar\nmonths (two versions), SV53-AB only\n(interval spans 0, 15 vs 22)." %
+             (_fmt(dd.value, 2), _fmt(dd.interval_low, 2), _fmt(dd.interval_high, 2), about(key.loc["i3_ratio_main", "value"])),
+             fontsize=13, color=INK, va="top")
+    return fig, _save(fig, "04_insight3_motor_minutes_per_day")
+
+
+def make_charts(R):
+    """Build and save all four charts. Returns {name: (figure, [paths])}."""
+    return {"dq": chart_dq(R), "insight1": chart_insight1(R), "insight2": chart_insight2(R), "insight3": chart_insight3(R)}
+
+
+def main():
+    R = compute()
+    p = write_key_numbers(R)
+    bad = R["step6_check"][~R["step6_check"].matches]
+    print("wrote", p, "(%d rows)" % len(R["key"]))
+    print("Step 6 consistency: %d checked, %d differ" % (len(R["step6_check"]), len(bad)))
+    if len(bad):
+        print(bad.to_string())
+    for name, (fig, paths) in make_charts(R).items():
+        print(name, [str(x.relative_to(ROOT)) for x in paths])
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

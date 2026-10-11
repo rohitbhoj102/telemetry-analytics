@@ -145,3 +145,23 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
 - **Why**: fix the scope for Step 7 before charts and the report are built.
 - **Found**: no new analysis; numbers in the final section are the 6b results.
 - **Next**: Step 7 (figures, including fault rate with and without 13/1).
+
+### Sun 11 Oct, 22:12
+- **Did**
+  - Step 7: added `src/insights.py` (all computation and the four final charts) and `notebooks/02_insights.ipynb` (calls it, shows tables and charts, executed end to end). Wrote `reports/insights/key_numbers.csv` (152 rows), `reports/insights/step6_consistency.csv`, `reports/insights/insight_cards.md` and four charts (PNG 200 dpi and SVG) in `reports/figures/final/`.
+  - Read only `data/model/`, plus the generated Step 3/4 reports for the DQ headline numbers (cross-checked against the model). No pipeline or earlier output changed.
+- **Why**: finalise the three insights chosen at the Step 6 gate with the pooled-rate method and consistent charts for the slides.
+- **Found**
+  - All 61 numbers repeated from Step 6/6b match when recomputed; no difference.
+  - Insight 1: Normal SV50 16.5 vs SV53 4.3 faults per 100 sessions; Filter Wash 81% of the gap; excluding it the gap is -2.3 (interval -5.3 to 0.7).
+  - Insight 2 (SV53): type 12 per 100 sessions RR 13.1 vs Normal 2.8 (about 5x); 12/2 alone 6.5 vs 1.1; per runtime hour 1.73 vs 0.32.
+  - Insight 3: motor minutes per day RR 4.87 vs Normal 2.38 (about 2x).
+  - Under SV53-only, RR is also higher for Filter Wash (+4.1, interval 0.2 to 9.7), so the insight 1 claim is about model mix in total counts, not that Filter Wash is unrelated to cohort.
+- **Next**: review the cards and charts; then the dashboard and slides (not started).
+
+### Sun 11 Oct, 22:20
+- **Did**
+  - Step 7 review changes: `key_numbers.csv` now has `n_denominator` and `denominator_unit` (clean sessions, motor runtime hours or raw rows) beside the numerator in `n_events_or_sessions`; DQ rows name their source report in `script_or_cell`. Chart 02 now marks and states the like-for-like comparison (Return/Repair SV53 vs Normal SV53, difference 14.4 [2.4, 34.4], not vs Normal SV50). Insight 3 card caveats now state the window difference (median 91 vs 240 valid days) and the SV53-AB result (2.50 [-0.45, 5.38], interval spans 0). Re-ran `src/insights.py` and the notebook.
+- **Why**: make each rate self-explanatory and stop the model-mix comparison being misread.
+- **Found**: Step 6/6b consistency check still passes (61 checked, 0 differ). No numbers changed.
+- **Next**: review, then dashboard and slides (not started).

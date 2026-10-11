@@ -75,15 +75,24 @@ cd notebooks && jupyter nbconvert --to notebook --execute --inplace 01_eda_short
 
 The notebook reads only `data/model/` (helpers in `src/eda_helpers.py`), keeps its outputs in the notebook, and writes `reports/eda/shortlist.md` and the figures in `reports/figures/eda/`. Run it from the `notebooks/` folder (it imports `../src`).
 
-TODO: remaining pipeline steps (analysis, dashboard).
+Final insights (Step 7), after `model.py`, from the repo root with the virtual environment active:
+
+```bash
+python src/insights.py   # reports/insights/key_numbers.csv, step6_consistency.csv, reports/figures/final/*.png and *.svg
+cd notebooks && jupyter nbconvert --to notebook --execute --inplace 02_insights.ipynb
+```
+
+`src/insights.py` holds all Step 7 computation (pooled fault rates with machine-resampled bootstrap intervals; machine-level medians for continuous measures) and the four final charts. It reads `data/model/`; the DQ headline numbers come from the generated reports in `reports/profiling/` and `reports/dq/` and are cross-checked against the model. `reports/insights/key_numbers.csv` has one row per number used downstream, `step6_consistency.csv` compares the numbers repeated from Step 6/6b, and `reports/insights/insight_cards.md` has the write-up of each insight with its caveats. `02_insights.ipynb` calls the module and shows the tables and charts.
+
+TODO: remaining pipeline steps (dashboard).
 
 ## Repo structure
 ```
 normal_machines/, return_repair_machines/, reference_files/   raw inputs (read-only, git-ignored)
-src/            profiling, parsing, build_clean.py, dq.py, model.py, eda_helpers.py (Step 6 helpers), field_meanings.py (field meanings in one place)
+src/            profiling, parsing, build_clean.py, dq.py, model.py, eda_helpers.py (Step 6 helpers), insights.py (Step 7 numbers and charts), field_meanings.py (field meanings in one place)
 data/clean/     parsed tables (Step 3); data/clean/dq/ flagged tables with is_analysis_row (Step 4)
 data/model/     star schema, Parquet + CSV (Step 5, Tableau source)
-reports/        profiling/, dq/, model/ (generated checks and summaries); eda/ (shortlist.md, Step 6); figures/ and figures/eda/ (Step 6 charts)
+reports/        profiling/, dq/, model/ (generated checks and summaries); eda/ (shortlist.md, Step 6); insights/ (key_numbers.csv, insight_cards.md, Step 7); figures/eda/ (Step 6 charts) and figures/final/ (Step 7 charts, PNG and SVG)
 docs/           assumptions_log.md, worklog.md, parsing_spec.md, erd.md, productionization.md
-notebooks/      EDA and presentation notebooks (01_eda_shortlist.ipynb, Step 6)
+notebooks/      EDA and presentation notebooks (01_eda_shortlist.ipynb, Step 6; 02_insights.ipynb, Step 7)
 ```
