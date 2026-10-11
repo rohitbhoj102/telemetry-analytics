@@ -95,3 +95,21 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
 
 ### Sun 11 Oct, 18:00
 - **Did**: renamed `flag_temp_conflict` to `flag_temp_not_reported` in `src/dq.py` (it marks rows with no temperature flag true; same rows as `battery_temp_state = not_reported`) and updated the summary wording; re-ran `dq.py`. Earlier log rows that say `flag_temp_conflict` refer to this flag under its old name.
+
+### Sun 11 Oct, 18:15
+- **Did**
+  - Step 5: wrote `src/model.py` and ran it. Outputs in `data/model/` (Parquet and CSV): `dim_machine`, `dim_date`, `fact_session`, `fact_fault`, `fact_motor_period`, `fact_battery_period`, `machine_summary`. Validation and counts in `reports/model/` (`model_checks.csv`, `table_row_counts.csv`, `period_summary.csv`).
+  - Wrote `docs/erd.md` (Mermaid ERD and grain of each table) and `docs/productionization.md` (bronze/silver/gold flowchart and notes). Updated README run steps and repo structure. Logged the Step 5 decisions and limitations in `docs/assumptions_log.md`.
+- **Why**: turn the flagged analysis rows into a star schema with per-period deltas, the Tableau source and a per-machine summary, before EDA (Steps 6-7).
+- **Found**
+  - Rows: sessions 30,832 Normal / 4,641 RR; faults 3,674 / 861; motor periods 394 / 444; battery periods 523 / 365; 232 machines.
+  - 53 checks pass, 0 fail. Invalid periods: 27 (all Normal battery, `counter_decrease`); motor 0.
+  - Fault-to-session link: 99.36% (4,506 of 4,535).
+  - Blanking fault metrics for machines absent from the faults table changes the Step 4 medians (Normal 6.53 to 10.64, RR 9.69 to 14.95, primary rule). This is logged as an open question.
+- **Next**: review the Step 5 open questions, then Step 6 (EDA shortlist) when opened. No cohort interpretation was done in this step.
+
+### Sun 11 Oct, 18:30
+- **Did**: applied the answers to the Step 5 open questions in `src/model.py`: fault rates in `machine_summary` are zero-filled for machines with >= 10 sessions and no fault rows [assumed]; added sensitivity columns `faults_per_100_fault_machines_only_primary` / `_status_rule`. Re-ran `model.py`; updated `docs/erd.md`.
+- **Why**: absence from the fault event log is treated as no faults (user decision); the blanked version stays visible as a sensitivity check.
+- **Found**: 53 checks pass, 0 fail. Medians per cohort (primary / status rule): Normal zero-filled 6.53 / 10.67 (158 machines), fault-table machines only 10.64 / 14.47 (137); Return/Repair zero-filled 9.69 / 15.50 (36), fault-table machines only 14.95 / 18.09 (32). Zero-filled values equal Step 4, so the earlier contradiction is gone.
+- **Next**: Step 6 when opened.

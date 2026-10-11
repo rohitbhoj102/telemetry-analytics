@@ -59,7 +59,23 @@ python src/dq.py   # data/clean/dq/*.parquet (flagged tables + machine_dq), repo
 
 `dq.py` never changes the Step 3 outputs. Each table in `data/clean/dq/` has every original column, `dup_class` / `dup_keep` and other `flag_*` columns, cleaned analysis columns (`*_clean`) and `is_analysis_row`; later steps use only rows with `is_analysis_row = True` (faults also have `is_analysis_row_status_rule` for the sensitivity count). Raw values are never overwritten and no row is deleted. The run exits non-zero if an original column's row or non-null count changes. `reports/dq/dq_summary.csv` has one row per check and cohort (`check, table, cohort, rows_affected, pct, action_taken`); the basis of each count is in the check name.
 
-TODO: remaining pipeline steps (deltas, model, analysis, dashboard).
+Data model (Step 5), after `dq.py`:
+
+```bash
+python src/model.py   # data/model/*.parquet and *.csv, reports/model/model_checks.csv, table_row_counts.csv, period_summary.csv
+```
+
+`model.py` reads only analysis rows from `data/clean/dq/` and writes a star schema: `dim_machine`, `dim_date`, `fact_session`, `fact_fault`, `fact_motor_period`, `fact_battery_period` and `machine_summary`. Motor and battery facts are one row per interval between consecutive snapshots (with `days_elapsed`), and a counter decrease makes that period's deltas missing (`delta_valid = False`) rather than being treated as a reset. The CSV files are the Tableau source. The run exits non-zero, and writes no tables, if any validation check fails. Grain, keys and rules are in `docs/erd.md`; the production sketch is in `docs/productionization.md`.
+
+TODO: remaining pipeline steps (analysis, dashboard).
 
 ## Repo structure
-TODO
+```
+normal_machines/, return_repair_machines/, reference_files/   raw inputs (read-only, git-ignored)
+src/            profiling, parsing, build_clean.py, dq.py, model.py, field_meanings.py (field meanings in one place)
+data/clean/     parsed tables (Step 3); data/clean/dq/ flagged tables with is_analysis_row (Step 4)
+data/model/     star schema, Parquet + CSV (Step 5, Tableau source)
+reports/        profiling/, dq/, model/ (generated checks and summaries); figures/
+docs/           assumptions_log.md, worklog.md, parsing_spec.md, erd.md, productionization.md
+notebooks/      EDA and presentation notebooks
+```

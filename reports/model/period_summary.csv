@@ -1,0 +1,5 @@
+table,cohort,periods,valid,invalid_counter_decrease,zero_days_elapsed,ts_fallback_any,machines,median_days_elapsed
+fact_motor_period,normal,394,394,0,0,0,54,21.971846
+fact_motor_period,return_repair,444,444,0,0,0,36,7.528767
+fact_battery_period,normal,523,496,27,0,2,25,7.015718
+fact_battery_period,return_repair,365,365,0,0,0,36,7.896146
