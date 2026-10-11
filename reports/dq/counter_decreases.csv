@@ -1,0 +1,15 @@
+table,stage,pack_type,cohort,rows,serials,pairs,pairs_with_decrease,serials_with_decrease,pairs_same_event_ts
+motor,before_reupload_removal,all,normal,470,76,394,0,0,0
+motor,before_reupload_removal,all,return_repair,564,44,520,0,0,72
+motor,after_reupload_removal,all,normal,470,76,394,0,0,0
+motor,after_reupload_removal,all,return_repair,488,44,444,0,0,0
+battery,before_reupload_removal,all,normal,1250,28,1222,27,11,687
+battery,before_reupload_removal,all,return_repair,542,42,500,0,0,132
+battery,before_reupload_removal,4-cell,normal,1077,18,1059,26,10,659
+battery,before_reupload_removal,7-cell,normal,173,10,163,1,1,28
+battery,before_reupload_removal,7-cell,return_repair,542,42,500,0,0,132
+battery,after_reupload_removal,all,normal,551,28,523,27,11,0
+battery,after_reupload_removal,all,return_repair,407,42,365,0,0,0
+battery,after_reupload_removal,4-cell,normal,418,18,400,26,10,0
+battery,after_reupload_removal,7-cell,normal,133,10,123,1,1,0
+battery,after_reupload_removal,7-cell,return_repair,407,42,365,0,0,0

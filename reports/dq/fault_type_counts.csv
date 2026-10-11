@@ -1,0 +1,20 @@
+cohort,fault_type,fault_value,fault_status,rows_raw,occurrences_primary,occurrences_status_rule,meaning_in_brief
+normal,11,2,1,1,1,1,Battery Temperature: HOT
+normal,12,1,0,1035,92,223,"Airway Blockage: inlet blocked, motor still running"
+normal,12,1,1,2258,158,247,"Airway Blockage: inlet blocked, motor still running"
+normal,12,1,,681,636,638,"Airway Blockage: inlet blocked, motor still running"
+normal,12,2,0,923,32,98,Airway Blockage: inlet blocked and in error
+normal,12,2,1,1503,84,115,Airway Blockage: inlet blocked and in error
+normal,12,2,,336,302,302,Airway Blockage: inlet blocked and in error
+normal,13,1,0,825,65,170,Filter Wash: needs cleaning
+normal,13,1,1,1671,246,305,Filter Wash: needs cleaning
+normal,13,1,,2216,2058,2060,Filter Wash: needs cleaning
+return_repair,12,1,0,1564,33,111,"Airway Blockage: inlet blocked, motor still running"
+return_repair,12,1,1,6846,82,115,"Airway Blockage: inlet blocked, motor still running"
+return_repair,12,1,,195,188,188,"Airway Blockage: inlet blocked, motor still running"
+return_repair,12,2,0,2568,44,119,Airway Blockage: inlet blocked and in error
+return_repair,12,2,1,4733,75,119,Airway Blockage: inlet blocked and in error
+return_repair,12,2,,186,182,182,Airway Blockage: inlet blocked and in error
+return_repair,13,1,0,751,34,81,Filter Wash: needs cleaning
+return_repair,13,1,1,2925,49,83,Filter Wash: needs cleaning
+return_repair,13,1,,189,174,174,Filter Wash: needs cleaning

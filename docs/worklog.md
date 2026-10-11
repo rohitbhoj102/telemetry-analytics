@@ -72,3 +72,26 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
 - **Why**: avoid presenting one typical lag when it depends on how duplicates are counted; stop motor variant codes from creating false multi-model machines.
 - **Found**: fault lag median is 2.5 h on raw rows, 31.9 / 13.1 h (Normal / RR) with exact duplicates removed, and 167.6 / 96.2 h with one row per fault event; p90 reaches 2,086 h. `date` >= `fault_timestamp` in all but 13 rows. Multi-model serials: 0 in both cohorts.
 - **Next**: Step 4 (duplicate classification and flags, DQ checks). Not started.
+
+### Sun 11 Oct, 17:30
+- **Did**
+  - Step 4: wrote `src/dq.py` (reusable check functions; one code path for both cohorts) and ran it. Outputs: flagged tables `data/clean/dq/{clean_sessions,faults,motor,battery}.parquet`, `machine_dq.parquet`, `reports/dq/dq_summary.csv` plus detail CSVs (`missingness`, `value_ranges`, `outlier_thresholds`, `counter_decreases*`, `coverage`, `fault_type_counts`, `fault_rate_sensitivity`, `motor_variant_structure`).
+  - Added `FAULT_TYPES` (brief meanings only) to `src/field_meanings.py`; moved the Step 1 serial-coverage and fault type/value counts into `dq.py`. README run steps updated. Recorded the decisions, limitations and numbers in `docs/assumptions_log.md`.
+- **Why**: classify duplicates, flag invalid values and outliers, and define the analysis rows before deltas and the model (Steps 5-6).
+- **Found**
+  - Analysis rows: sessions 30,832 Normal / 4,641 RR; faults 3,674 / 861 (primary) and 4,159 / 1,172 (status rule); motor 470 / 488; battery 551 / 407. Sessions and faults match the sanity expectations; RR battery is 407 against about 411 (hash-only grouping merges 3 more than the Step 2 grouping; 1 unexplained).
+  - Largest data issues: 94.8% of battery rows are empty payloads; 78% of fault rows are exact copies; 24.7% of session rows are fan-out/copies; dust 65535 in 9% (Normal) / 26% (RR) of analysis sessions; no temperature flag true in 47% of Normal sessions; `log3_time_sync_old` = 0 in 58% of Normal sessions.
+  - Counter decreases: none in motor; 27 pairs in Normal battery (26 in the 4-cell pack), none in RR; re-upload removal does not change them.
+  - Median faults per 100 sessions per machine differs by rule (Normal 6.5 vs 10.7; RR 9.7 vs 15.5).
+  - Only 6 Normal machines are in all four tables (33 RR).
+  - The 683 / 692B motor rows have the same payload structure as the others.
+- **Next**: review the Step 4 decisions and open questions, then Step 5 (deltas, `dim_machine`, star schema) when opened.
+
+### Sun 11 Oct, 17:50
+- **Did**: recorded the user's answers on the Step 4 open questions (zero-duration handling kept; hash-only re-upload grouping kept with rationale). Added `battery_temp_state` to the DQ sessions table and summary (`src/dq.py`), re-ran `dq.py`. Logged the temperature-comparability and cohort-recording limitations.
+- **Why**: stop the temperature flags and other differently-recorded fields from being used in cohort contrasts by mistake.
+- **Found**: analysis-row counts unchanged. `not_reported` is 14,494 Normal (47.0%) and 150 RR (3.2%); no true conflicts.
+- **Next**: Step 5 when opened.
+
+### Sun 11 Oct, 18:00
+- **Did**: renamed `flag_temp_conflict` to `flag_temp_not_reported` in `src/dq.py` (it marks rows with no temperature flag true; same rows as `battery_temp_state = not_reported`) and updated the summary wording; re-ran `dq.py`. Earlier log rows that say `flag_temp_conflict` refer to this flag under its old name.

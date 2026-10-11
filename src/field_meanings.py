@@ -303,3 +303,16 @@ def column_dictionary():
                  "source": "eventLog.events|faults[].cellVolt", "unit": UNKNOWN, "status": INFERRED_NAME,
                  "note": SNAPSHOT_NOTES["cell_volt_min_raw"]})
     return rows
+
+
+# ---------------------------------------------------------------------------
+# Fault types stated in the brief (used by src/dq.py). Any type not listed here has NO stated meaning.
+# fault_type -> (name, {fault_value: meaning}).  fault_status (0/1) is NOT defined anywhere: unknown.
+# ---------------------------------------------------------------------------
+FAULT_TYPES = {
+    12: ("Airway Blockage", {0: "not blocked", 1: "inlet blocked, motor still running",
+                             2: "inlet blocked and in error", 3: "outlet blocked and in error"}),
+    7: ("Brush Bar Stall", {}),  # fault_value N/A (stall detected)
+    11: ("Battery Temperature", {0: "OK", 1: "COLD", 2: "HOT"}),
+    13: ("Filter Wash", {0: "OK", 1: "needs cleaning"}),
+}

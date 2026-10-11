@@ -1,0 +1,4 @@
+cohort,machines_with_ge_10_sessions,median_faults_per_100_sessions_primary,median_faults_per_100_sessions_status_rule,total_faults_primary,total_faults_status_rule
+normal,158,6.534090909090909,10.668563300142248,3658,4142
+return_repair,36,9.68835080808666,15.504807692307693,859,1169
+all,194,7.6923076923076925,11.202689243027889,4517,5311

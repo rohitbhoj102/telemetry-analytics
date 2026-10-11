@@ -1,0 +1,388 @@
+check,table,cohort,rows_affected,pct,action_taken
+"dup_class=exact_copy, not kept [all rows]",clean_sessions,normal,73,0.18,"dup_keep=False for all but one (earliest date_server, then lowest source_row); not an analysis row"
+"dup_class=exact_copy, not kept [all rows]",clean_sessions,return_repair,12,0.18,"dup_keep=False for all but one (earliest date_server, then lowest source_row); not an analysis row"
+"dup_class=exact_copy, not kept [all rows]",clean_sessions,all,85,0.18,"dup_keep=False for all but one (earliest date_server, then lowest source_row); not an analysis row"
+"dup_class=join_fanout, not kept [all rows]",clean_sessions,normal,9722,23.93,"same serial+session_id+date_server, differs only in log3_time_sync_*; one kept [assumed: join artefact]"
+"dup_class=join_fanout, not kept [all rows]",clean_sessions,return_repair,1912,29.12,"same serial+session_id+date_server, differs only in log3_time_sync_*; one kept [assumed: join artefact]"
+"dup_class=join_fanout, not kept [all rows]",clean_sessions,all,11634,24.65,"same serial+session_id+date_server, differs only in log3_time_sync_*; one kept [assumed: join artefact]"
+"dup_class=exact_copy or join_fanout, any member of a group [all rows]",clean_sessions,normal,11590,28.53,informational: rows in a duplicate group incl. the kept one
+"dup_class=exact_copy or join_fanout, any member of a group [all rows]",clean_sessions,return_repair,2097,31.94,informational: rows in a duplicate group incl. the kept one
+"dup_class=exact_copy or join_fanout, any member of a group [all rows]",clean_sessions,all,13687,29.0,informational: rows in a duplicate group incl. the kept one
+flag_key_conflict: same serial+session_id+date_server but different measured columns [all rows],clean_sessions,normal,4,0.01,all rows kept (not merged); flag only
+flag_key_conflict: same serial+session_id+date_server but different measured columns [all rows],clean_sessions,return_repair,10,0.15,all rows kept (not merged); flag only
+flag_key_conflict: same serial+session_id+date_server but different measured columns [all rows],clean_sessions,all,14,0.03,all rows kept (not merged); flag only
+is_analysis_row [all rows],clean_sessions,normal,30832,75.89,rows used from Step 5
+is_analysis_row [all rows],clean_sessions,return_repair,4641,70.69,rows used from Step 5
+is_analysis_row [all rows],clean_sessions,all,35473,75.17,rows used from Step 5
+flag_null_fault_ts [all rows],faults,normal,7,0.06,flagged and excluded from both analysis flags
+flag_null_fault_ts [all rows],faults,return_repair,1,0.01,flagged and excluded from both analysis flags
+flag_null_fault_ts [all rows],faults,all,8,0.03,flagged and excluded from both analysis flags
+"dup_class=exact_copy, not kept [all rows]",faults,normal,6406,55.95,identical in all raw columns; not kept
+"dup_class=exact_copy, not kept [all rows]",faults,return_repair,18196,91.18,identical in all raw columns; not kept
+"dup_class=exact_copy, not kept [all rows]",faults,all,24602,78.34,identical in all raw columns; not kept
+"dup_class=reupload, not kept [all rows]",faults,normal,882,7.7,"same occurrence key + fault_status, differs in other columns (e.g. date_server); earliest date_server kept [assumed: re-upload of one event]"
+"dup_class=reupload, not kept [all rows]",faults,return_repair,588,2.95,"same occurrence key + fault_status, differs in other columns (e.g. date_server); earliest date_server kept [assumed: re-upload of one event]"
+"dup_class=reupload, not kept [all rows]",faults,all,1470,4.68,"same occurrence key + fault_status, differs in other columns (e.g. date_server); earliest date_server kept [assumed: re-upload of one event]"
+flag_occ_multi_status: occurrence key seen with more than one fault_status (incl. null) [all rows],faults,normal,6828,59.64,"informational; meaning of fault_status unknown, so both counting rules are kept"
+flag_occ_multi_status: occurrence key seen with more than one fault_status (incl. null) [all rows],faults,return_repair,18677,93.59,"informational; meaning of fault_status unknown, so both counting rules are kept"
+flag_occ_multi_status: occurrence key seen with more than one fault_status (incl. null) [all rows],faults,all,25505,81.21,"informational; meaning of fault_status unknown, so both counting rules are kept"
+is_analysis_row (primary: one per serial+session_id+fault_type+fault_value+fault_timestamp) [all rows],faults,normal,3674,32.09,primary fault count; does not depend on fault_status
+is_analysis_row (primary: one per serial+session_id+fault_type+fault_value+fault_timestamp) [all rows],faults,return_repair,861,4.31,primary fault count; does not depend on fault_status
+is_analysis_row (primary: one per serial+session_id+fault_type+fault_value+fault_timestamp) [all rows],faults,all,4535,14.44,primary fault count; does not depend on fault_status
+is_analysis_row_status_rule (primary key + fault_status) [all rows],faults,normal,4159,36.33,sensitivity count
+is_analysis_row_status_rule (primary key + fault_status) [all rows],faults,return_repair,1172,5.87,sensitivity count
+is_analysis_row_status_rule (primary key + fault_status) [all rows],faults,all,5331,16.97,sensitivity count
+fault_status null [analysis rows],faults,normal,3000,72.13,informational; null is its own level in the status rule
+fault_status null [analysis rows],faults,return_repair,544,46.42,informational; null is its own level in the status rule
+fault_status null [analysis rows],faults,all,3544,66.48,informational; null is its own level in the status rule
+"dup_class=reupload, not kept (same serial+payload_hash) [parsed rows]",motor,normal,0,0.0,"earliest server_timestamp kept, then lowest source_row; not an analysis row"
+"dup_class=reupload, not kept (same serial+payload_hash) [parsed rows]",motor,return_repair,76,13.48,"earliest server_timestamp kept, then lowest source_row; not an analysis row"
+"dup_class=reupload, not kept (same serial+payload_hash) [parsed rows]",motor,all,76,7.35,"earliest server_timestamp kept, then lowest source_row; not an analysis row"
+re-upload groups whose hdr_timestamp differs [parsed rows],motor,normal,0,0.0,informational: identical payload under different device timestamps; collapsed by payload_hash per project decision
+re-upload groups whose hdr_timestamp differs [parsed rows],motor,return_repair,8,1.42,informational: identical payload under different device timestamps; collapsed by payload_hash per project decision
+re-upload groups whose hdr_timestamp differs [parsed rows],motor,all,8,0.77,informational: identical payload under different device timestamps; collapsed by payload_hash per project decision
+is_analysis_row [all rows],motor,normal,470,100.0,"parsed and first of its (serial, payload_hash) group"
+is_analysis_row [all rows],motor,return_repair,488,86.52,"parsed and first of its (serial, payload_hash) group"
+is_analysis_row [all rows],motor,all,958,92.65,"parsed and first of its (serial, payload_hash) group"
+"dup_class=reupload, not kept (same serial+payload_hash) [parsed rows]",battery,normal,699,55.92,"earliest server_timestamp kept, then lowest source_row; not an analysis row"
+"dup_class=reupload, not kept (same serial+payload_hash) [parsed rows]",battery,return_repair,135,24.91,"earliest server_timestamp kept, then lowest source_row; not an analysis row"
+"dup_class=reupload, not kept (same serial+payload_hash) [parsed rows]",battery,all,834,46.54,"earliest server_timestamp kept, then lowest source_row; not an analysis row"
+re-upload groups whose hdr_timestamp differs [parsed rows],battery,normal,0,0.0,informational: identical payload under different device timestamps; collapsed by payload_hash per project decision
+re-upload groups whose hdr_timestamp differs [parsed rows],battery,return_repair,6,1.11,informational: identical payload under different device timestamps; collapsed by payload_hash per project decision
+re-upload groups whose hdr_timestamp differs [parsed rows],battery,all,6,0.33,informational: identical payload under different device timestamps; collapsed by payload_hash per project decision
+is_analysis_row [all rows],battery,normal,551,19.92,"parsed and first of its (serial, payload_hash) group"
+is_analysis_row [all rows],battery,return_repair,407,1.25,"parsed and first of its (serial, payload_hash) group"
+is_analysis_row [all rows],battery,all,958,2.71,"parsed and first of its (serial, payload_hash) group"
+parse_status=empty_payload [all rows],battery,normal,1516,54.81,"no decoded_data; not an analysis row; serials: normal=9, return_repair=5"
+parse_status=empty_payload [all rows],battery,return_repair,32033,98.22,"no decoded_data; not an analysis row; serials: normal=9, return_repair=5"
+parse_status=empty_payload [all rows],battery,all,33549,94.82,"no decoded_data; not an analysis row; serials: normal=9, return_repair=5"
+parse_status=unparsed_layout [all rows],battery,normal,0,0.0,"labelled/flat layout left unparsed (project decision); not an analysis row; serials: normal=0, return_repair=2"
+parse_status=unparsed_layout [all rows],battery,return_repair,39,0.12,"labelled/flat layout left unparsed (project decision); not an analysis row; serials: normal=0, return_repair=2"
+parse_status=unparsed_layout [all rows],battery,all,39,0.11,"labelled/flat layout left unparsed (project decision); not an analysis row; serials: normal=0, return_repair=2"
+ultra_fine_dust_particle_mass = 65535 [analysis rows],clean_sessions,normal,2517,8.16,set to missing in ultra_fine_dust_particle_mass_clean [inferred: sentinel for no reading]
+ultra_fine_dust_particle_mass = 65535 [analysis rows],clean_sessions,return_repair,1119,24.11,set to missing in ultra_fine_dust_particle_mass_clean [inferred: sentinel for no reading]
+ultra_fine_dust_particle_mass = 65535 [analysis rows],clean_sessions,all,3636,10.25,set to missing in ultra_fine_dust_particle_mass_clean [inferred: sentinel for no reading]
+fine_dust_particle_mass = 65535 [analysis rows],clean_sessions,normal,1516,4.92,set to missing in fine_dust_particle_mass_clean [inferred: sentinel for no reading]
+fine_dust_particle_mass = 65535 [analysis rows],clean_sessions,return_repair,561,12.09,set to missing in fine_dust_particle_mass_clean [inferred: sentinel for no reading]
+fine_dust_particle_mass = 65535 [analysis rows],clean_sessions,all,2077,5.86,set to missing in fine_dust_particle_mass_clean [inferred: sentinel for no reading]
+coarse_dust_particle_mass = 65535 [analysis rows],clean_sessions,normal,584,1.89,set to missing in coarse_dust_particle_mass_clean [inferred: sentinel for no reading]
+coarse_dust_particle_mass = 65535 [analysis rows],clean_sessions,return_repair,159,3.43,set to missing in coarse_dust_particle_mass_clean [inferred: sentinel for no reading]
+coarse_dust_particle_mass = 65535 [analysis rows],clean_sessions,all,743,2.09,set to missing in coarse_dust_particle_mass_clean [inferred: sentinel for no reading]
+large_dust_particle_mass = 65535 [analysis rows],clean_sessions,normal,943,3.06,set to missing in large_dust_particle_mass_clean [inferred: sentinel for no reading]
+large_dust_particle_mass = 65535 [analysis rows],clean_sessions,return_repair,217,4.68,set to missing in large_dust_particle_mass_clean [inferred: sentinel for no reading]
+large_dust_particle_mass = 65535 [analysis rows],clean_sessions,all,1160,3.27,set to missing in large_dust_particle_mass_clean [inferred: sentinel for no reading]
+flag_dust_sentinel (any dust column = 65535) [analysis rows],clean_sessions,normal,2823,9.16,see per-column rows
+flag_dust_sentinel (any dust column = 65535) [analysis rows],clean_sessions,return_repair,1214,26.16,see per-column rows
+flag_dust_sentinel (any dust column = 65535) [analysis rows],clean_sessions,all,4037,11.38,see per-column rows
+battery_charge_start outside 0-100 [analysis rows],clean_sessions,normal,2,0.01,set to missing in battery_charge_start_clean; row kept
+battery_charge_start outside 0-100 [analysis rows],clean_sessions,return_repair,0,0.0,set to missing in battery_charge_start_clean; row kept
+battery_charge_start outside 0-100 [analysis rows],clean_sessions,all,2,0.01,set to missing in battery_charge_start_clean; row kept
+battery_charge_end outside 0-100 [analysis rows],clean_sessions,normal,1,0.0,set to missing in battery_charge_end_clean; row kept
+battery_charge_end outside 0-100 [analysis rows],clean_sessions,return_repair,0,0.0,set to missing in battery_charge_end_clean; row kept
+battery_charge_end outside 0-100 [analysis rows],clean_sessions,all,1,0.0,set to missing in battery_charge_end_clean; row kept
+battery_health outside 0-100 [analysis rows],clean_sessions,normal,0,0.0,set to missing in battery_health_clean; row kept
+battery_health outside 0-100 [analysis rows],clean_sessions,return_repair,0,0.0,set to missing in battery_health_clean; row kept
+battery_health outside 0-100 [analysis rows],clean_sessions,all,0,0.0,set to missing in battery_health_clean; row kept
+flag_charge_gain: charge_end > charge_start (after range cleaning) [analysis rows],clean_sessions,normal,33,0.11,values kept; battery_drain_clean left missing for these rows (drain metrics only)
+flag_charge_gain: charge_end > charge_start (after range cleaning) [analysis rows],clean_sessions,return_repair,8,0.17,values kept; battery_drain_clean left missing for these rows (drain metrics only)
+flag_charge_gain: charge_end > charge_start (after range cleaning) [analysis rows],clean_sessions,all,41,0.12,values kept; battery_drain_clean left missing for these rows (drain metrics only)
+flag_temp_not_reported: none of hot/cold/ok true [analysis rows],clean_sessions,normal,14494,47.01,flag only; equals battery_temp_state = not_reported; 2-3 true would be 'conflict' (see state rows); all three null is reported separately
+flag_temp_not_reported: none of hot/cold/ok true [analysis rows],clean_sessions,return_repair,150,3.23,flag only; equals battery_temp_state = not_reported; 2-3 true would be 'conflict' (see state rows); all three null is reported separately
+flag_temp_not_reported: none of hot/cold/ok true [analysis rows],clean_sessions,all,14644,41.28,flag only; equals battery_temp_state = not_reported; 2-3 true would be 'conflict' (see state rows); all three null is reported separately
+2 of the 3 temperature flags true (conflict) [analysis rows],clean_sessions,normal,0,0.0,breakdown
+2 of the 3 temperature flags true (conflict) [analysis rows],clean_sessions,return_repair,0,0.0,breakdown
+2 of the 3 temperature flags true (conflict) [analysis rows],clean_sessions,all,0,0.0,breakdown
+3 of the 3 temperature flags true (conflict) [analysis rows],clean_sessions,normal,0,0.0,breakdown
+3 of the 3 temperature flags true (conflict) [analysis rows],clean_sessions,return_repair,0,0.0,breakdown
+3 of the 3 temperature flags true (conflict) [analysis rows],clean_sessions,all,0,0.0,breakdown
+battery_temp_state = hot [analysis rows],clean_sessions,normal,7,0.02,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = hot [analysis rows],clean_sessions,return_repair,0,0.0,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = hot [analysis rows],clean_sessions,all,7,0.02,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = cold [analysis rows],clean_sessions,normal,0,0.0,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = cold [analysis rows],clean_sessions,return_repair,0,0.0,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = cold [analysis rows],clean_sessions,all,0,0.0,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = ok [analysis rows],clean_sessions,normal,16331,52.97,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = ok [analysis rows],clean_sessions,return_repair,4491,96.77,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = ok [analysis rows],clean_sessions,all,20822,58.7,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = not_reported [analysis rows],clean_sessions,normal,14494,47.01,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = not_reported [analysis rows],clean_sessions,return_repair,150,3.23,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = not_reported [analysis rows],clean_sessions,all,14644,41.28,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = conflict [analysis rows],clean_sessions,normal,0,0.0,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = conflict [analysis rows],clean_sessions,return_repair,0,0.0,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+battery_temp_state = conflict [analysis rows],clean_sessions,all,0,0.0,derived column; not_reported = no flag true (project decision); not comparable across cohorts
+flag_temp_all_null: all three temperature flags null [analysis rows],clean_sessions,normal,0,0.0,flag only
+flag_temp_all_null: all three temperature flags null [analysis rows],clean_sessions,return_repair,0,0.0,flag only
+flag_temp_all_null: all three temperature flags null [analysis rows],clean_sessions,all,0,0.0,flag only
+clean_duration = 0 [analysis rows],clean_sessions,normal,170,0.55,flag_duration_nonpositive; set to missing in clean_duration_clean
+clean_duration = 0 [analysis rows],clean_sessions,return_repair,24,0.52,flag_duration_nonpositive; set to missing in clean_duration_clean
+clean_duration = 0 [analysis rows],clean_sessions,all,194,0.55,flag_duration_nonpositive; set to missing in clean_duration_clean
+clean_duration < 0 [analysis rows],clean_sessions,normal,0,0.0,flag_duration_nonpositive; set to missing in clean_duration_clean
+clean_duration < 0 [analysis rows],clean_sessions,return_repair,0,0.0,flag_duration_nonpositive; set to missing in clean_duration_clean
+clean_duration < 0 [analysis rows],clean_sessions,all,0,0.0,flag_duration_nonpositive; set to missing in clean_duration_clean
+rows with a negative value in any numeric column [analysis rows],motor,normal,0,0.0,no rule applied; counts only
+rows with a negative value in any numeric column [analysis rows],motor,return_repair,0,0.0,no rule applied; counts only
+rows with a negative value in any numeric column [analysis rows],motor,all,0,0.0,no rule applied; counts only
+rows with a value equal to 255 in any numeric column [analysis rows],motor,normal,8,1.7,no rule applied; 255 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 255 in any numeric column [analysis rows],motor,return_repair,6,1.23,no rule applied; 255 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 255 in any numeric column [analysis rows],motor,all,14,1.46,no rule applied; 255 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 65535 in any numeric column [analysis rows],motor,normal,146,31.06,no rule applied; 65535 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 65535 in any numeric column [analysis rows],motor,return_repair,100,20.49,no rule applied; 65535 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 65535 in any numeric column [analysis rows],motor,all,246,25.68,no rule applied; 65535 may be a real count or a saturation value (unknown); counts only
+rows with a negative value in any numeric column [analysis rows],battery,normal,0,0.0,no rule applied; counts only
+rows with a negative value in any numeric column [analysis rows],battery,return_repair,0,0.0,no rule applied; counts only
+rows with a negative value in any numeric column [analysis rows],battery,all,0,0.0,no rule applied; counts only
+rows with a value equal to 255 in any numeric column [analysis rows],battery,normal,13,2.36,no rule applied; 255 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 255 in any numeric column [analysis rows],battery,return_repair,3,0.74,no rule applied; 255 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 255 in any numeric column [analysis rows],battery,all,16,1.67,no rule applied; 255 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 65535 in any numeric column [analysis rows],battery,normal,0,0.0,no rule applied; 65535 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 65535 in any numeric column [analysis rows],battery,return_repair,2,0.49,no rule applied; 65535 may be a real count or a saturation value (unknown); counts only
+rows with a value equal to 65535 in any numeric column [analysis rows],battery,all,2,0.21,no rule applied; 65535 may be a real count or a saturation value (unknown); counts only
+"ts_fallback_flag (hdr_timestamp after cut-off, server_timestamp used) [analysis rows]",motor,normal,0,0.0,event_ts falls back to server_timestamp (project decision); approximate
+"ts_fallback_flag (hdr_timestamp after cut-off, server_timestamp used) [analysis rows]",motor,return_repair,0,0.0,event_ts falls back to server_timestamp (project decision); approximate
+"ts_fallback_flag (hdr_timestamp after cut-off, server_timestamp used) [analysis rows]",motor,all,0,0.0,event_ts falls back to server_timestamp (project decision); approximate
+hdr_timestamp outside data window [analysis rows],motor,normal,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+hdr_timestamp outside data window [analysis rows],motor,return_repair,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+hdr_timestamp outside data window [analysis rows],motor,all,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+server_timestamp earlier than hdr_timestamp [analysis rows],motor,normal,0,0.0,flag only; includes the future-dated hdr_timestamp rows
+server_timestamp earlier than hdr_timestamp [analysis rows],motor,return_repair,0,0.0,flag only; includes the future-dated hdr_timestamp rows
+server_timestamp earlier than hdr_timestamp [analysis rows],motor,all,0,0.0,flag only; includes the future-dated hdr_timestamp rows
+"ts_fallback_flag (hdr_timestamp after cut-off, server_timestamp used) [analysis rows]",battery,normal,1,0.18,event_ts falls back to server_timestamp (project decision); approximate
+"ts_fallback_flag (hdr_timestamp after cut-off, server_timestamp used) [analysis rows]",battery,return_repair,0,0.0,event_ts falls back to server_timestamp (project decision); approximate
+"ts_fallback_flag (hdr_timestamp after cut-off, server_timestamp used) [analysis rows]",battery,all,1,0.1,event_ts falls back to server_timestamp (project decision); approximate
+hdr_timestamp outside data window [analysis rows],battery,normal,1,0.18,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+hdr_timestamp outside data window [analysis rows],battery,return_repair,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+hdr_timestamp outside data window [analysis rows],battery,all,1,0.1,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+server_timestamp earlier than hdr_timestamp [analysis rows],battery,normal,1,0.18,flag only; includes the future-dated hdr_timestamp rows
+server_timestamp earlier than hdr_timestamp [analysis rows],battery,return_repair,0,0.0,flag only; includes the future-dated hdr_timestamp rows
+server_timestamp earlier than hdr_timestamp [analysis rows],battery,all,1,0.1,flag only; includes the future-dated hdr_timestamp rows
+log3_time_sync_old = 0 [analysis rows],clean_sessions,normal,17895,58.04,left as is; epoch zero [assumed: epoch seconds]; meaning unknown
+log3_time_sync_old = 0 [analysis rows],clean_sessions,return_repair,0,0.0,left as is; epoch zero [assumed: epoch seconds]; meaning unknown
+log3_time_sync_old = 0 [analysis rows],clean_sessions,all,17895,50.45,left as is; epoch zero [assumed: epoch seconds]; meaning unknown
+log3_time_sync_new = 0 [analysis rows],clean_sessions,normal,0,0.0,left as is
+log3_time_sync_new = 0 [analysis rows],clean_sessions,return_repair,0,0.0,left as is
+log3_time_sync_new = 0 [analysis rows],clean_sessions,all,0,0.0,left as is
+log3_time_sync_* non-zero but outside data window [analysis rows],clean_sessions,normal,119,0.39,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+log3_time_sync_* non-zero but outside data window [analysis rows],clean_sessions,return_repair,107,2.31,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+log3_time_sync_* non-zero but outside data window [analysis rows],clean_sessions,all,226,0.64,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+date_server outside data window [analysis rows],clean_sessions,normal,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+date_server outside data window [analysis rows],clean_sessions,return_repair,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+date_server outside data window [analysis rows],clean_sessions,all,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+fault_timestamp outside data window [analysis rows],faults,normal,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+fault_timestamp outside data window [analysis rows],faults,return_repair,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+fault_timestamp outside data window [analysis rows],faults,all,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+log2_time_sync_old = 0 [analysis rows],faults,normal,1317,35.85,left as is
+log2_time_sync_old = 0 [analysis rows],faults,return_repair,0,0.0,left as is
+log2_time_sync_old = 0 [analysis rows],faults,all,1317,29.04,left as is
+log2_time_sync_new = 0 [analysis rows],faults,normal,0,0.0,left as is
+log2_time_sync_new = 0 [analysis rows],faults,return_repair,0,0.0,left as is
+log2_time_sync_new = 0 [analysis rows],faults,all,0,0.0,left as is
+log2_time_sync_* non-zero but outside data window [analysis rows],faults,normal,2,0.05,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+log2_time_sync_* non-zero but outside data window [analysis rows],faults,return_repair,0,0.0,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+log2_time_sync_* non-zero but outside data window [analysis rows],faults,all,2,0.04,"flag only; window = [2025-05-21 06:07:53, 2026-06-30 00:04:56] (min/max server-side time over all tables, both cohorts)"
+date_server earlier than fault_timestamp [analysis rows],faults,normal,2,0.05,"flag only; [inferred] date_server is receipt time, so this would be unexpected"
+date_server earlier than fault_timestamp [analysis rows],faults,return_repair,0,0.0,"flag only; [inferred] date_server is receipt time, so this would be unexpected"
+date_server earlier than fault_timestamp [analysis rows],faults,all,2,0.04,"flag only; [inferred] date_server is receipt time, so this would be unexpected"
+null: clean_duration [analysis rows],clean_sessions,normal,1822,5.91,reported only; see missingness.csv
+null: clean_duration [analysis rows],clean_sessions,return_repair,432,9.31,reported only; see missingness.csv
+null: clean_duration [analysis rows],clean_sessions,all,2254,6.35,reported only; see missingness.csv
+null: battery_charge_start [analysis rows],clean_sessions,normal,596,1.93,reported only; see missingness.csv
+null: battery_charge_start [analysis rows],clean_sessions,return_repair,157,3.38,reported only; see missingness.csv
+null: battery_charge_start [analysis rows],clean_sessions,all,753,2.12,reported only; see missingness.csv
+null: battery_charge_end [analysis rows],clean_sessions,normal,596,1.93,reported only; see missingness.csv
+null: battery_charge_end [analysis rows],clean_sessions,return_repair,157,3.38,reported only; see missingness.csv
+null: battery_charge_end [analysis rows],clean_sessions,all,753,2.12,reported only; see missingness.csv
+null: battery_health [analysis rows],clean_sessions,normal,654,2.12,reported only; see missingness.csv
+null: battery_health [analysis rows],clean_sessions,return_repair,189,4.07,reported only; see missingness.csv
+null: battery_health [analysis rows],clean_sessions,all,843,2.38,reported only; see missingness.csv
+null: battery_soc_state [analysis rows],clean_sessions,normal,666,2.16,reported only; see missingness.csv
+null: battery_soc_state [analysis rows],clean_sessions,return_repair,165,3.56,reported only; see missingness.csv
+null: battery_soc_state [analysis rows],clean_sessions,all,831,2.34,reported only; see missingness.csv
+null: running_firmware_version [analysis rows],clean_sessions,normal,30749,99.73,reported only; see missingness.csv
+null: running_firmware_version [analysis rows],clean_sessions,return_repair,4553,98.1,reported only; see missingness.csv
+null: running_firmware_version [analysis rows],clean_sessions,all,35302,99.52,reported only; see missingness.csv
+null: ultra_fine_dust_particle_mass [analysis rows],clean_sessions,normal,19817,64.27,reported only; see missingness.csv
+null: ultra_fine_dust_particle_mass [analysis rows],clean_sessions,return_repair,130,2.8,reported only; see missingness.csv
+null: ultra_fine_dust_particle_mass [analysis rows],clean_sessions,all,19947,56.23,reported only; see missingness.csv
+null: fine_dust_particle_mass [analysis rows],clean_sessions,normal,19817,64.27,reported only; see missingness.csv
+null: fine_dust_particle_mass [analysis rows],clean_sessions,return_repair,130,2.8,reported only; see missingness.csv
+null: fine_dust_particle_mass [analysis rows],clean_sessions,all,19947,56.23,reported only; see missingness.csv
+null: coarse_dust_particle_mass [analysis rows],clean_sessions,normal,19817,64.27,reported only; see missingness.csv
+null: coarse_dust_particle_mass [analysis rows],clean_sessions,return_repair,130,2.8,reported only; see missingness.csv
+null: coarse_dust_particle_mass [analysis rows],clean_sessions,all,19947,56.23,reported only; see missingness.csv
+null: large_dust_particle_mass [analysis rows],clean_sessions,normal,19817,64.27,reported only; see missingness.csv
+null: large_dust_particle_mass [analysis rows],clean_sessions,return_repair,130,2.8,reported only; see missingness.csv
+null: large_dust_particle_mass [analysis rows],clean_sessions,all,19947,56.23,reported only; see missingness.csv
+null: log3_time_sync_old [analysis rows],clean_sessions,normal,11261,36.52,reported only; see missingness.csv
+null: log3_time_sync_old [analysis rows],clean_sessions,return_repair,4186,90.2,reported only; see missingness.csv
+null: log3_time_sync_old [analysis rows],clean_sessions,all,15447,43.55,reported only; see missingness.csv
+null: log3_time_sync_old_ts [analysis rows],clean_sessions,normal,11261,36.52,reported only; see missingness.csv
+null: log3_time_sync_old_ts [analysis rows],clean_sessions,return_repair,4186,90.2,reported only; see missingness.csv
+null: log3_time_sync_old_ts [analysis rows],clean_sessions,all,15447,43.55,reported only; see missingness.csv
+null: log3_time_sync_new [analysis rows],clean_sessions,normal,11261,36.52,reported only; see missingness.csv
+null: log3_time_sync_new [analysis rows],clean_sessions,return_repair,4186,90.2,reported only; see missingness.csv
+null: log3_time_sync_new [analysis rows],clean_sessions,all,15447,43.55,reported only; see missingness.csv
+null: log3_time_sync_new_ts [analysis rows],clean_sessions,normal,11261,36.52,reported only; see missingness.csv
+null: log3_time_sync_new_ts [analysis rows],clean_sessions,return_repair,4186,90.2,reported only; see missingness.csv
+null: log3_time_sync_new_ts [analysis rows],clean_sessions,all,15447,43.55,reported only; see missingness.csv
+null: ultra_fine_dust_particle_mass_clean [analysis rows],clean_sessions,normal,22334,72.44,reported only; see missingness.csv
+null: ultra_fine_dust_particle_mass_clean [analysis rows],clean_sessions,return_repair,1249,26.91,reported only; see missingness.csv
+null: ultra_fine_dust_particle_mass_clean [analysis rows],clean_sessions,all,23583,66.48,reported only; see missingness.csv
+null: fine_dust_particle_mass_clean [analysis rows],clean_sessions,normal,21333,69.19,reported only; see missingness.csv
+null: fine_dust_particle_mass_clean [analysis rows],clean_sessions,return_repair,691,14.89,reported only; see missingness.csv
+null: fine_dust_particle_mass_clean [analysis rows],clean_sessions,all,22024,62.09,reported only; see missingness.csv
+null: coarse_dust_particle_mass_clean [analysis rows],clean_sessions,normal,20401,66.17,reported only; see missingness.csv
+null: coarse_dust_particle_mass_clean [analysis rows],clean_sessions,return_repair,289,6.23,reported only; see missingness.csv
+null: coarse_dust_particle_mass_clean [analysis rows],clean_sessions,all,20690,58.33,reported only; see missingness.csv
+null: large_dust_particle_mass_clean [analysis rows],clean_sessions,normal,20760,67.33,reported only; see missingness.csv
+null: large_dust_particle_mass_clean [analysis rows],clean_sessions,return_repair,347,7.48,reported only; see missingness.csv
+null: large_dust_particle_mass_clean [analysis rows],clean_sessions,all,21107,59.5,reported only; see missingness.csv
+null: battery_charge_start_clean [analysis rows],clean_sessions,normal,598,1.94,reported only; see missingness.csv
+null: battery_charge_start_clean [analysis rows],clean_sessions,return_repair,157,3.38,reported only; see missingness.csv
+null: battery_charge_start_clean [analysis rows],clean_sessions,all,755,2.13,reported only; see missingness.csv
+null: battery_charge_end_clean [analysis rows],clean_sessions,normal,597,1.94,reported only; see missingness.csv
+null: battery_charge_end_clean [analysis rows],clean_sessions,return_repair,157,3.38,reported only; see missingness.csv
+null: battery_charge_end_clean [analysis rows],clean_sessions,all,754,2.13,reported only; see missingness.csv
+null: battery_health_clean [analysis rows],clean_sessions,normal,654,2.12,reported only; see missingness.csv
+null: battery_health_clean [analysis rows],clean_sessions,return_repair,189,4.07,reported only; see missingness.csv
+null: battery_health_clean [analysis rows],clean_sessions,all,843,2.38,reported only; see missingness.csv
+null: clean_duration_clean [analysis rows],clean_sessions,normal,1992,6.46,reported only; see missingness.csv
+null: clean_duration_clean [analysis rows],clean_sessions,return_repair,456,9.83,reported only; see missingness.csv
+null: clean_duration_clean [analysis rows],clean_sessions,all,2448,6.9,reported only; see missingness.csv
+null: battery_drain_clean [analysis rows],clean_sessions,normal,632,2.05,reported only; see missingness.csv
+null: battery_drain_clean [analysis rows],clean_sessions,return_repair,165,3.56,reported only; see missingness.csv
+null: battery_drain_clean [analysis rows],clean_sessions,all,797,2.25,reported only; see missingness.csv
+null: product_alarm_source [analysis rows],faults,normal,2996,81.55,reported only; see missingness.csv
+null: product_alarm_source [analysis rows],faults,return_repair,547,63.53,reported only; see missingness.csv
+null: product_alarm_source [analysis rows],faults,all,3543,78.13,reported only; see missingness.csv
+null: hex_error_code [analysis rows],faults,normal,2996,81.55,reported only; see missingness.csv
+null: hex_error_code [analysis rows],faults,return_repair,544,63.18,reported only; see missingness.csv
+null: hex_error_code [analysis rows],faults,all,3540,78.06,reported only; see missingness.csv
+null: product_alarm_fault_severity [analysis rows],faults,normal,2996,81.55,reported only; see missingness.csv
+null: product_alarm_fault_severity [analysis rows],faults,return_repair,547,63.53,reported only; see missingness.csv
+null: product_alarm_fault_severity [analysis rows],faults,all,3543,78.13,reported only; see missingness.csv
+null: fault_status [analysis rows],faults,normal,2996,81.55,reported only; see missingness.csv
+null: fault_status [analysis rows],faults,return_repair,544,63.18,reported only; see missingness.csv
+null: fault_status [analysis rows],faults,all,3540,78.06,reported only; see missingness.csv
+null: log2_time_sync_old [analysis rows],faults,normal,2239,60.94,reported only; see missingness.csv
+null: log2_time_sync_old [analysis rows],faults,return_repair,852,98.95,reported only; see missingness.csv
+null: log2_time_sync_old [analysis rows],faults,all,3091,68.16,reported only; see missingness.csv
+null: log2_time_sync_old_ts [analysis rows],faults,normal,2239,60.94,reported only; see missingness.csv
+null: log2_time_sync_old_ts [analysis rows],faults,return_repair,852,98.95,reported only; see missingness.csv
+null: log2_time_sync_old_ts [analysis rows],faults,all,3091,68.16,reported only; see missingness.csv
+null: log2_time_sync_new [analysis rows],faults,normal,2239,60.94,reported only; see missingness.csv
+null: log2_time_sync_new [analysis rows],faults,return_repair,852,98.95,reported only; see missingness.csv
+null: log2_time_sync_new [analysis rows],faults,all,3091,68.16,reported only; see missingness.csv
+null: log2_time_sync_new_ts [analysis rows],faults,normal,2239,60.94,reported only; see missingness.csv
+null: log2_time_sync_new_ts [analysis rows],faults,return_repair,852,98.95,reported only; see missingness.csv
+null: log2_time_sync_new_ts [analysis rows],faults,all,3091,68.16,reported only; see missingness.csv
+"columns with at least one null (count of columns, not rows) [analysis rows]",motor,normal,4,4.35,"reported only; rows_affected counts columns; many are structural (e.g. 4-cell battery lacks header fields), see missingness.csv with pack_type subgroup"
+"columns with at least one null (count of columns, not rows) [analysis rows]",motor,return_repair,3,3.26,"reported only; rows_affected counts columns; many are structural (e.g. 4-cell battery lacks header fields), see missingness.csv with pack_type subgroup"
+"columns with at least one null (count of columns, not rows) [analysis rows]",motor,all,7,3.8,"reported only; rows_affected counts columns; many are structural (e.g. 4-cell battery lacks header fields), see missingness.csv with pack_type subgroup"
+"columns with at least one null (count of columns, not rows) [analysis rows]",battery,normal,6,3.49,"reported only; rows_affected counts columns; many are structural (e.g. 4-cell battery lacks header fields), see missingness.csv with pack_type subgroup"
+"columns with at least one null (count of columns, not rows) [analysis rows]",battery,return_repair,1,0.58,"reported only; rows_affected counts columns; many are structural (e.g. 4-cell battery lacks header fields), see missingness.csv with pack_type subgroup"
+"columns with at least one null (count of columns, not rows) [analysis rows]",battery,all,7,2.03,"reported only; rows_affected counts columns; many are structural (e.g. 4-cell battery lacks header fields), see missingness.csv with pack_type subgroup"
+clean_duration_clean beyond 3xIQR [analysis rows],clean_sessions,normal,308,1.0,"flag_duration_outlier only, no exclusion; fences Q1-3*IQR..Q3+3*IQR = -981.0..1399.0 (Q1=39.0, Q3=379.0, n=33025, both cohorts together)"
+clean_duration_clean beyond 3xIQR [analysis rows],clean_sessions,return_repair,34,0.73,"flag_duration_outlier only, no exclusion; fences Q1-3*IQR..Q3+3*IQR = -981.0..1399.0 (Q1=39.0, Q3=379.0, n=33025, both cohorts together)"
+clean_duration_clean beyond 3xIQR [analysis rows],clean_sessions,all,342,0.96,"flag_duration_outlier only, no exclusion; fences Q1-3*IQR..Q3+3*IQR = -981.0..1399.0 (Q1=39.0, Q3=379.0, n=33025, both cohorts together)"
+sessions_per_week beyond 3xIQR [machines with >=10 analysis sessions],machine_dq,normal,8,5.06,"flag only (machine_dq); fences -26.44..43.38 (Q1=3.48, Q3=13.45, n=194 machines, both cohorts together); rows_affected counts machines"
+sessions_per_week beyond 3xIQR [machines with >=10 analysis sessions],machine_dq,return_repair,2,5.56,"flag only (machine_dq); fences -26.44..43.38 (Q1=3.48, Q3=13.45, n=194 machines, both cohorts together); rows_affected counts machines"
+sessions_per_week beyond 3xIQR [machines with >=10 analysis sessions],machine_dq,all,10,5.15,"flag only (machine_dq); fences -26.44..43.38 (Q1=3.48, Q3=13.45, n=194 machines, both cohorts together); rows_affected counts machines"
+faults_per_100_sessions_primary beyond 3xIQR [machines with >=10 analysis sessions],machine_dq,normal,7,4.43,"flag only (machine_dq); fences -74.66..103.15 (Q1=1.54, Q3=26.95, n=194 machines, both cohorts together); rows_affected counts machines"
+faults_per_100_sessions_primary beyond 3xIQR [machines with >=10 analysis sessions],machine_dq,return_repair,3,8.33,"flag only (machine_dq); fences -74.66..103.15 (Q1=1.54, Q3=26.95, n=194 machines, both cohorts together); rows_affected counts machines"
+faults_per_100_sessions_primary beyond 3xIQR [machines with >=10 analysis sessions],machine_dq,all,10,5.15,"flag only (machine_dq); fences -74.66..103.15 (Q1=1.54, Q3=26.95, n=194 machines, both cohorts together); rows_affected counts machines"
+"consecutive pairs with a counter decrease, before_reupload_removal [pairs]",motor,normal,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [pairs]",motor,return_repair,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [pairs]",motor,all,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, before_reupload_removal [serials]",motor,normal,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [serials]",motor,return_repair,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [serials]",motor,all,0,0.0,rows_affected counts serials
+"consecutive pairs with a counter decrease, after_reupload_removal [pairs]",motor,normal,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [pairs]",motor,return_repair,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [pairs]",motor,all,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, after_reupload_removal [serials]",motor,normal,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [serials]",motor,return_repair,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [serials]",motor,all,0,0.0,rows_affected counts serials
+"consecutive pairs with a counter decrease, before_reupload_removal [all packs] [pairs]",battery,normal,27,2.21,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [all packs] [pairs]",battery,return_repair,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [all packs] [pairs]",battery,all,27,1.57,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, before_reupload_removal [all packs] [serials]",battery,normal,11,39.29,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [all packs] [serials]",battery,return_repair,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [all packs] [serials]",battery,all,11,15.71,rows_affected counts serials
+"consecutive pairs with a counter decrease, after_reupload_removal [all packs] [pairs]",battery,normal,27,5.16,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [all packs] [pairs]",battery,return_repair,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [all packs] [pairs]",battery,all,27,3.04,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, after_reupload_removal [all packs] [serials]",battery,normal,11,39.29,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [all packs] [serials]",battery,return_repair,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [all packs] [serials]",battery,all,11,15.71,rows_affected counts serials
+"consecutive pairs with a counter decrease, before_reupload_removal [4-cell] [pairs]",battery,normal,26,2.46,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [4-cell] [pairs]",battery,return_repair,0,,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [4-cell] [pairs]",battery,all,26,2.46,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, before_reupload_removal [4-cell] [serials]",battery,normal,10,55.56,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [4-cell] [serials]",battery,return_repair,0,,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [4-cell] [serials]",battery,all,10,55.56,rows_affected counts serials
+"consecutive pairs with a counter decrease, after_reupload_removal [4-cell] [pairs]",battery,normal,26,6.5,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [4-cell] [pairs]",battery,return_repair,0,,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [4-cell] [pairs]",battery,all,26,6.5,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, after_reupload_removal [4-cell] [serials]",battery,normal,10,55.56,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [4-cell] [serials]",battery,return_repair,0,,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [4-cell] [serials]",battery,all,10,55.56,rows_affected counts serials
+"consecutive pairs with a counter decrease, before_reupload_removal [7-cell] [pairs]",battery,normal,1,0.61,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [7-cell] [pairs]",battery,return_repair,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, before_reupload_removal [7-cell] [pairs]",battery,all,1,0.15,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, before_reupload_removal [7-cell] [serials]",battery,normal,1,10.0,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [7-cell] [serials]",battery,return_repair,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, before_reupload_removal [7-cell] [serials]",battery,all,1,1.92,rows_affected counts serials
+"consecutive pairs with a counter decrease, after_reupload_removal [7-cell] [pairs]",battery,normal,1,0.81,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [7-cell] [pairs]",battery,return_repair,0,0.0,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"consecutive pairs with a counter decrease, after_reupload_removal [7-cell] [pairs]",battery,all,1,0.2,not fixed; Step 5 sets these deltas to missing; rows_affected counts pairs of consecutive observations
+"serials with at least one counter decrease, after_reupload_removal [7-cell] [serials]",battery,normal,1,10.0,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [7-cell] [serials]",battery,return_repair,0,0.0,rows_affected counts serials
+"serials with at least one counter decrease, after_reupload_removal [7-cell] [serials]",battery,all,1,1.92,rows_affected counts serials
+coverage: machines in clean_sessions (any row) [machines],all_tables,normal,173,93.01,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in clean_sessions (any row) [machines],all_tables,return_repair,43,93.48,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in clean_sessions (any row) [machines],all_tables,all,216,93.1,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in clean_sessions (analysis rows) [machines],all_tables,normal,173,93.01,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in clean_sessions (analysis rows) [machines],all_tables,return_repair,43,93.48,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in clean_sessions (analysis rows) [machines],all_tables,all,216,93.1,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in faults (any row) [machines],all_tables,normal,143,76.88,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in faults (any row) [machines],all_tables,return_repair,33,71.74,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in faults (any row) [machines],all_tables,all,176,75.86,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in faults (analysis rows) [machines],all_tables,normal,143,76.88,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in faults (analysis rows) [machines],all_tables,return_repair,33,71.74,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in faults (analysis rows) [machines],all_tables,all,176,75.86,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in motor (any row) [machines],all_tables,normal,76,40.86,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in motor (any row) [machines],all_tables,return_repair,44,95.65,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in motor (any row) [machines],all_tables,all,120,51.72,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in motor (analysis rows) [machines],all_tables,normal,76,40.86,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in motor (analysis rows) [machines],all_tables,return_repair,44,95.65,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in motor (analysis rows) [machines],all_tables,all,120,51.72,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in battery (any row) [machines],all_tables,normal,28,15.05,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in battery (any row) [machines],all_tables,return_repair,45,97.83,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in battery (any row) [machines],all_tables,all,73,31.47,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in battery (analysis rows) [machines],all_tables,normal,28,15.05,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in battery (analysis rows) [machines],all_tables,return_repair,42,91.3,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in battery (analysis rows) [machines],all_tables,all,70,30.17,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in all four tables (any row) [machines],all_tables,normal,6,3.23,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in all four tables (any row) [machines],all_tables,return_repair,33,71.74,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in all four tables (any row) [machines],all_tables,all,39,16.81,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in all four tables (analysis rows) [machines],all_tables,normal,6,3.23,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in all four tables (analysis rows) [machines],all_tables,return_repair,33,71.74,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+coverage: machines in all four tables (analysis rows) [machines],all_tables,all,39,16.81,"reported only; rows_affected counts machines, pct = share of machines seen in any table"
+fault occurrences (primary) matching a session on serial+session_id [occurrences],faults,normal,3646,99.24,reported only; rows_affected = matching occurrences
+fault occurrences (primary) matching a session on serial+session_id [occurrences],faults,return_repair,860,99.88,reported only; rows_affected = matching occurrences
+fault occurrences (primary) matching a session on serial+session_id [occurrences],faults,all,4506,99.36,reported only; rows_affected = matching occurrences
+serials present in both cohorts [serials],all_tables,normal,0,,expected 0; rows_affected counts serials
+serials present in both cohorts [serials],all_tables,return_repair,0,,expected 0; rows_affected counts serials
+serials present in both cohorts [serials],all_tables,all,0,,expected 0; rows_affected counts serials
+fault_type without a stated meaning [analysis rows],faults,normal,0,0.0,"reported as unknown, never guessed"
+fault_type without a stated meaning [analysis rows],faults,return_repair,0,0.0,"reported as unknown, never guessed"
+fault_type without a stated meaning [analysis rows],faults,all,0,0.0,"reported as unknown, never guessed"
+fault_value not in the brief's list for its fault_type [analysis rows],faults,normal,0,0.0,flag only
+fault_value not in the brief's list for its fault_type [analysis rows],faults,return_repair,0,0.0,flag only
+fault_value not in the brief's list for its fault_type [analysis rows],faults,all,0,0.0,flag only
+motor_model_raw 683/692B rows whose payload structure differs from other rows [RR rows],motor,normal,0,,"key paths + array lengths + value kinds compared with the other RR rows: 52 variant rows, 0 with a structure not seen in other rows; paths only in variant: 0, only in other: 0. Report only; rows kept"
+motor_model_raw 683/692B rows whose payload structure differs from other rows [RR rows],motor,return_repair,0,0.0,"key paths + array lengths + value kinds compared with the other RR rows: 52 variant rows, 0 with a structure not seen in other rows; paths only in variant: 0, only in other: 0. Report only; rows kept"
+motor_model_raw 683/692B rows whose payload structure differs from other rows [RR rows],motor,all,0,0.0,"key paths + array lengths + value kinds compared with the other RR rows: 52 variant rows, 0 with a structure not seen in other rows; paths only in variant: 0, only in other: 0. Report only; rows kept"
+"median faults per 100 sessions per machine, primary vs status rule [machines with >=10 analysis sessions]",machine_dq,normal,158,,"numbers only, no interpretation; rows_affected counts machines. normal: median primary=6.53, status rule=10.67; return_repair: median primary=9.69, status rule=15.50; all: median primary=7.69, status rule=11.20"
+"median faults per 100 sessions per machine, primary vs status rule [machines with >=10 analysis sessions]",machine_dq,return_repair,36,,"numbers only, no interpretation; rows_affected counts machines. normal: median primary=6.53, status rule=10.67; return_repair: median primary=9.69, status rule=15.50; all: median primary=7.69, status rule=11.20"
+"median faults per 100 sessions per machine, primary vs status rule [machines with >=10 analysis sessions]",machine_dq,all,194,,"numbers only, no interpretation; rows_affected counts machines. normal: median primary=6.53, status rule=10.67; return_repair: median primary=9.69, status rule=15.50; all: median primary=7.69, status rule=11.20"

@@ -1,0 +1,11 @@
+item,value
+variant rows,52
+other RR rows,512
+distinct structure signatures among variant rows,1
+distinct structure signatures among other rows,1
+variant signatures also present among other rows,1
+paths only in variant rows,0
+paths only in other rows,0
+variant rows with parse_status != parsed,0
+variant rows by motor_model_raw,"{""683"": 39, ""692B"": 13}"
+variant rows by serial,3

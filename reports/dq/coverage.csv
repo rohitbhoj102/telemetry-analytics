@@ -1,0 +1,21 @@
+cohort,metric,machines,of
+normal,machines in clean_sessions (any row),173,186
+normal,machines in clean_sessions (analysis rows),173,186
+normal,machines in faults (any row),143,186
+normal,machines in faults (analysis rows),143,186
+normal,machines in motor (any row),76,186
+normal,machines in motor (analysis rows),76,186
+normal,machines in battery (any row),28,186
+normal,machines in battery (analysis rows),28,186
+normal,machines in all four tables (any row),6,186
+normal,machines in all four tables (analysis rows),6,186
+return_repair,machines in clean_sessions (any row),43,46
+return_repair,machines in clean_sessions (analysis rows),43,46
+return_repair,machines in faults (any row),33,46
+return_repair,machines in faults (analysis rows),33,46
+return_repair,machines in motor (any row),44,46
+return_repair,machines in motor (analysis rows),44,46
+return_repair,machines in battery (any row),45,46
+return_repair,machines in battery (analysis rows),42,46
+return_repair,machines in all four tables (any row),33,46
+return_repair,machines in all four tables (analysis rows),33,46

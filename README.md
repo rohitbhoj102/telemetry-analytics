@@ -51,7 +51,15 @@ python src/build_clean.py        # data/clean/*.parquet, parse_summary.csv, mach
 
 `build_clean.py` is lossless (one output row per raw row, `source_file` + `source_row` for traceability), does not de-duplicate or correct values, and exits non-zero if a row count or the motor reconciliation (parsed values vs the Normal flattened columns) fails. Field meanings, units and bin-to-column mappings live in `src/field_meanings.py`; `payload_parsers.py` holds the motor and battery parsers.
 
-TODO: remaining pipeline steps (de-duplication flags, DQ, model, analysis, dashboard).
+Data quality (Step 4), after `build_clean.py`:
+
+```bash
+python src/dq.py   # data/clean/dq/*.parquet (flagged tables + machine_dq), reports/dq/dq_summary.csv and detail CSVs
+```
+
+`dq.py` never changes the Step 3 outputs. Each table in `data/clean/dq/` has every original column, `dup_class` / `dup_keep` and other `flag_*` columns, cleaned analysis columns (`*_clean`) and `is_analysis_row`; later steps use only rows with `is_analysis_row = True` (faults also have `is_analysis_row_status_rule` for the sensitivity count). Raw values are never overwritten and no row is deleted. The run exits non-zero if an original column's row or non-null count changes. `reports/dq/dq_summary.csv` has one row per check and cohort (`check, table, cohort, rows_affected, pct, action_taken`); the basis of each count is in the check name.
+
+TODO: remaining pipeline steps (deltas, model, analysis, dashboard).
 
 ## Repo structure
 TODO
