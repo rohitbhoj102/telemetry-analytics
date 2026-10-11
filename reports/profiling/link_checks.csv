@@ -1,0 +1,55 @@
+check,scope,metric,value
+a,normal,serial+session_id groups,28881.0
+a,normal,groups with >1 distinct date,1821.0
+a,normal,of those: also differ in clean_duration or battery_charge_start/end,624.0
+a,normal,of those: differ in a non-null value of those columns (nulls ignored),177.0
+a,return_repair,serial+session_id groups,4120.0
+a,return_repair,groups with >1 distinct date,489.0
+a,return_repair,of those: also differ in clean_duration or battery_charge_start/end,243.0
+a,return_repair,of those: differ in a non-null value of those columns (nulls ignored),67.0
+a,all,serial+session_id groups,33001.0
+a,all,groups with >1 distinct date,2310.0
+a,all,of those: also differ in clean_duration or battery_charge_start/end,867.0
+a,all,of those: differ in a non-null value of those columns (nulls ignored),244.0
+b,normal,"rows, exact duplicates removed",5636.0
+b,normal,"median lag hours, exact duplicates removed",31.9
+b,normal,"p90 lag hours, exact duplicates removed",1899.6
+b,normal,"rows, one row per serial+session_id+fault_type+fault_value+fault_timestamp+fault_status (earliest date kept)",4163.0
+b,normal,"median lag hours, one row per serial+session_id+fault_type+fault_value+fault_timestamp+fault_status (earliest date kept)",167.6
+b,normal,"p90 lag hours, one row per serial+session_id+fault_type+fault_value+fault_timestamp+fault_status (earliest date kept)",2085.8
+b,normal,rows with both timestamps,11442.0
+b,normal,median lag hours (date - fault_timestamp),7.2
+b,normal,p90 lag hours,747.2
+b,normal,rows with negative lag (date earlier than fault_timestamp),13.0
+b,return_repair,"rows, exact duplicates removed",2525.0
+b,return_repair,"median lag hours, exact duplicates removed",13.1
+b,return_repair,"p90 lag hours, exact duplicates removed",393.7
+b,return_repair,"rows, one row per serial+session_id+fault_type+fault_value+fault_timestamp+fault_status (earliest date kept)",1173.0
+b,return_repair,"median lag hours, one row per serial+session_id+fault_type+fault_value+fault_timestamp+fault_status (earliest date kept)",96.2
+b,return_repair,"p90 lag hours, one row per serial+session_id+fault_type+fault_value+fault_timestamp+fault_status (earliest date kept)",914.2
+b,return_repair,rows with both timestamps,19956.0
+b,return_repair,median lag hours (date - fault_timestamp),0.8
+b,return_repair,p90 lag hours,32.2
+b,return_repair,rows with negative lag (date earlier than fault_timestamp),0.0
+b,all,rows with both timestamps,31398.0
+b,all,median lag hours (date - fault_timestamp),2.5
+b,all,p90 lag hours,271.3
+b,all,rows with negative lag (date earlier than fault_timestamp),13.0
+c,motor/normal,distinct serial+session_id pairs,470.0
+c,motor/normal,pairs also in clean_sessions,3.0
+c,motor/normal,pct found in clean_sessions,0.64
+c,battery/normal,distinct serial+session_id pairs,749.0
+c,battery/normal,pairs also in clean_sessions,17.0
+c,battery/normal,pct found in clean_sessions,2.27
+c,motor/return_repair,distinct serial+session_id pairs,488.0
+c,motor/return_repair,pairs also in clean_sessions,28.0
+c,motor/return_repair,pct found in clean_sessions,5.74
+c,battery/return_repair,distinct serial+session_id pairs,438.0
+c,battery/return_repair,pairs also in clean_sessions,25.0
+c,battery/return_repair,pct found in clean_sessions,5.71
+c,motor/all,distinct serial+session_id pairs,958.0
+c,motor/all,pairs also in clean_sessions,31.0
+c,motor/all,pct found in clean_sessions,3.24
+c,battery/all,distinct serial+session_id pairs,1187.0
+c,battery/all,pairs also in clean_sessions,42.0
+c,battery/all,pct found in clean_sessions,3.54

@@ -53,3 +53,22 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
   - Normal 4-cell counter decreases are unaffected by removing re-uploads (median monotonic share 41.2% in all variants; 5,092 decreasing pairs in all variants).
   - Normal 7-cell: one record has a 2055 `hdr_timestamp`.
 - **Next**: Step 3 (parser) once the user opens it. The size check in the Found list is ad hoc and not yet in a script; move it into the DQ module in Step 4 with the other ad-hoc checks.
+
+### Sun 11 Oct, 17:00
+- **Did**
+  - Part A: logged that the EEPROM document will not arrive (supersedes the earlier Data gap row; "Additional data needed" list added at the end of `docs/assumptions_log.md`). Wrote `src/link_checks.py` (read-only) → `reports/profiling/link_checks.csv` and logged the three results. Recorded the Step 4 duplicate-handling decision (classify and flag, never merge differing content; fault rates computed both ways).
+  - Step 3: wrote `src/field_meanings.py` (single home for meanings, units, bin edges and column names, edges read from the bin JSONs), `src/payload_parsers.py` (one motor parser for both cohorts, battery parser) and `src/build_clean.py` (lossless build to `data/clean/*.parquet`, `parse_summary.csv`, `machine_lookup_checks.csv`, `clean_column_dictionary.csv`). Added `src/check_band_order.py` for the 2-D battery bin order. README run steps and raw-data placement note updated.
+- **Why**: turn the Step 2 parsing spec into tables that Step 4 (de-duplication flags, DQ) can use, without cleaning anything yet.
+- **Found**
+  - Link checks: (a) 2,310 of 33,001 serial + `session_id` groups have more than one `date` (867 also differ in content, 244 ignoring nulls): holds. (b) **Contradicted:** median `date` - `fault_timestamp` lag is 2.5 h (Normal 7.2, RR 0.8), not about 155 h. (c) motor and battery `session_id` pairs are found in clean sessions in 3.2% and 3.5% of cases: holds.
+  - All 1,034 motor payloads parse. Reconciliation on 470 Normal rows × 52 columns: 0 mismatches; `runtime_s` equals `cumulative_usage_duration_seconds` everywhere.
+  - Battery: 1,792 parsed (1,250 Normal, 542 RR), 39 unparsed layout, 33,549 empty, 0 errors; counts equal the spec. 2-D bins are flat lists of 9, voltage slowest ([inferred], two supports).
+  - Motor `model` is `683` / `692B` in 52 RR rows (3 serials). 24 Normal battery rows (2 serials) have a future `hdr_timestamp` and use the `server_timestamp` fallback (cut-off 2026-06-28 13:44:05).
+  - Two bugs were caught by the built-in checks during the build (booleans are lower case in the raw text; array path duplicated the array name) and fixed before the final run.
+- **Next**: answer the open questions (which snapshot record represents a battery payload; whether to keep Parquet for Tableau). Then Step 4: duplicate classification and flags, DQ checks, outlier and invalid-value flags. Not started.
+
+### Sun 11 Oct, 17:05
+- **Did**: recorded the user's answers on the open questions. Added `motor_model_raw` to `data/clean/motor.parquet` (replaces `model`; the machine lookup now takes model from sessions and faults only). Added a third counting rule to the fault lag check in `src/link_checks.py` and re-ran it and `src/build_clean.py` (row counts and motor reconciliation unchanged).
+- **Why**: avoid presenting one typical lag when it depends on how duplicates are counted; stop motor variant codes from creating false multi-model machines.
+- **Found**: fault lag median is 2.5 h on raw rows, 31.9 / 13.1 h (Normal / RR) with exact duplicates removed, and 167.6 / 96.2 h with one row per fault event; p90 reaches 2,086 h. `date` >= `fault_timestamp` in all but 13 rows. Multi-model serials: 0 in both cohorts.
+- **Next**: Step 4 (duplicate classification and flags, DQ checks). Not started.

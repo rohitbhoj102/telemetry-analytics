@@ -1,0 +1,15 @@
+table,cohort,raw_rows_in,rows_out,rows_equal,parsed,empty_payload,unparsed_layout,error,cast_nulls_introduced,reconciliation
+clean_sessions,normal,40627.0,40627,True,,,,,,non-null count of every raw column preserved
+clean_sessions,return_repair,6565.0,6565,True,,,,,,non-null count of every raw column preserved
+clean_sessions,all,47192.0,47192,True,,,,,0.0,non-null count of every raw column preserved
+faults,normal,11449.0,11449,True,,,,,,non-null count of every raw column preserved
+faults,return_repair,19957.0,19957,True,,,,,,non-null count of every raw column preserved
+faults,all,31406.0,31406,True,,,,,0.0,non-null count of every raw column preserved
+motor,normal,470.0,470,True,470.0,0.0,0.0,0.0,,470 rows x 52 columns compared with the flattened Normal columns; mismatches: 0
+motor,return_repair,564.0,564,True,564.0,0.0,0.0,0.0,,no flattened columns to compare; same parser as Normal. runtime_s = sum(PowerBins) is [assumed] to be the runtime
+motor,all,1034.0,1034,True,1034.0,0.0,0.0,0.0,0.0,see cohort rows
+battery,normal,2766.0,2766,True,1250.0,1516.0,0.0,0.0,,counts equal docs/parsing_spec.md: yes
+battery,return_repair,32614.0,32614,True,542.0,32033.0,39.0,0.0,,counts equal docs/parsing_spec.md: yes
+battery,all,35380.0,35380,True,1792.0,33549.0,39.0,0.0,0.0,pack_type vs root-key signature mismatches: 0
+battery_event_snapshots,all,,30464,,,,,,,30464 records = 17 per parsed battery payload (15 events + 2 faults): yes
+machine_lookup,all,,232,,,,,,,one row per serial

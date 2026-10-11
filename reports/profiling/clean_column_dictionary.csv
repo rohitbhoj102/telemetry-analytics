@@ -1,0 +1,222 @@
+table,column,source,unit,status,note
+motor,speed_bin_lt_45_seconds,ddmUsage.ddm692_SpeedBins.bins[0],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_45_55_seconds,ddmUsage.ddm692_SpeedBins.bins[1],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_55_65_seconds,ddmUsage.ddm692_SpeedBins.bins[2],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_65_75_seconds,ddmUsage.ddm692_SpeedBins.bins[3],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_75_85_seconds,ddmUsage.ddm692_SpeedBins.bins[4],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_85_95_seconds,ddmUsage.ddm692_SpeedBins.bins[5],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_95_105_seconds,ddmUsage.ddm692_SpeedBins.bins[6],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_105_110_seconds,ddmUsage.ddm692_SpeedBins.bins[7],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_110_115_seconds,ddmUsage.ddm692_SpeedBins.bins[8],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_115_120_seconds,ddmUsage.ddm692_SpeedBins.bins[9],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_120_122_5_seconds,ddmUsage.ddm692_SpeedBins.bins[10],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_122_5_125_seconds,ddmUsage.ddm692_SpeedBins.bins[11],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_125_127_5_seconds,ddmUsage.ddm692_SpeedBins.bins[12],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_127_5_130_seconds,ddmUsage.ddm692_SpeedBins.bins[13],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_130_132_5_seconds,ddmUsage.ddm692_SpeedBins.bins[14],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_132_5_135_seconds,ddmUsage.ddm692_SpeedBins.bins[15],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_135_137_5_seconds,ddmUsage.ddm692_SpeedBins.bins[16],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_137_5_140_seconds,ddmUsage.ddm692_SpeedBins.bins[17],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_140_142_5_seconds,ddmUsage.ddm692_SpeedBins.bins[18],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_142_5_145_seconds,ddmUsage.ddm692_SpeedBins.bins[19],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_145_147_5_seconds,ddmUsage.ddm692_SpeedBins.bins[20],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_147_5_150_seconds,ddmUsage.ddm692_SpeedBins.bins[21],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_150_155_seconds,ddmUsage.ddm692_SpeedBins.bins[22],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_155_160_seconds,ddmUsage.ddm692_SpeedBins.bins[23],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,speed_bin_gt_160_seconds,ddmUsage.ddm692_SpeedBins.bins[24],krpm (edges); array unit: second,stated (brief or bin JSON),
+motor,power_lt_50_seconds,ddmUsage.ddm692_PowerBins.bins[0],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_50_75_seconds,ddmUsage.ddm692_PowerBins.bins[1],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_75_100_seconds,ddmUsage.ddm692_PowerBins.bins[2],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_100_125_seconds,ddmUsage.ddm692_PowerBins.bins[3],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_125_150_seconds,ddmUsage.ddm692_PowerBins.bins[4],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_150_200_seconds,ddmUsage.ddm692_PowerBins.bins[5],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_200_300_seconds,ddmUsage.ddm692_PowerBins.bins[6],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_300_400_seconds,ddmUsage.ddm692_PowerBins.bins[7],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_400_500_seconds,ddmUsage.ddm692_PowerBins.bins[8],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_500_600_seconds,ddmUsage.ddm692_PowerBins.bins[9],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_600_700_seconds,ddmUsage.ddm692_PowerBins.bins[10],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_700_800_seconds,ddmUsage.ddm692_PowerBins.bins[11],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_800_900_seconds,ddmUsage.ddm692_PowerBins.bins[12],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,power_gt_900_seconds,ddmUsage.ddm692_PowerBins.bins[13],watts (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit watts; the unit is used
+motor,exhaust_temperature_bin_lt_10_seconds,ddmUsage.ddm692_ExhaustTempBins.bins[0],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,exhaust_temperature_bin_10_20_seconds,ddmUsage.ddm692_ExhaustTempBins.bins[1],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,exhaust_temperature_bin_20_30_seconds,ddmUsage.ddm692_ExhaustTempBins.bins[2],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,exhaust_temperature_bin_30_40_seconds,ddmUsage.ddm692_ExhaustTempBins.bins[3],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,exhaust_temperature_bin_40_50_seconds,ddmUsage.ddm692_ExhaustTempBins.bins[4],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,exhaust_temperature_bin_50_60_seconds,ddmUsage.ddm692_ExhaustTempBins.bins[5],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,exhaust_temperature_bin_60_70_seconds,ddmUsage.ddm692_ExhaustTempBins.bins[6],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_lt_14_seconds,ddmUsage.ddm692_FisfTempBins.bins[0],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_14_28_seconds,ddmUsage.ddm692_FisfTempBins.bins[1],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_28_42_seconds,ddmUsage.ddm692_FisfTempBins.bins[2],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_42_56_seconds,ddmUsage.ddm692_FisfTempBins.bins[3],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_56_70_seconds,ddmUsage.ddm692_FisfTempBins.bins[4],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_70_84_seconds,ddmUsage.ddm692_FisfTempBins.bins[5],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_84_98_seconds,ddmUsage.ddm692_FisfTempBins.bins[6],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_98_112_seconds,ddmUsage.ddm692_FisfTempBins.bins[7],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_112_126_seconds,ddmUsage.ddm692_FisfTempBins.bins[8],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+motor,fisf_temperature_bin_gt_126_seconds,ddmUsage.ddm692_FisfTempBins.bins[9],celsius (edges); array unit: second,stated (brief or bin JSON),JSON names this bin dimension 'speed' but declares unit celsius; the unit is used
+battery,discharge_power_lt_95_W,usage.dischargeLog.powerBins[0],watt (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_power_95_250_W,usage.dischargeLog.powerBins[1],watt (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_power_gt_250_W,usage.dischargeLog.powerBins[2],watt (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_band_lt_3p3V_lt_15C,usage.dischargeLog.dischargeBandBins[0],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_lt_3p3V_15_45C,usage.dischargeLog.dischargeBandBins[1],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_lt_3p3V_gt_45C,usage.dischargeLog.dischargeBandBins[2],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_3p3_4V_lt_15C,usage.dischargeLog.dischargeBandBins[3],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_3p3_4V_15_45C,usage.dischargeLog.dischargeBandBins[4],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_3p3_4V_gt_45C,usage.dischargeLog.dischargeBandBins[5],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_gt_4V_lt_15C,usage.dischargeLog.dischargeBandBins[6],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_gt_4V_15_45C,usage.dischargeLog.dischargeBandBins[7],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_band_gt_4V_gt_45C,usage.dischargeLog.dischargeBandBins[8],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,discharge_duration_lt_5_s,usage.dischargeLog.dischargeDurationBins[0],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_5_10_s,usage.dischargeLog.dischargeDurationBins[1],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_10_15_s,usage.dischargeLog.dischargeDurationBins[2],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_15_20_s,usage.dischargeLog.dischargeDurationBins[3],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_20_25_s,usage.dischargeLog.dischargeDurationBins[4],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_25_30_s,usage.dischargeLog.dischargeDurationBins[5],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_30_45_s,usage.dischargeLog.dischargeDurationBins[6],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_45_60_s,usage.dischargeLog.dischargeDurationBins[7],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_60_75_s,usage.dischargeLog.dischargeDurationBins[8],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_75_90_s,usage.dischargeLog.dischargeDurationBins[9],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_90_105_s,usage.dischargeLog.dischargeDurationBins[10],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_105_120_s,usage.dischargeLog.dischargeDurationBins[11],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_120_180_s,usage.dischargeLog.dischargeDurationBins[12],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_180_240_s,usage.dischargeLog.dischargeDurationBins[13],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_240_300_s,usage.dischargeLog.dischargeDurationBins[14],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_300_360_s,usage.dischargeLog.dischargeDurationBins[15],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_360_600_s,usage.dischargeLog.dischargeDurationBins[16],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_600_900_s,usage.dischargeLog.dischargeDurationBins[17],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_900_1200_s,usage.dischargeLog.dischargeDurationBins[18],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_1200_1800_s,usage.dischargeLog.dischargeDurationBins[19],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_1800_2400_s,usage.dischargeLog.dischargeDurationBins[20],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_2400_3000_s,usage.dischargeLog.dischargeDurationBins[21],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_duration_gt_3000_s,usage.dischargeLog.dischargeDurationBins[22],second (edges); array unit: second,stated (brief or bin JSON),
+battery,discharge_start_temp_lt_5_C,usage.dischargeLog.dischargeStartTempBins[0],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_5_10_C,usage.dischargeLog.dischargeStartTempBins[1],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_10_15_C,usage.dischargeLog.dischargeStartTempBins[2],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_15_20_C,usage.dischargeLog.dischargeStartTempBins[3],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_20_25_C,usage.dischargeLog.dischargeStartTempBins[4],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_25_30_C,usage.dischargeLog.dischargeStartTempBins[5],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_30_35_C,usage.dischargeLog.dischargeStartTempBins[6],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_35_45_C,usage.dischargeLog.dischargeStartTempBins[7],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_45_60_C,usage.dischargeLog.dischargeStartTempBins[8],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_start_temp_gt_60_C,usage.dischargeLog.dischargeStartTempBins[9],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_off_time_lt_5_s,usage.dischargeLog.dischargeOffTimeBins[0],second (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_off_time_5_20_s,usage.dischargeLog.dischargeOffTimeBins[1],second (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_off_time_20_60_s,usage.dischargeLog.dischargeOffTimeBins[2],second (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_off_time_60_300_s,usage.dischargeLog.dischargeOffTimeBins[3],second (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_off_time_300_1800_s,usage.dischargeLog.dischargeOffTimeBins[4],second (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_off_time_gt_1800_s,usage.dischargeLog.dischargeOffTimeBins[5],second (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_lt_1_min,usage.dischargeLog.dischargeBtwChargesBins[0],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_1_2_min,usage.dischargeLog.dischargeBtwChargesBins[1],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_2_4_min,usage.dischargeLog.dischargeBtwChargesBins[2],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_4_6_min,usage.dischargeLog.dischargeBtwChargesBins[3],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_6_8_min,usage.dischargeLog.dischargeBtwChargesBins[4],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_8_10_min,usage.dischargeLog.dischargeBtwChargesBins[5],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_10_15_min,usage.dischargeLog.dischargeBtwChargesBins[6],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_15_20_min,usage.dischargeLog.dischargeBtwChargesBins[7],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_20_25_min,usage.dischargeLog.dischargeBtwChargesBins[8],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_25_30_min,usage.dischargeLog.dischargeBtwChargesBins[9],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_30_35_min,usage.dischargeLog.dischargeBtwChargesBins[10],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_35_40_min,usage.dischargeLog.dischargeBtwChargesBins[11],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_40_50_min,usage.dischargeLog.dischargeBtwChargesBins[12],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_50_60_min,usage.dischargeLog.dischargeBtwChargesBins[13],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,discharge_btw_charges_gt_60_min,usage.dischargeLog.dischargeBtwChargesBins[14],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_maintain_temp_lt_20_C,usage.chargeLog.chargeMaintainTempBins[0],celsius (edges); array unit: second,stated (brief or bin JSON),
+battery,charge_maintain_temp_20_25_C,usage.chargeLog.chargeMaintainTempBins[1],celsius (edges); array unit: second,stated (brief or bin JSON),
+battery,charge_maintain_temp_25_30_C,usage.chargeLog.chargeMaintainTempBins[2],celsius (edges); array unit: second,stated (brief or bin JSON),
+battery,charge_maintain_temp_30_35_C,usage.chargeLog.chargeMaintainTempBins[3],celsius (edges); array unit: second,stated (brief or bin JSON),
+battery,charge_maintain_temp_35_40_C,usage.chargeLog.chargeMaintainTempBins[4],celsius (edges); array unit: second,stated (brief or bin JSON),
+battery,charge_maintain_temp_gt_40_C,usage.chargeLog.chargeMaintainTempBins[5],celsius (edges); array unit: second,stated (brief or bin JSON),
+battery,charge_band_lt_3p3V_lt_15C,usage.chargeLog.chargeBandBins[0],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_lt_3p3V_15_45C,usage.chargeLog.chargeBandBins[1],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_lt_3p3V_gt_45C,usage.chargeLog.chargeBandBins[2],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_3p3_4p15V_lt_15C,usage.chargeLog.chargeBandBins[3],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_3p3_4p15V_15_45C,usage.chargeLog.chargeBandBins[4],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_3p3_4p15V_gt_45C,usage.chargeLog.chargeBandBins[5],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_gt_4p15V_lt_15C,usage.chargeLog.chargeBandBins[6],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_gt_4p15V_15_45C,usage.chargeLog.chargeBandBins[7],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_band_gt_4p15V_gt_45C,usage.chargeLog.chargeBandBins[8],volt x celsius (edges); array unit: second,inferred,"2-D storage order is row-major, voltage (dimension 0) slowest, temperature (dimension 1) fastest"
+battery,charge_duration_lt_5_min,usage.chargeLog.chargeDurationBins[0],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_5_10_min,usage.chargeLog.chargeDurationBins[1],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_10_15_min,usage.chargeLog.chargeDurationBins[2],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_15_30_min,usage.chargeLog.chargeDurationBins[3],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_30_45_min,usage.chargeLog.chargeDurationBins[4],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_45_60_min,usage.chargeLog.chargeDurationBins[5],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_60_75_min,usage.chargeLog.chargeDurationBins[6],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_75_90_min,usage.chargeLog.chargeDurationBins[7],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_90_105_min,usage.chargeLog.chargeDurationBins[8],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_105_120_min,usage.chargeLog.chargeDurationBins[9],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_120_150_min,usage.chargeLog.chargeDurationBins[10],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_150_180_min,usage.chargeLog.chargeDurationBins[11],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_180_210_min,usage.chargeLog.chargeDurationBins[12],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_210_240_min,usage.chargeLog.chargeDurationBins[13],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_240_270_min,usage.chargeLog.chargeDurationBins[14],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_duration_gt_270_min,usage.chargeLog.chargeDurationBins[15],minute (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_precustomer_lt_20_C,usage.chargeLog.chargeAmbientTempPreCustomerBins[0],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_precustomer_20_25_C,usage.chargeLog.chargeAmbientTempPreCustomerBins[1],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_precustomer_25_30_C,usage.chargeLog.chargeAmbientTempPreCustomerBins[2],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_precustomer_30_40_C,usage.chargeLog.chargeAmbientTempPreCustomerBins[3],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_precustomer_40_50_C,usage.chargeLog.chargeAmbientTempPreCustomerBins[4],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_precustomer_gt_50_C,usage.chargeLog.chargeAmbientTempPreCustomerBins[5],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_customer_lt_15_C,usage.chargeLog.chargeAmbientTempCustomerBins[0],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_customer_15_20_C,usage.chargeLog.chargeAmbientTempCustomerBins[1],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_customer_20_25_C,usage.chargeLog.chargeAmbientTempCustomerBins[2],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_customer_25_30_C,usage.chargeLog.chargeAmbientTempCustomerBins[3],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_customer_30_40_C,usage.chargeLog.chargeAmbientTempCustomerBins[4],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,charge_ambient_temp_customer_gt_40_C,usage.chargeLog.chargeAmbientTempCustomerBins[5],celsius (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_lt_2p6_V,usage.chargeLog.minCellVoltAtChargeStartBins[0],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_2p6_2p7_V,usage.chargeLog.minCellVoltAtChargeStartBins[1],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_2p7_2p8_V,usage.chargeLog.minCellVoltAtChargeStartBins[2],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_2p8_2p9_V,usage.chargeLog.minCellVoltAtChargeStartBins[3],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_2p9_3_V,usage.chargeLog.minCellVoltAtChargeStartBins[4],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3_3p1_V,usage.chargeLog.minCellVoltAtChargeStartBins[5],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p1_3p2_V,usage.chargeLog.minCellVoltAtChargeStartBins[6],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p2_3p3_V,usage.chargeLog.minCellVoltAtChargeStartBins[7],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p3_3p4_V,usage.chargeLog.minCellVoltAtChargeStartBins[8],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p4_3p5_V,usage.chargeLog.minCellVoltAtChargeStartBins[9],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p5_3p6_V,usage.chargeLog.minCellVoltAtChargeStartBins[10],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p6_3p7_V,usage.chargeLog.minCellVoltAtChargeStartBins[11],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p7_3p8_V,usage.chargeLog.minCellVoltAtChargeStartBins[12],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p8_3p9_V,usage.chargeLog.minCellVoltAtChargeStartBins[13],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_3p9_4_V,usage.chargeLog.minCellVoltAtChargeStartBins[14],volt (edges); array unit: count,stated (brief or bin JSON),
+battery,min_cell_volt_at_charge_start_gt_4_V,usage.chargeLog.minCellVoltAtChargeStartBins[15],volt (edges); array unit: count,stated (brief or bin JSON),
+motor,ambient_temperature_mC,ddmUsage.ambientTemperature_mC,milli-degC,inferred from key name,ambient temperature (brief lists 'ambient temperature'); equals the Normal column of the same name
+motor,ambient_pressure_pa,ddmUsage.ambientPressure_Pa,Pa,inferred from key name,ambient pressure (brief lists 'ambient pressure'); equals the Normal column of the same name
+motor,write_count,header.writeCount,count,inferred from key name,write counter; equals the Normal column of the same name
+motor,filter_wash_counter,ddmUsage.filterWashCounter,count,inferred from key name,count of filter washes; do not link to fault type 13 as causation
+motor,on_but_not_run_time_s,ddmUsage.ddmOnButNotRunTime_s,s,inferred from key name,seconds powered on but not running
+motor,runtime_s,derived,s,inferred,sum(ddm692_PowerBins). [verified] equals Normal cumulative_usage_duration_seconds in all rows; [assumed] to be the cumulative runtime for Return/Repair (project decision)
+motor,ambient_temperature_C,derived,degC,inferred,ambient_temperature_mC / 1000 (verified against the Normal column)
+motor,ambient_pressure_kpa,derived,kPa,inferred,ambient_pressure_pa / 1000 (verified against the Normal column)
+motor,exhaust_bins_8_10_nonzero_flag,derived,flag,derived,True if any of exhaust bins 8-10 (not output) is non-zero; False in every row of both cohorts in the current data
+battery,sig_discharges_all_time,usage.dischargeLog.sigDischarges.allTime,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,charger_insertions_all_time,usage.chargeLog.chargerInsertions.allTime,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,discharge_stop_low_volt,usage.dischargeLog.dischargeStopEvents.lowVolt,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,discharge_stop_no_load,usage.dischargeLog.dischargeStopEvents.noLoad,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,discharge_stop_over_temp,usage.dischargeLog.dischargeStopEvents.overTemp,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,discharge_inhibit_other,usage.dischargeLog.dischargeInhibitEvents.other,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,discharge_inhibit_pack_flat,usage.dischargeLog.dischargeInhibitEvents.packFlat,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,charge_stop_over_temp,usage.chargeLog.chargeStopEvents.overTemp,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,charge_stop_under_temp,usage.chargeLog.chargeStopEvents.underTemp,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,charge_stop_charging_for_long,usage.chargeLog.chargeStopEvents.chargingForLong,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,charge_stop_over_current,usage.chargeLog.chargeStopEvents.overCurrent,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,charge_stop_other_fault,usage.chargeLog.chargeStopEvents.otherFault,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,charge_stop_charger_removed,usage.chargeLog.chargeStopEvents.chargerRemoved,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,power_ups,header.power_ups,count,inferred from key name,counter semantics (reset behaviour) unknown
+battery,min_power_resistance_raw,miscAndSibyl.sibylData.runtimeAlgo.Min_Power_Resistance,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,low_power_resistance_raw,miscAndSibyl.sibylData.runtimeAlgo.Low_Power_Resistance,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,medium_power_resistance_raw,miscAndSibyl.sibylData.runtimeAlgo.Medium_Power_Resistance,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,high_power_resistance_raw,miscAndSibyl.sibylData.runtimeAlgo.High_Power_Resistance,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,peak_power_resistance_raw,miscAndSibyl.sibylData.runtimeAlgo.Peak_Power_Resistance,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,soh_rs_min_raw,miscAndSibyl.sibylData.sohData.SoH_Rs_Min,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,soh_rs_low_raw,miscAndSibyl.sibylData.sohData.SoH_Rs_Low,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,soh_rs_med_raw,miscAndSibyl.sibylData.sohData.SoH_Rs_Med,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,soh_rs_high_raw,miscAndSibyl.sibylData.sohData.SoH_Rs_High,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery,soh_rs_peak_raw,miscAndSibyl.sibylData.sohData.SoH_Rs_Peak,unknown,inferred from key name,[inferred from key name] resistance-related value (brief lists 'resistance estimates'); unit unknown; kept raw
+battery_event_snapshots,time_raw,eventLog.events|faults[].time,unknown,unknown,unknown: time base and unit not stated
+battery_event_snapshots,state_of_charge_raw,eventLog.events|faults[].stateOfCharge,unknown,inferred from key name,inferred from key name (brief lists SoC); scale unknown
+battery_event_snapshots,state_of_health_raw,eventLog.events|faults[].stateOfHealth,unknown,inferred from key name,inferred from key name (brief lists SoH); scale unknown (e.g. 9999 / 10000 seen)
+battery_event_snapshots,pack_volt_raw,eventLog.events|faults[].packVolt,unknown,inferred from key name,inferred from key name; unit unknown
+battery_event_snapshots,run_time_raw,eventLog.events|faults[].runTime,unknown,inferred from key name,inferred from key name (brief lists 'runtime'); unit unknown
+battery_event_snapshots,temp_1_raw / temp_2_raw / temp_3_raw / temp_n,eventLog.events|faults[].temp,unknown,inferred from key name,inferred from key name (brief lists 'battery temperature'); unit unknown. 7-cell packs hold one integer (stored in temp_1_raw); 4-cell packs hold three values
+battery_event_snapshots,cell_volt_min_raw / cell_volt_max_raw / cell_volt_spread_raw / n_cells,eventLog.events|faults[].cellVolt,unknown,inferred from key name,inferred from key name (brief lists 'cell voltages'); unit unknown
