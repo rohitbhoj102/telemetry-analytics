@@ -67,15 +67,23 @@ python src/model.py   # data/model/*.parquet and *.csv, reports/model/model_chec
 
 `model.py` reads only analysis rows from `data/clean/dq/` and writes a star schema: `dim_machine`, `dim_date`, `fact_session`, `fact_fault`, `fact_motor_period`, `fact_battery_period` and `machine_summary`. Motor and battery facts are one row per interval between consecutive snapshots (with `days_elapsed`), and a counter decrease makes that period's deltas missing (`delta_valid = False`) rather than being treated as a reset. The CSV files are the Tableau source. The run exits non-zero, and writes no tables, if any validation check fails. Grain, keys and rules are in `docs/erd.md`; the production sketch is in `docs/productionization.md`.
 
+EDA shortlist (Step 6), after `model.py`, from the repo root with the virtual environment active:
+
+```bash
+cd notebooks && jupyter nbconvert --to notebook --execute --inplace 01_eda_shortlist.ipynb
+```
+
+The notebook reads only `data/model/` (helpers in `src/eda_helpers.py`), keeps its outputs in the notebook, and writes `reports/eda/shortlist.md` and the figures in `reports/figures/eda/`. Run it from the `notebooks/` folder (it imports `../src`).
+
 TODO: remaining pipeline steps (analysis, dashboard).
 
 ## Repo structure
 ```
 normal_machines/, return_repair_machines/, reference_files/   raw inputs (read-only, git-ignored)
-src/            profiling, parsing, build_clean.py, dq.py, model.py, field_meanings.py (field meanings in one place)
+src/            profiling, parsing, build_clean.py, dq.py, model.py, eda_helpers.py (Step 6 helpers), field_meanings.py (field meanings in one place)
 data/clean/     parsed tables (Step 3); data/clean/dq/ flagged tables with is_analysis_row (Step 4)
 data/model/     star schema, Parquet + CSV (Step 5, Tableau source)
-reports/        profiling/, dq/, model/ (generated checks and summaries); figures/
+reports/        profiling/, dq/, model/ (generated checks and summaries); eda/ (shortlist.md, Step 6); figures/ and figures/eda/ (Step 6 charts)
 docs/           assumptions_log.md, worklog.md, parsing_spec.md, erd.md, productionization.md
-notebooks/      EDA and presentation notebooks
+notebooks/      EDA and presentation notebooks (01_eda_shortlist.ipynb, Step 6)
 ```
