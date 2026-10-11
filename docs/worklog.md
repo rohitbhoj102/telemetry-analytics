@@ -181,3 +181,12 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
 - **Why**: put the supporting number in the title now that the gap lines are off the chart.
 - **Found**: all checks pass: 78 chart numbers read from and checked against `key_numbers.csv`, and the Step 6/6b consistency check (61 checked, 0 differ). No numbers changed.
 - **Next**: review; dashboard and slides not started.
+
+### Sun 11 Oct, 22:37
+- **Did**: wrote `src/tableau_export.py`; it writes `data/model/tableau/tableau_machines.csv` (232 rows), `tableau_insight_rates.csv` (10 rows) and `tableau_dq_volume.csv` (16 rows). Added the step to the README.
+- **Why**: flat, plain-label inputs for the Tableau dashboard, with every number tied to `key_numbers.csv`.
+- **Found**
+  - All built-in checks pass: bar components add to their totals; every rate equals `key_numbers.csv` and an independent pooled recomputation from `data/model/machine_summary.csv` (tolerance 0.001, because `key_numbers.csv` stores 6 significant figures); machine counts match; DQ analysis rows match `data/model/`; `machine_id` (first 6 characters) is unique across 232 machines.
+  - Machines: 105 SV50, 111 SV53, 16 Unknown model family; 194 rate-eligible. 16 machines have no session rows, so their session and fault counts are blank (zero-fill rule: 0 only when a machine has sessions). Motor minutes per day is blank for 142 machines (no valid motor runtime).
+  - The airway chart has only Normal SV53 (order 2) and Return/Repair SV53 (order 3); `group_order` keeps the same numbering as the first chart.
+- **Next**: review; Tableau workbook not started.

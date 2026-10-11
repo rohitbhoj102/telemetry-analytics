@@ -84,14 +84,22 @@ cd notebooks && jupyter nbconvert --to notebook --execute --inplace 02_insights.
 
 `src/insights.py` holds all Step 7 computation (pooled fault rates with machine-resampled bootstrap intervals; machine-level medians for continuous measures) and the four final charts. It reads `data/model/`; the DQ headline numbers come from the generated reports in `reports/profiling/` and `reports/dq/` and are cross-checked against the model. `reports/insights/key_numbers.csv` has one row per number used downstream, `step6_consistency.csv` compares the numbers repeated from Step 6/6b, and `reports/insights/insight_cards.md` has the write-up of each insight with its caveats. `02_insights.ipynb` calls the module and shows the tables and charts.
 
-TODO: remaining pipeline steps (dashboard).
+Tableau export (Step 8 prep), after `insights.py`:
+
+```bash
+python src/tableau_export.py   # data/model/tableau/tableau_machines.csv, tableau_insight_rates.csv, tableau_dq_volume.csv
+```
+
+`src/tableau_export.py` writes three flat CSVs with plain labels: one row per machine (232), the bar segments of the two fault charts (10), and raw vs analysis row counts per table and cohort (16). Rates and row counts are read from `reports/insights/key_numbers.csv` and re-computed from `data/model/`; the script stops with an assertion error if they differ, if the components of a bar do not add to its total, or if the 6-character `machine_id` is not unique.
+
+TODO: remaining pipeline steps (Tableau workbook).
 
 ## Repo structure
 ```
 normal_machines/, return_repair_machines/, reference_files/   raw inputs (read-only, git-ignored)
-src/            profiling, parsing, build_clean.py, dq.py, model.py, eda_helpers.py (Step 6 helpers), insights.py (Step 7 numbers and charts), field_meanings.py (field meanings in one place)
+src/            profiling, parsing, build_clean.py, dq.py, model.py, eda_helpers.py (Step 6 helpers), insights.py (Step 7 numbers and charts), tableau_export.py (Step 8 Tableau CSVs), field_meanings.py (field meanings in one place)
 data/clean/     parsed tables (Step 3); data/clean/dq/ flagged tables with is_analysis_row (Step 4)
-data/model/     star schema, Parquet + CSV (Step 5, Tableau source)
+data/model/     star schema, Parquet + CSV (Step 5); data/model/tableau/ flat Tableau CSVs (Step 8 prep)
 reports/        profiling/, dq/, model/ (generated checks and summaries); eda/ (shortlist.md, Step 6); insights/ (key_numbers.csv, insight_cards.md, Step 7); figures/eda/ (Step 6 charts) and figures/final/ (Step 7 charts, PNG and SVG)
 docs/           assumptions_log.md, worklog.md, parsing_spec.md, erd.md, productionization.md
 notebooks/      EDA and presentation notebooks (01_eda_shortlist.ipynb, Step 6; 02_insights.ipynb, Step 7)
