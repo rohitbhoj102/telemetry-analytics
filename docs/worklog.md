@@ -165,3 +165,19 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
 - **Why**: make each rate self-explanatory and stop the model-mix comparison being misread.
 - **Found**: Step 6/6b consistency check still passes (61 checked, 0 differ). No numbers changed.
 - **Next**: review, then dashboard and slides (not started).
+
+### Sun 11 Oct, 22:31
+- **Did**
+  - Chart fixes (no number changes). All four charts now read every printed number from `reports/insights/key_numbers.csv` (rounded half up from the stored text), and `make_charts` fails if a printed number differs from the file, if the file differs from the run, or if the figure shows any number not read from the file. I tested that it fails on a stray number and on a mismatched value.
+  - Chart 01 title reworded. Chart 02: only the bold like-for-like note remains on the right, error bars are centred on the stacked bars, segment labels moved clear of them. Chart 03: only 12/2 and all type 12 on both panels, no 12/1 legend entry, new title. Insight cards updated to say where the removed numbers now live.
+- **Why**: one source for every printed number, and clearer slides.
+- **Found**
+  - The request said chart 04 should show 2.49, but `key_numbers.csv` holds 2.48458 for the Insight 3 difference, so 2.48 is correct. The 2.49 came from the insight card and my earlier summary, which was wrong (it equals 4.87 minus 2.38 using rounded medians). Corrected the card to 2.48.
+  - Consistency check against Step 6/6b still passes (61 checked, 0 differ). Fixed "22 vs 15" to "15 vs 22" (Normal first) on chart 04.
+- **Next**: review; dashboard and slides not started.
+
+### Sun 11 Oct, 22:33
+- **Did**: chart 02 title changed to "Filter Wash alerts make up 81% of the SV50 vs SV53 fault-rate gap"; the 81% is read from `key_numbers.csv` (`i1_fw_share_of_gap`, 81.362) like every other printed number. Stopped titles and subtitles wrapping at hyphens on all charts. Re-ran `src/insights.py` and the notebook.
+- **Why**: put the supporting number in the title now that the gap lines are off the chart.
+- **Found**: all checks pass: 78 chart numbers read from and checked against `key_numbers.csv`, and the Step 6/6b consistency check (61 checked, 0 differ). No numbers changed.
+- **Next**: review; dashboard and slides not started.

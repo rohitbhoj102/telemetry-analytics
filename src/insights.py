@@ -524,8 +524,8 @@ def _setup():
 
 def _frame(plt, title, subtitle, source, rect=None):
     fig = plt.figure(figsize=(13.333, 7.5))
-    tl = textwrap.wrap(title, 60)
-    sl = textwrap.wrap(subtitle, 108)
+    tl = textwrap.wrap(title, 60, break_on_hyphens=False)
+    sl = textwrap.wrap(subtitle, 108, break_on_hyphens=False)
     fig.text(0.04, 0.955, "\n".join(tl), fontsize=22, fontweight="bold", color=INK, va="top")
     ys = 0.955 - 0.052 * len(tl) - 0.008
     fig.text(0.04, ys, "\n".join(sl), fontsize=14, color=GREY, va="top")
@@ -549,29 +549,108 @@ def _save(fig, name):
     return out
 
 
-def _fmt(v, nd=1):
-    return ("%." + str(nd) + "f") % v
+import re as _re
+from decimal import Decimal, ROUND_HALF_UP
 
 
-def chart_dq(R):
+def _fmt_csv(raw, nd, comma=False):
+    """Format a value as stored in key_numbers.csv (text), rounding half up, so 2.485 prints as 2.49."""
+    q = Decimal(1).scaleb(-nd)
+    d = Decimal(str(raw).strip()).quantize(q, rounding=ROUND_HALF_UP)
+    return ("{:,.%df}" if comma else "{:.%df}") % nd and (("{:,.%df}" if comma else "{:.%df}") % nd).format(d)
+
+
+class Printed(object):
+    """Every number a chart prints comes through here, read from reports/insights/key_numbers.csv.
+
+    `num` formats a value from the file and records it; `verify` re-reads the file, re-checks every
+    recorded number and scans the text on the figure for any number that did not come through `num`.
+    """
+    STATIC = {"95", "2,000", "10", "100", "0", "1"}      # method text: 95% interval, 2,000 resamples, >= 10 sessions, per 100, "spans 0"
+    STRIP = [r"SV\d+", r"\d+/\d+", r"type 12", r"ROW-PROD", r"\bSV53-AB\b"]
+    TOKEN = r"-?\d+(?:,\d{3})*(?:\.\d+)?"
+
+    def __init__(self, path):
+        self.path = path
+        self.k = pd.read_csv(path).set_index("id")
+        self.raw = pd.read_csv(path, dtype=str).set_index("id")      # value text exactly as stored
+        self.log = []
+        self.reg = set()
+
+    def num(self, id_, field="value", nd=1, comma=False):
+        s = _fmt_csv(self.raw.loc[id_, field], nd, comma)
+        self.log.append((id_, field, nd, comma, s))
+        self.reg.add(s)
+        return s
+
+    def count(self, id_, field="n_machines"):
+        return self.num(id_, field, 0, comma=True)
+
+    def ratio(self, id_):
+        """'about 5x' from a ratio row; registers the integer."""
+        txt = about(float(self.k.loc[id_, "value"]))
+        for t in _re.findall(self.TOKEN, txt):
+            self.reg.add(t)
+        self.log.append((id_, "value", -1, False, txt))
+        return txt
+
+    def verify(self, fig, name, R):
+        fresh = pd.read_csv(self.path).set_index("id")
+        fresh_raw = pd.read_csv(self.path, dtype=str).set_index("id")
+        # the file on disk must equal this run's computed numbers
+        calc = R["key"].set_index("id")
+        assert set(calc.index) == set(fresh.index), "key_numbers.csv ids differ from this run"
+        for col in ("value", "interval_low", "interval_high"):
+            a, b = calc[col].astype(float), fresh[col].astype(float)
+            ok = (a.isna() & b.isna()) | ((a - b).abs() <= 1e-5 * (1 + b.abs()))
+            assert ok.all(), "key_numbers.csv is stale vs computed %s: %s" % (col, list(ok.index[~ok])[:5])
+        bad = []
+        for id_, field, nd, comma, s in self.log:
+            exp = about(float(fresh.loc[id_, field])) if nd == -1 else _fmt_csv(fresh_raw.loc[id_, field], nd, comma)
+            if exp != s:
+                bad.append((id_, field, s, exp))
+        assert not bad, "%s: printed number differs from key_numbers.csv: %s" % (name, bad)
+        # scan figure text for numbers that were not registered
+        texts = [t.get_text() for t in fig.texts]
+        for ax in fig.axes:
+            texts += [t.get_text() for t in ax.texts] + [ax.get_title(), ax.get_xlabel(), ax.get_ylabel()]
+            texts += [t.get_text() for t in ax.get_xticklabels() if not _re.fullmatch(r"[-−]?[\d.,]+", t.get_text())]
+            leg = ax.get_legend()
+            if leg:
+                texts += [t.get_text() for t in leg.get_texts()]
+        for lg in fig.legends:
+            texts += [t.get_text() for t in lg.get_texts()]
+        stray = []
+        for tx in texts:
+            for pat in self.STRIP:
+                tx = _re.sub(pat, " ", tx)
+            for tok in _re.findall(self.TOKEN, tx):
+                if tok not in self.reg and tok not in self.STATIC:
+                    stray.append(tok)
+        assert not stray, "%s: numbers printed on the chart that are not from key_numbers.csv: %s" % (name, sorted(set(stray)))
+        return len(self.log)
+
+
+def chart_dq(R, P):
     plt = _setup()
-    d = R["dq_table"]
-    fig = _frame(plt, "Only 14% of raw fault rows and 3% of raw battery rows are analysis rows",
+    pk = lambda t, c: P.num("dq_pct_kept_%s_%s" % (t, c), nd=0)
+    fig = _frame(plt, "Only %s%% of raw fault rows and %s%% of raw battery rows remain as distinct records after cleaning" %
+                 (P.num("dq_pct_kept_faults_all", nd=0), P.num("dq_pct_kept_battery_all", nd=0)),
                  "Raw rows vs analysis rows, by table and cohort (all four tables, both cohorts)",
                  "Source: parse_summary.csv (raw rows), dq_summary.csv (analysis rows, cross-checked with data/model); "
                  "faults use the primary count")
     titles = {"clean_sessions": "Clean sessions", "faults": "Faults", "motor": "Motor snapshots", "battery": "Battery snapshots"}
-    gs = fig.add_gridspec(2, 2, left=0.13, right=0.97, top=0.76, bottom=0.12, hspace=0.75, wspace=0.42)
+    gs = fig.add_gridspec(2, 2, left=0.13, right=0.97, top=0.70, bottom=0.10, hspace=0.75, wspace=0.42)
     for i, tb in enumerate(["clean_sessions", "faults", "motor", "battery"]):
         ax = fig.add_subplot(gs[i // 2, i % 2])
-        sub = d[d.table == tb].set_index("cohort").reindex([NORMAL, RR])
-        ymax = sub.raw_rows.max()
+        ymax = max(float(P.k.loc["dq_raw_%s_%s" % (tb, c), "value"]) for c in (NORMAL, RR))
         for j, c in enumerate([NORMAL, RR]):
             y = 1 - j
-            ax.barh(y + 0.2, sub.loc[c, "raw_rows"], height=0.36, color=_tint(h.COLORS[c], 0.65), edgecolor=h.COLORS[c], linewidth=1)
-            ax.barh(y - 0.2, sub.loc[c, "analysis_rows"], height=0.36, color=h.COLORS[c])
-            ax.text(sub.loc[c, "raw_rows"] + ymax * 0.015, y + 0.2, "{:,} raw".format(int(sub.loc[c, "raw_rows"])), va="center", fontsize=12, color=INK)
-            ax.text(sub.loc[c, "analysis_rows"] + ymax * 0.015, y - 0.2, "{:,} analysis ({:.0f}%)".format(int(sub.loc[c, "analysis_rows"]), sub.loc[c, "pct_kept"]),
+            raw, ana = float(P.k.loc["dq_raw_%s_%s" % (tb, c), "value"]), float(P.k.loc["dq_analysis_%s_%s" % (tb, c), "value"])
+            ax.barh(y + 0.2, raw, height=0.36, color=_tint(h.COLORS[c], 0.65), edgecolor=h.COLORS[c], linewidth=1)
+            ax.barh(y - 0.2, ana, height=0.36, color=h.COLORS[c])
+            ax.text(raw + ymax * 0.015, y + 0.2, "%s raw" % P.num("dq_raw_%s_%s" % (tb, c), nd=0, comma=True), va="center", fontsize=12, color=INK)
+            ax.text(ana + ymax * 0.015, y - 0.2, "%s analysis (%s%%)" % (P.num("dq_analysis_%s_%s" % (tb, c), nd=0, comma=True), pk(tb, c)),
                     va="center", fontsize=12, color=INK, fontweight="bold")
         ax.set_yticks([1, 0])
         ax.set_yticklabels(["Normal", "Return/\nRepair"])
@@ -579,149 +658,145 @@ def chart_dq(R):
         ax.set_xticks([])
         ax.spines["bottom"].set_visible(False)
         ax.set_title(titles[tb], fontsize=14, loc="left", color=INK)
+    P.verify(fig, "01_dq", R)
     return fig, _save(fig, "01_dq_raw_vs_analysis_rows")
 
 
-def chart_insight1(R):
+def chart_insight1(R, P):
     plt = _setup()
-    r = R["i1_rates"]
-    order = [("Normal SV50", h.COLORS[NORMAL], SV50_BLUE), ("Normal SV53", h.COLORS[NORMAL], h.COLORS[NORMAL]),
-             ("Return/Repair SV53", h.COLORS[RR], h.COLORS[RR])]
-    n = {g: int(r[r.group == g].machines.iloc[0]) for g, _, _ in order}
-    gap = R["i1_diffs"].set_index(["comparison", "measure"])
-    fig = _frame(plt, "Filter Wash alerts account for most of the SV50 vs SV53 fault-rate gap",
+    from matplotlib.patches import Patch
+    order = [("Normal SV50", "normal_SV50", h.COLORS[NORMAL], SV50_BLUE), ("Normal SV53", "normal_SV53", h.COLORS[NORMAL], h.COLORS[NORMAL]),
+             ("Return/Repair SV53", "return_repair_SV53", h.COLORS[RR], h.COLORS[RR])]
+    n = {g: P.count("i1_total_" + s) for g, s, _, _ in order}
+    fig = _frame(plt, "Filter Wash alerts make up %s%% of the SV50 vs SV53 fault-rate gap" % P.num("i1_fw_share_of_gap", nd=0),
                  "Pooled faults per 100 clean sessions with 95%% intervals (machines resampled); rate-eligible machines "
-                 "(>= 10 sessions): %d Normal SV50, %d Normal SV53, %d Return/Repair SV53" % (n["Normal SV50"], n["Normal SV53"], n["Return/Repair SV53"]),
+                 "(>= 10 sessions): %s Normal SV50, %s Normal SV53, %s Return/Repair SV53" % (n["Normal SV50"], n["Normal SV53"], n["Return/Repair SV53"]),
                  "Source: fact_session, fact_fault, analysis rows; pooled rate, 2,000 machine-bootstrap resamples. "
                  "Filter Wash 13/1 as a 'maintenance alert' is our grouping, not the brief's.")
     ax = fig.add_axes([0.08, 0.21, 0.58, 0.50])
-    for i, (g, hue, shade) in enumerate(order):
-        sub = r[r.group == g].set_index("measure")
-        oth, fw, tot = sub.loc["all other faults (excl. 13/1)"], sub.loc[FW_LABEL], sub.loc["all fault types"]
-        ax.bar(i, oth.rate, width=0.55, color=shade)
-        ax.bar(i, fw.rate, bottom=oth.rate, width=0.55, color=_tint(shade, 0.55), edgecolor=shade, hatch="//", linewidth=1)
-        ax.errorbar(i + 0.14, tot.rate, yerr=[[tot.rate - tot.lo], [tot.hi - tot.rate]], color=INK, capsize=7, lw=2, zorder=5)
-        ax.text(i, tot.hi + 0.6, "%s\n[%s to %s]" % (_fmt(tot.rate), _fmt(tot.lo), _fmt(tot.hi)), ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
-        ax.text(i - 0.08, oth.rate / 2.0, _fmt(oth.rate), ha="center", va="center", fontsize=13, color="white", fontweight="bold")
-        if fw.rate > 1.5:
-            ax.text(i - 0.08, oth.rate + fw.rate / 2.0, _fmt(fw.rate), ha="center", va="center", fontsize=13, color=INK, fontweight="bold")
+    f = lambda i, fld="value": float(P.k.loc[i, fld])
+    hi_max = max(f("i1_total_" + s, "interval_high") for _, s, _, _ in order)
+    for i, (g, s, hue, shade) in enumerate(order):
+        oth, fw = f("i1_other_" + s), f("i1_fw_" + s)
+        tot, lo, hi = f("i1_total_" + s), f("i1_total_" + s, "interval_low"), f("i1_total_" + s, "interval_high")
+        ax.bar(i, oth, width=0.6, color=shade)
+        ax.bar(i, fw, bottom=oth, width=0.6, color=_tint(shade, 0.55), edgecolor=shade, hatch="//", linewidth=1)
+        ax.errorbar(i, tot, yerr=[[tot - lo], [hi - tot]], color=INK, capsize=7, lw=2, zorder=5)
+        ax.text(i, hi + 0.6, "%s\n[%s to %s]" % (P.num("i1_total_" + s), P.num("i1_total_" + s, "interval_low"), P.num("i1_total_" + s, "interval_high")),
+                ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
+        xl = i - 0.17                                 # segment labels sit left of the centred error bar
+        ax.text(xl, oth / 2.0, P.num("i1_other_" + s), ha="center", va="center", fontsize=13, color="white", fontweight="bold")
+        if fw > 3:
+            ax.text(xl, oth + fw / 2.0, P.num("i1_fw_" + s), ha="center", va="center", fontsize=13, color=INK, fontweight="bold")
         else:
-            ax.text(i - 0.08, oth.rate + fw.rate + 0.3, _fmt(fw.rate), ha="center", va="bottom", fontsize=13, color=INK)
+            ax.text(xl, oth + fw + 0.4, P.num("i1_fw_" + s), ha="center", va="bottom", fontsize=13, color=INK)
     ax.set_xticks(range(3))
-    ax.set_xticklabels(["%s\n(%d machines)" % (g, n[g]) for g, _, _ in order])
+    ax.set_xticklabels(["%s\n(%s machines)" % (g, n[g]) for g, _, _, _ in order])
     ax.set_ylabel("Faults per 100 clean sessions")
-    ax.set_ylim(0, r[r.measure == "all fault types"].hi.max() * 1.25)
-    from matplotlib.patches import Patch
+    ax.set_ylim(0, hi_max * 1.25)
+    ax.annotate("", xy=(2, ax.get_ylim()[1] * 0.97), xytext=(1, ax.get_ylim()[1] * 0.97), arrowprops=dict(arrowstyle="<->", color=INK, lw=1.8))
+    ax.text(1.5, ax.get_ylim()[1] * 0.99, "like-for-like", ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
     fig.legend(handles=[Patch(facecolor="#777777", label="All other faults (11/2, 12/1, 12/2)"),
                         Patch(facecolor="#CCCCCC", edgecolor="#777777", hatch="//", label="Filter Wash 13/1\n(maintenance alert; our grouping)")],
                loc="upper left", bbox_to_anchor=(0.69, 0.71), frameon=False, fontsize=12)
-    tot = gap.loc[("Normal: SV53 minus SV50", "all fault types")]
-    fw = gap.loc[("Normal: SV53 minus SV50", FW_LABEL)]
-    oth = gap.loc[("Normal: SV53 minus SV50", "all other faults (excl. 13/1)")]
-    note = ("Within Normal, SV53 minus SV50\n(per 100 sessions, 95%% interval):\n"
-            "All faults: %s [%s, %s]\nFilter Wash: %s [%s, %s]\nAll other: %s [%s, %s]\n\n"
-            "Filter Wash is %.0f%% of the gap;\nexcluding it, the interval spans 0." %
-            (_fmt(tot["diff"]), _fmt(tot.lo), _fmt(tot.hi), _fmt(fw["diff"]), _fmt(fw.lo), _fmt(fw.hi),
-             _fmt(oth["diff"]), _fmt(oth.lo), _fmt(oth.hi), 100 * R["i1_fw_share"]))
-    fig.text(0.69, 0.50, note, fontsize=13, color=INK, va="top")
-    lf = gap.loc[("SV53: Return/Repair minus Normal", "all fault types")]
-    fig.text(0.69, 0.255, "Like-for-like comparison:\nReturn/Repair SV53 vs Normal SV53\n(not vs Normal SV50).\nDifference %s [%s, %s]" %
-             (_fmt(lf["diff"]), _fmt(lf.lo), _fmt(lf.hi)), fontsize=13, color=INK, va="top", fontweight="bold")
-    ax.annotate("", xy=(2, ax.get_ylim()[1] * 0.97), xytext=(1, ax.get_ylim()[1] * 0.97),
-                arrowprops=dict(arrowstyle="<->", color=INK, lw=1.8))
-    ax.text(1.5, ax.get_ylim()[1] * 0.99, "like-for-like", ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
+    d = "i1_diff_total_rr_minus_normal_sv53"
+    fig.text(0.69, 0.45, "Like-for-like comparison:\nReturn/Repair SV53 vs Normal SV53\n(not vs Normal SV50).\nDifference %s [%s, %s]" %
+             (P.num(d), P.num(d, "interval_low"), P.num(d, "interval_high")), fontsize=13, color=INK, va="top", fontweight="bold")
+    P.verify(fig, "02_insight1", R)
     return fig, _save(fig, "02_insight1_model_effect_fault_rate")
 
 
-def _grouped_panel(ax, rows, categories, ylabel, nd, ymax_pad=1.35):
-    """rows: DataFrame with cohort label, measure, rate, lo, hi. categories: list of (measure, tick label)."""
+def _grouped_panel(ax, P, ids, categories, ylabel, nd):
+    """ids: {(cohort, category index): key id}. Bars, centred 95% interval and a value label per bar."""
     w = 0.36
-    top = 0
+    top = 0.0
     for j, c in enumerate((NORMAL, RR)):
-        for i, (meas, _) in enumerate(categories):
-            x = rows[(rows.cohort == h.LABELS[c]) & (rows.measure == meas)].iloc[0]
+        for i, _ in enumerate(categories):
+            kid = ids[(c, i)]
+            v, lo, hi = (float(P.k.loc[kid, fld]) for fld in ("value", "interval_low", "interval_high"))
             xp = i + (j - 0.5) * (w + 0.04)
-            tint = 0.5 if meas.startswith("12/1") else 0
-            ax.bar(xp, x.rate, width=w, color=_tint(h.COLORS[c], tint) if tint else h.COLORS[c],
-                   edgecolor=h.COLORS[c], hatch="//" if tint else None, linewidth=1)
-            ax.errorbar(xp, x.rate, yerr=[[x.rate - x.lo], [x.hi - x.rate]], color=INK, capsize=6, lw=1.8, zorder=5)
-            ax.text(xp, x.hi + 0.02 * max(1, rows.hi.max()), _fmt(x.rate, nd), ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
-            top = max(top, x.hi)
+            ax.bar(xp, v, width=w, color=h.COLORS[c])
+            ax.errorbar(xp, v, yerr=[[v - lo], [hi - v]], color=INK, capsize=6, lw=1.8, zorder=5)
+            ax.text(xp, hi + 0.02 * max(top, hi), P.num(kid, nd=nd), ha="center", va="bottom", fontsize=13, fontweight="bold", color=INK)
+            top = max(top, hi)
     ax.set_xticks(range(len(categories)))
-    ax.set_xticklabels([c[1] for c in categories])
+    ax.set_xticklabels(categories)
     ax.set_ylabel(ylabel)
-    ax.set_ylim(0, top * ymax_pad)
+    ax.set_ylim(0, top * 1.35)
 
 
-def chart_insight2(R):
+def chart_insight2(R, P):
     plt = _setup()
     from matplotlib.patches import Patch
-    r = R["i2_rates"]
-    r = r[r.subset == "SV53"]
-    nn = {h.LABELS[c]: int(r[r.cohort == h.LABELS[c]].machines.iloc[0]) for c in (NORMAL, RR)}
-    hr = R["i2_hour"]
-    nh = {h.LABELS[c]: int(hr[hr.cohort == h.LABELS[c]].machines.iloc[0]) for c in (NORMAL, RR)}
-    key = R["key"].set_index("id")
-    d1 = key.loc["i2_diff_t12_main"]
-    fig = _frame(plt, "Among SV53 machines, Return/Repair log about 5x the airway-blockage rate of Normal",
+    nl, nr = P.count("i2_t12_main_normal"), P.count("i2_t12_main_return_repair")
+    hl, hr = P.count("i2h_n_t12_win_normal"), P.count("i2h_n_t12_win_return_repair")
+    fig = _frame(plt, "Among SV53 machines, Return/Repair log several times (%s) the airway-blockage rate of Normal" % P.ratio("i2_ratio_t12_main"),
                  "Airway blockage (type 12) per 100 clean sessions (left) and per motor runtime hour (right), pooled, with 95%% intervals. "
-                 "Left: %d Normal, %d Return/Repair machines; right: %d and %d" % (nn["Normal"], nn["Return/Repair"], nh["Normal"], nh["Return/Repair"]),
+                 "Left: %s Normal, %s Return/Repair machines; right: %s and %s" % (nl, nr, hl, hr),
                  "Source: fact_session, fact_fault, fact_motor_period, analysis rows; SV53 only; pooled rate, 2,000 machine-bootstrap resamples. "
                  "Return/Repair is a selected population.")
-    ax1 = fig.add_axes([0.075, 0.22, 0.50, 0.49])
-    cats = [("12/1 inlet blocked, motor still running", "12/1\ninlet blocked,\nmotor running"),
-            ("12/2 inlet blocked and in error", "12/2\ninlet blocked\nand in error"),
-            ("type 12 airway blockage (values 1+2)", "All type 12\n(12/1 + 12/2)")]
-    _grouped_panel(ax1, r, cats, "Faults per 100 clean sessions", 1)
+    cats = ["12/2\ninlet blocked\nand in error", "All type 12\n(12/1 + 12/2)"]
+    ax1 = fig.add_axes([0.08, 0.22, 0.42, 0.49])
+    _grouped_panel(ax1, P, {(NORMAL, 0): "i2_t12_v2_main_normal", (RR, 0): "i2_t12_v2_main_return_repair",
+                            (NORMAL, 1): "i2_t12_main_normal", (RR, 1): "i2_t12_main_return_repair"}, cats, "Faults per 100 clean sessions", 1)
     ax1.set_title("Per 100 sessions", fontsize=14, loc="left", color=INK)
-    ax2 = fig.add_axes([0.665, 0.22, 0.31, 0.49])
-    hrr = hr.copy()
-    cats2 = [("12/2 inlet blocked and in error", "12/2"), ("type 12 airway blockage (values 1+2)", "All type 12")]
-    _grouped_panel(ax2, hrr, cats2, "Faults per motor runtime hour", 2)
+    ax2 = fig.add_axes([0.60, 0.22, 0.37, 0.49])
+    _grouped_panel(ax2, P, {(NORMAL, 0): "i2h_n_t12_2_win_normal", (RR, 0): "i2h_n_t12_2_win_return_repair",
+                            (NORMAL, 1): "i2h_n_t12_win_normal", (RR, 1): "i2h_n_t12_win_return_repair"}, cats, "Faults per motor runtime hour", 2)
     ax2.set_title("Per hour of motor runtime", fontsize=14, loc="left", color=INK)
-    handles = [Patch(color=h.COLORS[NORMAL], label="Normal"), Patch(color=h.COLORS[RR], label="Return/Repair"),
-               Patch(facecolor="#DDDDDD", edgecolor="#777777", hatch="//", label="12/1 shown lighter and hatched")]
-    ax1.legend(handles=handles, loc="upper left", frameon=False, fontsize=12)
+    ax1.legend(handles=[Patch(color=h.COLORS[NORMAL], label="Normal"), Patch(color=h.COLORS[RR], label="Return/Repair")],
+               loc="upper left", frameon=False, fontsize=12)
+    P.verify(fig, "03_insight2", R)
     return fig, _save(fig, "03_insight2_airway_blockage_sv53")
 
 
-def chart_insight3(R):
+def chart_insight3(R, P):
     plt = _setup()
-    d, med = R["i3_data"], R["i3_medians"].set_index("cohort")
-    n = {c: int(med.loc[h.LABELS[c], "machines"]) for c in (NORMAL, RR)}
-    key = R["key"].set_index("id")
-    fig = _frame(plt, "Return/Repair machines run about 2x the motor minutes per day of Normal machines",
+    d = R["i3_data"]
+    nn, nr = P.count("i3_median_main_normal"), P.count("i3_median_main_return_repair")
+    fig = _frame(plt, "Return/Repair machines run %s the motor minutes per day of Normal machines" % P.ratio("i3_ratio_main"),
                  "Motor runtime, minutes per day, one dot per machine; bar = median with 95%% interval. SV53 machines with a valid motor period: "
-                 "%d Normal, %d Return/Repair" % (n[NORMAL], n[RR]),
+                 "%s Normal, %s Return/Repair" % (nn, nr),
                  "Source: fact_motor_period, analysis rows, valid periods; machine-level median, 2,000 machine-bootstrap resamples. "
-                 "Observation windows differ (median valid days: %d Normal, %d Return/Repair)." %
-                 (key.loc["i3_valid_days_normal", "value"], key.loc["i3_valid_days_return_repair", "value"]))
+                 "Observation windows differ (median valid days: %s Normal, %s Return/Repair)." %
+                 (P.num("i3_valid_days_normal", nd=0), P.num("i3_valid_days_return_repair", nd=0)))
     ax = fig.add_axes([0.10, 0.20, 0.58, 0.52])
     rng = np.random.RandomState(1)
     for i, c in enumerate((NORMAL, RR)):
         v = d.loc[d.cohort == c, "motor_min_per_day"].values
         ax.scatter(i + rng.uniform(-0.22, 0.22, len(v)), v, s=46, color=h.COLORS[c], alpha=0.6, linewidths=0, zorder=2)
-        m = med.loc[h.LABELS[c]]
-        ax.hlines(m["median"], i - 0.34, i + 0.34, color=INK, lw=3, zorder=4)
-        ax.errorbar(i + 0.42, m["median"], yerr=[[m["median"] - m["lo"]], [m["hi"] - m["median"]]], color=INK, capsize=7, lw=2, zorder=4)
-        ax.text(i + 0.50, m["median"], "median %s\n[%s to %s]" % (_fmt(m["median"], 2), _fmt(m["lo"], 2), _fmt(m["hi"], 2)),
+        kid = "i3_median_main_" + c
+        m, lo, hi = (float(P.k.loc[kid, fld]) for fld in ("value", "interval_low", "interval_high"))
+        ax.hlines(m, i - 0.34, i + 0.34, color=INK, lw=3, zorder=4)
+        ax.errorbar(i + 0.42, m, yerr=[[m - lo], [hi - m]], color=INK, capsize=7, lw=2, zorder=4)
+        ax.text(i + 0.50, m, "median %s\n[%s to %s]" % (P.num(kid, nd=2), P.num(kid, "interval_low", 2), P.num(kid, "interval_high", 2)),
                 ha="left", va="center", fontsize=13, fontweight="bold", color=INK)
     ax.set_xticks([0, 1])
-    ax.set_xticklabels(["Normal\n(%d machines)" % n[NORMAL], "Return/Repair\n(%d machines)" % n[RR]])
+    ax.set_xticklabels(["Normal\n(%s machines)" % nn, "Return/Repair\n(%s machines)" % nr])
     ax.set_xlim(-0.6, 2.1)
     ax.set_ylim(0, d.motor_min_per_day.max() * 1.05)
     ax.set_ylabel("Motor runtime (minutes per day)")
-    dd = key.loc["i3_diff_main"]
+    dm = "i3_diff_main"
     fig.text(0.72, 0.70, "Return/Repair minus Normal:\n%s min/day\n[%s to %s]\nratio %s\n\nDirection also holds:\n"
-             "ROW-PROD only, common calendar\nmonths (two versions), SV53-AB only\n(interval spans 0, 15 vs 22)." %
-             (_fmt(dd.value, 2), _fmt(dd.interval_low, 2), _fmt(dd.interval_high, 2), about(key.loc["i3_ratio_main", "value"])),
+             "ROW-PROD only, common calendar\nmonths (two versions), SV53-AB only\n(interval spans 0, %s vs %s)." %
+             (P.num(dm, nd=2), P.num(dm, "interval_low", 2), P.num(dm, "interval_high", 2), P.ratio("i3_ratio_main"),
+              P.count("i3_median_ab_normal"), P.count("i3_median_ab_return_repair")),
              fontsize=13, color=INK, va="top")
+    P.verify(fig, "04_insight3", R)
     return fig, _save(fig, "04_insight3_motor_minutes_per_day")
 
 
 def make_charts(R):
-    """Build and save all four charts. Returns {name: (figure, [paths])}."""
-    return {"dq": chart_dq(R), "insight1": chart_insight1(R), "insight2": chart_insight2(R), "insight3": chart_insight3(R)}
+    """Write key_numbers.csv, then build the four charts reading every printed number from that file.
+
+    Fails (AssertionError) if a printed number differs from the file or if the file differs from this run.
+    Returns {name: (figure, [paths])}.
+    """
+    path = write_key_numbers(R)
+    P = Printed(path)
+    out = {"dq": chart_dq(R, P), "insight1": chart_insight1(R, P), "insight2": chart_insight2(R, P), "insight3": chart_insight3(R, P)}
+    R["n_printed_checked"] = len(P.log)
+    return out
 
 
 def main():
@@ -732,7 +807,9 @@ def main():
     print("Step 6 consistency: %d checked, %d differ" % (len(R["step6_check"]), len(bad)))
     if len(bad):
         print(bad.to_string())
-    for name, (fig, paths) in make_charts(R).items():
+    charts = make_charts(R)
+    print("chart numbers read from key_numbers.csv and checked: %d" % R["n_printed_checked"])
+    for name, (fig, paths) in charts.items():
         print(name, [str(x.relative_to(ROOT)) for x in paths])
     return 0
 

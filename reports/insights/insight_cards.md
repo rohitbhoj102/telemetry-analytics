@@ -8,6 +8,7 @@ Interval notation: rates carry the interval of the pooled rate; differences carr
 
 - **Headline:** Within Normal machines, SV50 log 16.5 faults per 100 clean sessions against 4.3 for SV53, and Filter Wash (13/1) is about 81% of that gap, so cohort comparisons of total fault counts need like-for-like models.
 - **Chart:** `reports/figures/final/02_insight1_model_effect_fault_rate.png` (and `.svg`)
+  - The chart shows the three groups and the like-for-like note (RR SV53 vs Normal SV53); the within-Normal SV53 minus SV50 gap lines are listed under key numbers below, not on the chart.
 - **Key numbers:**
   - Normal SV50 (99 machines): total 16.5 [12.6 to 21.7]; Filter Wash 11.4 [8.7 to 15.0]; all other 5.1 [3.4 to 7.5] (`i1_total_normal_SV50`, `i1_fw_normal_SV50`, `i1_other_normal_SV50`)
   - Normal SV53 (59 machines): total 4.3 [2.0 to 7.5]; Filter Wash 1.5 [0.5 to 3.0]; all other 2.8 [1.2 to 5.3] (`i1_total_normal_SV53`, `i1_fw_normal_SV53`, `i1_other_normal_SV53`)
@@ -23,6 +24,7 @@ Interval notation: rates carry the interval of the pooled rate; differences carr
 
 - **Headline:** Among SV53 machines, RR machines recorded 13.1 airway-blockage faults (type 12) per 100 clean sessions against 2.8 for Normal (about 5x), and the gap also appears per hour of motor runtime.
 - **Chart:** `reports/figures/final/03_insight2_airway_blockage_sv53.png` (and `.svg`)
+  - The chart shows 12/2 and all type 12 only; the 12/1 numbers are under key numbers below.
 - **Key numbers:**
   - Type 12 (values 1+2) per 100 sessions, Normal (59 machines) vs RR (36): 2.8 [1.2 to 5.3] vs 13.1 [5.1 to 26.7]; difference 10.3 [1.7 to 24.7]; ratio 4.7, about 5x (`i2_t12_main_normal`, `i2_t12_main_return_repair`, `i2_diff_t12_main`, `i2_ratio_t12_main`)
   - 12/1 (inlet blocked, motor still running): 1.7 [0.4 to 3.9] vs 6.6 [1.7 to 14.7] (`i2_t12_v1_main_normal`, `i2_t12_v1_main_return_repair`)
@@ -38,7 +40,7 @@ Interval notation: rates carry the interval of the pooled rate; differences carr
 - **Headline:** The median RR machine ran its motor 4.9 minutes per day against 2.4 for the median Normal machine (about 2x), measured over differing observation windows.
 - **Chart:** `reports/figures/final/04_insight3_motor_minutes_per_day.png` (and `.svg`)
 - **Key numbers:**
-  - Median motor minutes per day: Normal (54 machines) 2.38 [1.78 to 3.36]; RR (36 machines) 4.87 [3.08 to 6.38]; difference 2.49 [0.43 to 3.98]; ratio 2.04, about 2x (`i3_median_main_normal`, `i3_median_main_return_repair`, `i3_diff_main`, `i3_ratio_main`)
+  - Median motor minutes per day: Normal (54 machines) 2.38 [1.78 to 3.36]; RR (36 machines) 4.87 [3.08 to 6.38]; difference 2.48 [0.43 to 3.98]; ratio 2.04, about 2x (`i3_median_main_normal`, `i3_median_main_return_repair`, `i3_diff_main`, `i3_ratio_main`)
   - Observation window, median valid motor days per machine: 240 Normal vs 91 RR (`i3_valid_days_normal`, `i3_valid_days_return_repair`)
   - All 54 + 36 machines are SV53 (checked in code), so no model adjustment is needed here.
 - **Robustness (from 6b):** ROW-PROD only (49 vs 35): 2.46 vs 5.05, difference 2.59 [0.29 to 4.07] (`i3_diff_rowprod`). Over the common calendar months 2025-10 to 2026-05: whole periods only, 2.17 vs 4.45, difference 2.28 [0.49 to 3.91] (`i3_diff_window`); pro-rated, 2.29 vs 4.87, difference 2.58 [0.54 to 3.96] (`i3_diff_prorated`). SV53-AB only (15 vs 22): 1.71 vs 4.21, difference 2.50 [-0.45 to 5.38], direction holds but the interval **spans 0** (`i3_diff_ab`); SV53-AB ROW-PROD only (14 vs 22) likewise spans 0 (`i3_diff_ab_rowprod`).
