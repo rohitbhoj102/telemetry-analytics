@@ -92,7 +92,14 @@ python src/tableau_export.py   # data/model/tableau/tableau_machines.csv, tablea
 
 `src/tableau_export.py` writes three flat CSVs with plain labels: one row per machine (232), the bar segments of the two fault charts (10), and raw vs analysis row counts per table and cohort (16). Rates and row counts are read from `reports/insights/key_numbers.csv` and re-computed from `data/model/`; the script stops with an assertion error if they differ, if the components of a bar do not add to its total, or if the 6-character `machine_id` is not unique.
 
-TODO: remaining pipeline steps (Tableau workbook).
+Dashboard (Step 8), built in Tableau on the three CSVs above:
+
+- `dashboard/screenshots/01_findings.png`: "Return/Repair vs Normal" findings view. Fault-rate bars per 100 sessions (Filter Wash vs other faults, SV50 vs SV53), airway-blockage rate among SV53 machines (12/1 and 12/2 split), motor minutes per day by cohort, and a count of machines and sessions with 10 or more sessions.
+- `dashboard/screenshots/02_dq_explorer.png`: data quality and machine-level detail. Raw vs analysis row counts per table and cohort, plus a one-dot-per-machine scatter of sessions per week against airway-blockage rate, with filters for outlier flag (flagged outliers hidden by default), model family, region and cohort.
+- Data sources: `tableau_machines.csv` (machine-level views), `tableau_insight_rates.csv` (fault-rate bars) and `tableau_dq_volume.csv` (row counts).
+- The packaged workbook (`dashboard/telemetry_dashboard.twbx`) embeds the data extract, so it is git-ignored and not committed. Reviewers can use the screenshots. To rebuild the workbook, run `src/tableau_export.py` and connect Tableau to the three CSVs in `data/model/tableau/`.
+- Shareable link: TODO (add the Tableau Public URL here if the workbook is published).
+- The dashboard shows correlation only. Return/Repair machines are a selected population, and the screenshots carry the same caveat. Model family and region labels include an "Unknown" level for machines that could not be matched to a model or region.
 
 ## Repo structure
 ```
@@ -103,4 +110,5 @@ data/model/     star schema, Parquet + CSV (Step 5); data/model/tableau/ flat Ta
 reports/        profiling/, dq/, model/ (generated checks and summaries); eda/ (shortlist.md, Step 6); insights/ (key_numbers.csv, insight_cards.md, Step 7); figures/eda/ (Step 6 charts) and figures/final/ (Step 7 charts, PNG and SVG)
 docs/           assumptions_log.md, worklog.md, parsing_spec.md, erd.md, productionization.md
 notebooks/      EDA and presentation notebooks (01_eda_shortlist.ipynb, Step 6; 02_insights.ipynb, Step 7)
+dashboard/      Tableau dashboard screenshots (screenshots/); the .twbx workbook is git-ignored because it embeds data
 ```
