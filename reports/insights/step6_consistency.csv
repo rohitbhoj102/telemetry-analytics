@@ -51,7 +51,7 @@ i3_diff_main,interval_high,3.979,3.97858,True,"C4c diff, upper"
 i3_diff_rowprod,interval_low,0.291,0.291467,True,"6b-c C4c ROW-PROD diff, lower"
 i3_diff_rowprod,interval_high,4.074,4.0742,True,"6b-c C4c ROW-PROD diff, upper"
 i3_diff_ab,interval_low,-0.447,-0.447033,True,"6b-c C4c SV53-AB diff, lower"
-i3_diff_ab,interval_high,5.377,5.37673,True,"6b-c C4c SV53-AB diff, upper"
+i3_diff_ab,interval_high,5.377,5.37672,True,"6b-c C4c SV53-AB diff, upper"
 i3_diff_window,value,2.279,2.27908,True,6b-d whole periods inside common window diff
 i3_diff_window,interval_low,0.488,0.488065,True,"6b-d whole periods diff, lower"
 i3_diff_window,interval_high,3.905,3.90511,True,"6b-d whole periods diff, upper"

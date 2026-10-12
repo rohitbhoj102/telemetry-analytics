@@ -1,0 +1,17 @@
+metric,scope,n_machines,spearman,lo,hi
+press_ge100,Normal SV53,59,-0.245943,-0.467625,0.00697139
+press_ge100,RR SV53,36,-0.190219,-0.516861,0.166025
+press_ge100,SV53 both cohorts (not a comparison),95,-0.215224,-0.397295,-0.00373414
+press_ge100,"RR minus Normal, median share",95,-0.173256,-0.249706,0.0457698
+press_ge95,Normal SV53,59,-0.35337,-0.578035,-0.104362
+press_ge95,RR SV53,36,-0.166119,-0.499596,0.217065
+press_ge95,SV53 both cohorts (not a comparison),95,-0.275871,-0.475185,-0.0552436
+press_ge95,"RR minus Normal, median share",95,-0.0420188,-0.153269,0.0238303
+exh_ge50,Normal SV53,59,0.0420648,-0.236665,0.314952
+exh_ge50,RR SV53,36,-0.214705,-0.543684,0.164442
+exh_ge50,SV53 both cohorts (not a comparison),95,-0.0487343,-0.273423,0.175408
+exh_ge50,"RR minus Normal, median share",95,-0.00126906,-0.00368763,0.00395064
+exh_ge40,Normal SV53,59,-0.0163644,-0.297206,0.27173
+exh_ge40,RR SV53,36,-0.128746,-0.476736,0.246938
+exh_ge40,SV53 both cohorts (not a comparison),95,-0.0381498,-0.260679,0.175242
+exh_ge40,"RR minus Normal, median share",95,0.000662117,-0.00915822,0.0100511

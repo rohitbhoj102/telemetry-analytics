@@ -1,0 +1,9 @@
+cohort,dust,machines_both,machines_usable,median_rel_diff,lo,hi,share_higher,n_blockage_sessions,n_higher,n_lower
+normal,ultra_fine,27,27,-12.5,-51.0204,38.3562,44.4444,69,12,15
+normal,fine,30,30,-15.5952,-57.5375,27.7958,40,77,12,18
+normal,coarse,35,35,22.2222,-40,75,54.2857,85,19,16
+normal,large,34,28,-1.42857,-54.7515,34.126,46.4286,84,13,14
+return_repair,ultra_fine,23,23,32.6923,-12.5,48.3871,60.8696,102,14,9
+return_repair,fine,27,27,42.268,-11.7647,118.681,66.6667,126,18,9
+return_repair,coarse,27,27,5.55556,-16.6667,75,51.8519,132,14,11
+return_repair,large,28,23,6.81818,-28.7037,77.9661,60.8696,131,14,9

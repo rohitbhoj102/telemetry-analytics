@@ -1,0 +1,14 @@
+cohort,family,model,hot,cold,ok,not_reported,sessions,machines,not_reported_pct
+normal,SV50,SV50-AA,1,0,368,1126,1495,12,75.3177
+normal,SV50,SV50-AC,1,0,894,3058,3953,23,77.359
+normal,SV50,SV50-AF,5,0,3682,9989,13676,70,73.0404
+normal,SV53,SV53-AA,0,0,352,4,356,2,1.1236
+normal,SV53,SV53-AB,0,0,2654,32,2686,21,1.19136
+normal,SV53,SV53-AC,0,0,1428,9,1437,6,0.626305
+normal,SV53,SV53-AE,0,0,2057,55,2112,5,2.60417
+normal,SV53,SV53-AF,0,0,4896,221,5117,34,4.31894
+return_repair,SV53,SV53-AA,0,0,8,1,9,1,11.1111
+return_repair,SV53,SV53-AB,0,0,2623,132,2755,24,4.79129
+return_repair,SV53,SV53-AC,0,0,378,2,380,3,0.526316
+return_repair,SV53,SV53-AE,0,0,215,0,215,3,0
+return_repair,SV53,SV53-AF,0,0,1267,15,1282,12,1.17005

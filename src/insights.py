@@ -26,6 +26,7 @@ import eda_helpers as h  # noqa: E402
 ROOT = h.ROOT
 OUT_DIR = ROOT / "reports" / "insights"
 FIG_DIR = ROOT / "reports" / "figures" / "final"
+SLIDE_DIR = ROOT / "reports" / "figures" / "slide"      # slide-sized versions (Step 9), no titles
 N_BOOT, SEED = h.N_BOOT, h.SEED
 NORMAL, RR = h.NORMAL, h.RR
 FW_LABEL = "Filter Wash 13/1 (maintenance alert; our grouping)"
@@ -209,6 +210,69 @@ def dq_numbers(t):
     return d, pd.DataFrame(extra)
 
 
+def recording_numbers():
+    """Share of analysis sessions per cohort for three fields the cohorts record differently.
+
+    Read from the flagged session table (data/clean/dq/clean_sessions.parquet, is_analysis_row only) and
+    cross-checked against reports/dq/dq_summary.csv where that file has the same count.
+    """
+    import duckdb
+    con = duckdb.connect()
+    q = """SELECT cohort, count(*) AS base,
+                  sum(CASE WHEN log3_time_sync_old = 0 THEN 1 ELSE 0 END) AS log3_zero,
+                  sum(CASE WHEN flag_temp_not_reported THEN 1 ELSE 0 END) AS temp_not_reported,
+                  sum(CASE WHEN flag_dust_sentinel THEN 1 ELSE 0 END) AS dust_sentinel
+           FROM read_parquet('%s') WHERE is_analysis_row GROUP BY cohort""" % (ROOT / "data" / "clean" / "dq" / "clean_sessions.parquet")
+    g = con.execute(q).df().set_index("cohort")
+    dq = pd.read_csv(ROOT / "reports" / "dq" / "dq_summary.csv").drop_duplicates()
+
+    def dq_count(prefix, c):
+        r = dq[dq.check.str.startswith(prefix) & (dq.table == "clean_sessions") & (dq.cohort == c)]
+        assert len(r) == 1, (prefix, c)
+        return int(r.rows_affected.iloc[0])
+
+    meta = [("log3_zero", "log3_time_sync_old", "log3_time_sync_old = 0, % of analysis sessions", None,
+             "meaning of log3_time_sync_old is not stated; the value 0 is a recorded value, not a null"),
+            ("temp_not_reported", "temp_not_reported", "battery temperature not reported (no hot/cold/ok flag true), % of analysis sessions",
+             "flag_temp_not_reported", "equals battery_temp_state = not_reported"),
+            ("dust_sentinel", "dust_sentinel", "any dust column = 65535, % of analysis sessions",
+             "flag_dust_sentinel", "65535 treated as a no-reading sentinel [inferred]")]
+    rows = []
+    for col, field, label, dq_prefix, note in meta:
+        for c in (NORMAL, RR):
+            n, base = int(g.loc[c, col]), int(g.loc[c, "base"])
+            if dq_prefix:
+                assert dq_count(dq_prefix, c) == n, (col, c, dq_count(dq_prefix, c), n)
+            rows.append(dict(field={"log3_zero": "log3_zero", "temp_not_reported": "temp_not_reported",
+                                    "dust_sentinel": "dust_sentinel"}[col], cohort=c, label=label, n=n, base=base,
+                             pct=100.0 * n / base, note=note))
+    return pd.DataFrame(rows)
+
+
+def leave_one_out(s53, col, n_boot=N_BOOT, seed=SEED):
+    """Finding 2 leave-one-out: RR minus Normal pooled difference per 100 sessions, dropping each RR machine in turn.
+
+    Returns the min and max difference, the worst case (bootstrap rerun, same method and seed as the main
+    result), the RR rate and ratio in the worst case, and the share of RR faults from the top 1 and top 3 machines.
+    """
+    rr = s53[s53.cohort == RR]
+    nm = s53[s53.cohort == NORMAL]
+    rate_n = 100.0 * nm[col].sum() / nm.n_sessions.sum()
+    diffs = []
+    for ser in rr.anonymized_serial:
+        d = rr[rr.anonymized_serial != ser]
+        diffs.append((100.0 * d[col].sum() / d.n_sessions.sum() - rate_n, ser))
+    diffs.sort()
+    worst_ser = diffs[0][1]
+    r = h.compare_pooled(s53[s53.anonymized_serial != worst_ser], col, "n_sessions", scale=100.0, group="cohort",
+                         a_val=NORMAL, b_val=RR, n_boot=n_boot, seed=seed)
+    top = rr[col].sort_values(ascending=False)
+    return dict(min_diff=diffs[0][0], max_diff=diffs[-1][0], worst_serial=worst_ser, worst=r,
+                worst_rr_rate=r["rr"], worst_ratio=r["ratio"], total=float(rr[col].sum()),
+                top1=float(top.iloc[:1].sum()), top3=float(top.iloc[:3].sum()), n_rr=len(rr), n_normal=len(nm),
+                n_dropped_same_sign=int(sum(1 for d, _ in diffs if d > 0)))
+
+
 # ---------------------------------------------------------------------------
 # Main computation
 # ---------------------------------------------------------------------------
@@ -250,15 +314,29 @@ def compute(t=None):
               src=SRC + ":dq_numbers | reports/dq/dq_summary.csv, reports/profiling/parse_summary.csv",
               note="%d of %d raw battery rows have no decoded_data" % (r.empty_rows, r.battery_raw))
 
+    # ---- fields the cohorts record differently (share of analysis sessions) ----
+    rec = recording_numbers()
+    R["recording"] = rec
+    for r in rec.itertuples():
+        K.add("rec_%s_%s" % (r.field, r.cohort), "DQ", r.label, h.LABELS[r.cohort], r.pct, unit="%",
+              n_events=r.n, den=r.base, den_unit="analysis sessions", src=SRC + ":recording_numbers | data/clean/dq/clean_sessions.parquet",
+              note=r.note)
+
     def cnt(mask_df):
         return mask_df.groupby("cohort").anonymized_serial.nunique().reindex([NORMAL, RR]).fillna(0).astype(int)
 
     mach = {"machines_all": ("machines in dim_machine", cnt(dim)),
             "machines_rate_eligible": ("rate-eligible machines (>= 10 analysis sessions)", cnt(elig)),
-            "machines_motor_runtime": ("machines with a valid motor runtime per day", cnt(c4c))}
+            "machines_motor_runtime": ("machines with a valid motor runtime per day", cnt(c4c)),
+            "machines_with_faults": ("machines with >= 1 fault occurrence (fact_fault)", cnt(t["fault"]))}
     for k, (m, s) in mach.items():
         for c in (NORMAL, RR):
             K.add("%s_%s" % (k, c), "counts", m, h.LABELS[c], int(s[c]), n_machines=int(s[c]), unit="machines", src=SRC + ":compute")
+    gap = t["motor"].groupby("cohort").days_elapsed.median()
+    for c in (NORMAL, RR):
+        K.add("motor_gap_median_days_" + c, "counts", "median days between consecutive motor snapshots (fact_motor_period.days_elapsed)",
+              h.LABELS[c], float(gap[c]), unit="days", src=SRC + ":compute",
+              note="snapshot spacing is uneven, hence per-day rates; all motor periods in the model")
     fam_n = elig.groupby(["cohort", "family"]).size()
     for (c, fam), n in fam_n.items():
         K.add("machines_eligible_%s_%s" % (c, fam), "counts", "rate-eligible machines by model family",
@@ -342,6 +420,35 @@ def compute(t=None):
             K.add("i2_ratio_%s_%s" % (col[2:], tag[sname]), "Insight 2", "ratio RR / Normal, pooled per 100 sessions: " + names2[col],
                   sname, r["ratio"], unit="ratio", src=SRC + ":compute (insight 2)", note="rounded in text: " + about(r["ratio"]))
     R["i2_rates"] = pd.DataFrame(rows2)
+
+    # leave-one-out on the main Finding 2 sample (SV53): drop each RR machine in turn
+    loo_rows = []
+    for col, idn, nm_ in (("n_t12", "t12", names2["n_t12"]), ("n_t12_v2", "t12v2", names2["n_t12_v2"])):
+        L = leave_one_out(s53, col)
+        loo_rows.append(dict(measure=nm_, **{k: v for k, v in L.items() if k not in ("worst",)},
+                             worst_lo=L["worst"]["ci_lo"], worst_hi=L["worst"]["ci_hi"], worst_diff=L["worst"]["diff"]))
+        base = "SV53, RR machines dropped one at a time (%d fits)" % L["n_rr"]
+        m = "RR minus Normal, pooled per 100 sessions: " + nm_
+        K.add("i2_loo_%s_min_diff" % idn, "Insight 2", "leave-one-out minimum difference; " + m, base, L["min_diff"],
+              n_machines=L["n_rr"] + L["n_normal"] - 1, unit="per 100 sessions", src=SRC + ":leave_one_out",
+              note="all %d drops keep the same sign: %s; interval not recomputed for each drop" % (L["n_rr"], L["n_dropped_same_sign"] == L["n_rr"]))
+        K.add("i2_loo_%s_max_diff" % idn, "Insight 2", "leave-one-out maximum difference; " + m, base, L["max_diff"],
+              n_machines=L["n_rr"] + L["n_normal"] - 1, unit="per 100 sessions", src=SRC + ":leave_one_out")
+        K.add("i2_loo_%s_worst" % idn, "Insight 2", "leave-one-out worst case (bootstrap rerun); " + m,
+              "SV53, RR machine %s dropped" % L["worst_serial"][:6], L["worst"]["diff"], L["worst"]["ci_lo"], L["worst"]["ci_hi"],
+              L["worst"]["n_normal"] + L["worst"]["n_rr"], unit="per 100 sessions", src=SRC + ":leave_one_out",
+              note="n machines %d vs %d; ratio %.2f (%s); same method and seed as the main result" %
+                   (L["worst"]["n_normal"], L["worst"]["n_rr"], L["worst"]["ratio"], about(L["worst"]["ratio"])))
+        K.add("i2_loo_%s_worst_ratio" % idn, "Insight 2", "leave-one-out worst case: ratio RR / Normal; " + nm_,
+              "SV53, RR machine %s dropped" % L["worst_serial"][:6], L["worst"]["ratio"], unit="ratio", src=SRC + ":leave_one_out",
+              note="rounded in text: " + about(L["worst"]["ratio"]))
+        K.add("i2_loo_%s_top1_share" % idn, "Insight 2", "share of RR faults from the single machine with most: " + nm_, "SV53 Return/Repair",
+              100.0 * L["top1"] / L["total"], n_machines=1, n_events=L["top1"], den=L["total"], den_unit="RR faults (type/value as named)",
+              unit="%", src=SRC + ":leave_one_out")
+        K.add("i2_loo_%s_top3_share" % idn, "Insight 2", "share of RR faults from the 3 machines with most: " + nm_, "SV53 Return/Repair",
+              100.0 * L["top3"] / L["total"], n_machines=3, n_events=L["top3"], den=L["total"], den_unit="RR faults (type/value as named)",
+              unit="%", src=SRC + ":leave_one_out")
+    R["i2_loo"] = pd.DataFrame(loo_rows)
 
     e = exposure_table(P)
     R["exposure"] = e
@@ -497,10 +604,20 @@ def check_against_step6(key):
     return pd.DataFrame(rows)
 
 
+EXTRA_PREFIXES = ("n_", "f_")      # rows appended by src/insights3.py (n_) and src/insights_final.py (f_)
+
+
 def write_key_numbers(R):
+    """Write this script's rows, keeping any n_ / f_ rows already in the file (appended by later scripts) untouched."""
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     path = OUT_DIR / "key_numbers.csv"
+    kept = []
+    if path.exists():
+        kept = [l for l in path.read_text().splitlines(keepends=True)[1:] if l.startswith(EXTRA_PREFIXES)]
     R["key"].to_csv(path, index=False, float_format="%.6g")
+    if kept:
+        with open(str(path), "a") as f:
+            f.writelines(kept)
     R["step6_check"].to_csv(OUT_DIR / "step6_consistency.csv", index=False, float_format="%.6g")
     return path
 
@@ -539,12 +656,13 @@ def _tint(color, amount=0.55):
     return tuple(r + (1 - r) * amount)
 
 
-def _save(fig, name):
-    FIG_DIR.mkdir(parents=True, exist_ok=True)
+def _save(fig, name, out_dir=None, dpi=200):
+    out_dir = out_dir or FIG_DIR
+    out_dir.mkdir(parents=True, exist_ok=True)
     out = []
     for ext in ("png", "svg"):
-        p = FIG_DIR / ("%s.%s" % (name, ext))
-        fig.savefig(str(p), dpi=200)
+        p = out_dir / ("%s.%s" % (name, ext))
+        fig.savefig(str(p), dpi=dpi)
         out.append(p)
     return out
 
@@ -597,6 +715,8 @@ class Printed(object):
     def verify(self, fig, name, R):
         fresh = pd.read_csv(self.path).set_index("id")
         fresh_raw = pd.read_csv(self.path, dtype=str).set_index("id")
+        fresh = fresh[~fresh.index.str.startswith(EXTRA_PREFIXES)]            # rows owned by later scripts
+        fresh_raw = fresh_raw[~fresh_raw.index.str.startswith(EXTRA_PREFIXES)]
         # the file on disk must equal this run's computed numbers
         calc = R["key"].set_index("id")
         assert set(calc.index) == set(fresh.index), "key_numbers.csv ids differ from this run"
@@ -786,6 +906,121 @@ def chart_insight3(R, P):
     return fig, _save(fig, "04_insight3_motor_minutes_per_day")
 
 
+# ---------------------------------------------------------------------------
+# Slide-sized charts (Step 9): drawn at the physical size placed on the slide, no title or subtitle, labels >= 14 pt
+# (the data-quality chart uses 12 pt). Every printed number is read from key_numbers.csv and checked like the others.
+# ---------------------------------------------------------------------------
+SLIDE_RC = {"font.size": 14, "axes.labelsize": 14, "xtick.labelsize": 14, "ytick.labelsize": 14,
+            "axes.spines.top": False, "axes.spines.right": False, "axes.grid": False, "svg.fonttype": "path"}
+SLIDE_SIZE = (3.0, 2.25)           # inches as placed on the slide (4:3)
+DQ_SLIDE_SIZE = (5.9, 4.6)
+
+
+def chart_slide_insight1(R, P):
+    plt = _setup()
+    order = [("Normal\nSV50", "normal_SV50", SV50_BLUE), ("Normal\nSV53", "normal_SV53", h.COLORS[NORMAL]),
+             ("RR\nSV53", "return_repair_SV53", h.COLORS[RR])]
+    f = lambda i, fld="value": float(P.k.loc[i, fld])
+    with plt.rc_context(SLIDE_RC):
+        fig = plt.figure(figsize=SLIDE_SIZE)
+        ax = fig.add_axes([0.15, 0.25, 0.83, 0.72])
+        hi_max = max(f("i1_total_" + s, "interval_high") for _, s, _ in order)
+        for i, (lab, s, shade) in enumerate(order):
+            oth, fw, tot = f("i1_other_" + s), f("i1_fw_" + s), f("i1_total_" + s)
+            lo, hi = f("i1_total_" + s, "interval_low"), f("i1_total_" + s, "interval_high")
+            ax.bar(i, oth, width=0.62, color=shade)
+            ax.bar(i, fw, bottom=oth, width=0.62, color=_tint(shade, 0.55), edgecolor=shade, hatch="//", linewidth=1)
+            ax.errorbar(i, tot, yerr=[[tot - lo], [hi - tot]], color=INK, capsize=5, lw=1.8, zorder=5)
+            ax.text(i, hi + hi_max * 0.03, P.num("i1_total_" + s), ha="center", va="bottom", fontsize=14, fontweight="bold", color=INK)
+        ax.set_xticks(range(3))
+        ax.set_xticklabels([l for l, _, _ in order])
+        ax.set_ylim(0, hi_max * 1.22)
+        ax.set_yticks([0, 10, 20, 30])
+        P.verify(fig, "slide_02_insight1", R)
+        return fig, _save(fig, "slide_02_insight1_fault_rate", SLIDE_DIR, dpi=300)
+
+
+def chart_slide_insight2(R, P):
+    plt = _setup()
+    from matplotlib.patches import Patch
+    cats = ["12/2", "All\ntype 12"]
+    with plt.rc_context(SLIDE_RC):
+        fig = plt.figure(figsize=SLIDE_SIZE)
+        ax = fig.add_axes([0.15, 0.25, 0.83, 0.72])
+        ids = {(NORMAL, 0): "i2_t12_v2_main_normal", (RR, 0): "i2_t12_v2_main_return_repair",
+               (NORMAL, 1): "i2_t12_main_normal", (RR, 1): "i2_t12_main_return_repair"}
+        w, top = 0.36, 0.0
+        for j, c in enumerate((NORMAL, RR)):
+            for i in range(2):
+                kid = ids[(c, i)]
+                v, lo, hi = (float(P.k.loc[kid, fld]) for fld in ("value", "interval_low", "interval_high"))
+                xp = i + (j - 0.5) * (w + 0.04)
+                ax.bar(xp, v, width=w, color=h.COLORS[c])
+                ax.errorbar(xp, v, yerr=[[v - lo], [hi - v]], color=INK, capsize=4, lw=1.6, zorder=5)
+                ax.text(xp, hi + 0.5, P.num(kid), ha="center", va="bottom", fontsize=14, fontweight="bold", color=INK)
+                top = max(top, hi)
+        ax.set_xticks(range(2))
+        ax.set_xticklabels(cats)
+        ax.set_ylim(0, top * 1.3)
+        ax.set_yticks([0, 10, 20])
+        ax.legend(handles=[Patch(color=h.COLORS[NORMAL], label="Normal"), Patch(color=h.COLORS[RR], label="RR")],
+                  loc="upper left", frameon=False, fontsize=14, handlelength=1.0, borderaxespad=0.0)
+        P.verify(fig, "slide_03_insight2", R)
+        return fig, _save(fig, "slide_03_insight2_airway_blockage", SLIDE_DIR, dpi=300)
+
+
+def chart_slide_insight3(R, P):
+    plt = _setup()
+    d = R["i3_data"]
+    with plt.rc_context(SLIDE_RC):
+        fig = plt.figure(figsize=SLIDE_SIZE)
+        ax = fig.add_axes([0.15, 0.25, 0.83, 0.72])
+        rng = np.random.RandomState(1)
+        for i, c in enumerate((NORMAL, RR)):
+            v = d.loc[d.cohort == c, "motor_min_per_day"].values
+            ax.scatter(i + rng.uniform(-0.2, 0.2, len(v)), v, s=22, color=h.COLORS[c], alpha=0.6, linewidths=0, zorder=2)
+            kid = "i3_median_main_" + c
+            m, lo, hi = (float(P.k.loc[kid, fld]) for fld in ("value", "interval_low", "interval_high"))
+            ax.hlines(m, i - 0.32, i + 0.32, color=INK, lw=2.5, zorder=4)
+            ax.errorbar(i + 0.4, m, yerr=[[m - lo], [hi - m]], color=INK, capsize=4, lw=1.6, zorder=4)
+            ax.text(i + 0.47, m, P.num(kid, nd=2), ha="left", va="center", fontsize=14, fontweight="bold", color=INK)
+        ax.set_xticks([0, 1])
+        ax.set_xticklabels(["Normal", "RR"])
+        ax.set_xlim(-0.55, 2.1)
+        ax.set_ylim(0, d.motor_min_per_day.max() * 1.05)
+        ax.set_yticks([0, 5, 10, 15, 20])
+        P.verify(fig, "slide_04_insight3", R)
+        return fig, _save(fig, "slide_04_insight3_motor_minutes", SLIDE_DIR, dpi=300)
+
+
+def chart_slide_dq(R, P):
+    plt = _setup()
+    titles = {"clean_sessions": "Clean sessions", "faults": "Faults", "motor": "Motor snapshots", "battery": "Battery snapshots"}
+    rc = dict(SLIDE_RC, **{"font.size": 12, "xtick.labelsize": 12, "ytick.labelsize": 12})
+    with plt.rc_context(rc):
+        fig = plt.figure(figsize=DQ_SLIDE_SIZE)
+        gs = fig.add_gridspec(4, 1, left=0.20, right=0.99, top=0.945, bottom=0.01, hspace=0.62)
+        for i, tb in enumerate(["clean_sessions", "faults", "motor", "battery"]):
+            ax = fig.add_subplot(gs[i])
+            ymax = max(float(P.k.loc["dq_raw_%s_%s" % (tb, c), "value"]) for c in (NORMAL, RR))
+            for j, c in enumerate([NORMAL, RR]):
+                y = 1 - j
+                raw, ana = float(P.k.loc["dq_raw_%s_%s" % (tb, c), "value"]), float(P.k.loc["dq_analysis_%s_%s" % (tb, c), "value"])
+                ax.barh(y + 0.2, raw, height=0.36, color=_tint(h.COLORS[c], 0.65), edgecolor=h.COLORS[c], linewidth=1)
+                ax.barh(y - 0.2, ana, height=0.36, color=h.COLORS[c])
+                ax.text(raw + ymax * 0.015, y + 0.2, "%s raw" % P.num("dq_raw_%s_%s" % (tb, c), nd=0, comma=True), va="center", fontsize=12, color=INK)
+                ax.text(ana + ymax * 0.015, y - 0.2, "%s analysis (%s%%)" % (P.num("dq_analysis_%s_%s" % (tb, c), nd=0, comma=True),
+                        P.num("dq_pct_kept_%s_%s" % (tb, c), nd=0)), va="center", fontsize=12, color=INK, fontweight="bold")
+            ax.set_yticks([1, 0])
+            ax.set_yticklabels(["Normal", "RR"])
+            ax.set_xlim(0, ymax * 1.85)
+            ax.set_xticks([])
+            ax.spines["bottom"].set_visible(False)
+            ax.set_title(titles[tb], fontsize=12, loc="left", color=INK, pad=2)
+        P.verify(fig, "slide_01_dq", R)
+        return fig, _save(fig, "slide_01_dq_raw_vs_analysis_rows", SLIDE_DIR, dpi=300)
+
+
 def make_charts(R):
     """Write key_numbers.csv, then build the four charts reading every printed number from that file.
 
@@ -794,7 +1029,9 @@ def make_charts(R):
     """
     path = write_key_numbers(R)
     P = Printed(path)
-    out = {"dq": chart_dq(R, P), "insight1": chart_insight1(R, P), "insight2": chart_insight2(R, P), "insight3": chart_insight3(R, P)}
+    out = {"dq": chart_dq(R, P), "insight1": chart_insight1(R, P), "insight2": chart_insight2(R, P), "insight3": chart_insight3(R, P),
+           "slide_dq": chart_slide_dq(R, P), "slide_insight1": chart_slide_insight1(R, P),
+           "slide_insight2": chart_slide_insight2(R, P), "slide_insight3": chart_slide_insight3(R, P)}
     R["n_printed_checked"] = len(P.log)
     return out
 
