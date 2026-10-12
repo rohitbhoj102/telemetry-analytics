@@ -2,16 +2,14 @@
 
 ## 1. Overview
 
-Two cohorts of connected vacuum cleaners, Normal and Return/Repair (RR), send clean-session, fault, motor and battery telemetry. The assignment: assess data quality, build a data model (with a productionisation sketch), find a small number of well-supported insights, and present them in a report and a dashboard.
+Two cohorts of connected Dyson machines, Normal and Return/Repair (RR), send clean-session, fault, motor and battery telemetry. The assignment: assess data quality, build a data model (with a productionisation sketch), find a small number of well-supported insights, and present them in a report and a dashboard.
 
 | Deliverable | Where |
 |---|---|
 | Analysis report (title, contents, 5 sections; 7 pages) | `reports/telemetry_findings.pdf` |
 | Code repository | this repo (`src/`, `notebooks/`, this README) |
-| Dashboard (Tableau) | `dashboard/screenshots/01_findings.png` (insights dashboard) and `dashboard/screenshots/02_dq_explorer.png` (data quality explorer). The Tableau workbook is not committed (it embeds data). Dashboard data: `dashboard/data/insights_dashboard.csv`, described in `dashboard/data/README_dashboard.md` |
+| Dashboard (Tableau) | `dashboard/screenshots/01_findings.png` (insights dashboard) and `dashboard/screenshots/02_dq_explorer.png` (data quality explorer). Dashboard data: `dashboard/data/insights_dashboard.csv`, described in `dashboard/data/README_dashboard.md` |
 | Assumptions and limitations log | `docs/assumptions_log.md` |
-
-Also: `docs/worklog.md` (activity log), `docs/erd.md` (data model), `docs/productionization.md` (ingestion to BI sketch), `docs/parsing_spec.md` (payload parsing).
 
 ## 2. Setup
 
@@ -41,8 +39,6 @@ python src/run_all.py                 # everything, in order; about 3 minutes
 python src/run_all.py --from insights # restart at a named step
 ```
 
-Steps run in order: profile, inspect, dups, cumulative, spec, links, bands, clean, dq, model, insights, candidates, round2, final, charts, decknumbers, tableau, dashboard. The first failing check stops the run. The pipeline is deterministic (bootstrap seed fixed), so a rerun reproduces `key_numbers.csv`.
-
 | Output | Folder |
 |---|---|
 | Parsed tables (Parquet) and flagged tables with `is_analysis_row` | `data/clean/`, `data/clean/dq/` (generated, git-ignored) |
@@ -51,8 +47,6 @@ Steps run in order: profile, inspect, dups, cumulative, spec, links, bands, clea
 | All reported numbers, deck number sheet, insight write-ups | `reports/insights/` (`key_numbers.csv`, `deck_numbers.md`, `insight_cards.md`) |
 | Final charts | `reports/figures/final_v2/` |
 | Dashboard data | `dashboard/data/insights_dashboard.csv` |
-
-Optional notebook (run from `notebooks/`): `01_eda_shortlist.ipynb` (first-round EDA; writes `reports/eda/shortlist.md`).
 
 ## 4. Where to find each part
 
@@ -113,7 +107,7 @@ Supporting material: robustness checks in `reports/insights/deck_numbers.md`, fi
 
 **Live dashboard: https://public.tableau.com/views/telemetry_dashboard_public/Dashboard1?:language=en-GB&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link**
 
-The Tableau workbook is not committed (it embeds data). Data source for the insights view: `dashboard/data/insights_dashboard.csv` (aggregates only, copied by id from `key_numbers.csv`; column and chart descriptions in `dashboard/data/README_dashboard.md`). The data quality view uses `tableau_dq_volume.csv` (row counts) and `tableau_machines.csv` (machine-level dots), both written by `src/tableau_export.py` into `data/model/tableau/` (generated, git-ignored, not published).
+Data source for the insights view: `dashboard/data/insights_dashboard.csv` (aggregates only, copied by id from `key_numbers.csv`; column and chart descriptions in `dashboard/data/README_dashboard.md`).
 
 ![Insights dashboard](dashboard/screenshots/01_findings.png)
 
@@ -122,8 +116,6 @@ The Tableau workbook is not committed (it embeds data). Data source for the insi
 ![Data quality explorer](dashboard/screenshots/02_dq_explorer.png)
 
 **`02_dq_explorer.png` — raw vs usable rows, plus one dot per machine.** Left: for each table (clean sessions, faults, motor, battery) and cohort, bars compare raw rows with the rows kept for analysis after duplicates and empty payloads are flagged (for example faults: 32.1% of raw Normal rows and 4.3% of raw RR rows are kept; `dq_pct_kept_*` in `key_numbers.csv`). It shows why raw row counts must not be used as event counts. Right: each dot is one machine, sessions per week against airway blockages per 100 sessions, with filters for outlier flag, model family and region. It is machine-level and built from `tableau_machines.csv`, so it is a descriptive view, not a finding.
-
-The dashboard shows correlation only; Return/Repair is a selected population.
 
 ## 9. Assumptions and limitations
 
