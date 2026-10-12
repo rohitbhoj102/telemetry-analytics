@@ -19,3 +19,7 @@ take_home_assignment_details.pdf
 
 # local tooling instructions
 CLAUDE.md
+
+# Tableau workbooks (contain data)
+dashboard/*.twbx
+dashboard/*.twb
