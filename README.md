@@ -111,7 +111,7 @@ Supporting material: robustness checks in `reports/insights/deck_numbers.md`, fi
 
 ## 8. Dashboard
 
-**Live dashboard: <TABLEAU_PUBLIC_LINK>**
+**Live dashboard: https://public.tableau.com/views/telemetry_dashboard_public/Dashboard1?:language=en-GB&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link**
 
 The Tableau workbook is not committed (it embeds data). Data source for the insights view: `dashboard/data/insights_dashboard.csv` (aggregates only, copied by id from `key_numbers.csv`; column and chart descriptions in `dashboard/data/README_dashboard.md`). The data quality view uses `tableau_dq_volume.csv` (row counts) and `tableau_machines.csv` (machine-level dots), both written by `src/tableau_export.py` into `data/model/tableau/` (generated, git-ignored, not published).
 
