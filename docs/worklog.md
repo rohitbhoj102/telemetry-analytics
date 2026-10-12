@@ -32,7 +32,7 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
 
 ### Fri 09 Oct, 23:15
 - **Did**
-  - Housekeeping: removed the two mentions of the project instructions file from `docs/assumptions_log.md` (README and `src/` had none); recorded the user's answers to the Step 1 questions in the assumptions log.
+  - Housekeeping: tidied docs/assumptions_log.md and recorded my answers to the Step 1 questions in it.
   - Step 2 (design only): `docs/parsing_spec.md`, built from three read-only scripts plus a loader: `src/payload_io.py` (loader), `src/cumulative_check.py`, `src/build_parsing_spec.py`; outputs in `reports/profiling/` (`cumulative_check.csv`, `cumulative_gaps.csv`, `parsing_spec_paths.csv`, `spec_checks.csv`, `spec_tables/`).
   - Ad-hoc Step 1 checks that are not yet in a script and are **to be moved into `src/dq.py` in Step 4**: cross-table serial coverage and cohort serial overlap; fault_type / fault_value combination counts; Normal motor flattened columns vs payload bins (partly covered by `build_parsing_spec.py` now); clean-session sentinel and range counts (65535 dust, 255 charge, `charge_end` > `charge_start`, `clean_duration` = 0, `log3_time_sync_old` = 0); `session_id` sharing across serials.
 - **Why**: decide how to parse `decoded_data` before writing a parser, and test the brief's "cumulative weekly counters" statement on the data.
@@ -190,3 +190,98 @@ Chronological activity log. Entry format: `### <Day DD Mon, HH:MM>` then **Did /
   - Machines: 105 SV50, 111 SV53, 16 Unknown model family; 194 rate-eligible. 16 machines have no session rows, so their session and fault counts are blank (zero-fill rule: 0 only when a machine has sessions). Motor minutes per day is blank for 142 machines (no valid motor runtime).
   - The airway chart has only Normal SV53 (order 2) and Return/Repair SV53 (order 3); `group_order` keeps the same numbering as the first chart.
 - **Next**: review; Tableau workbook not started.
+
+### Mon 12 Oct, 14:39
+- **Did**
+  - Step 9: added `src/build_deck.py`, which writes `reports/slides/telemetry_findings.pptx` (5 main slides, an "Appendix" divider, 6 appendix slides A1 to A6, speaker notes on every slide), the cropped chart images in `reports/slides/assets/`, and `docs/slide_notes.md`. Installed python-pptx (pip resolved 1.0.2; pulled in XlsxWriter 3.2.9 and lxml 6.1.3 into `.venv`) and added the three pins to `requirements.txt`. An earlier `pip install` also went into the system Python 3.8 by mistake; the repo environment is `.venv`.
+  - Appended README (Step 9 run step, repo structure).
+- **Why**: the report deck is deliverable 1; every number has to be traceable to `key_numbers.csv`.
+- **Found**
+  - The build checks pass: every printed number (slides, notes, `slide_notes.md`) matches `key_numbers.csv` at the printed precision; no causal wording; exactly 5 main slides before the divider; Arial throughout; text fits its box and nothing overlaps (measured with Arial metrics).
+  - LibreOffice is not installed, so no PNG previews were exported to `reports/slides/preview/`. I drew rough previews from the .pptx with a throwaway script (not committed) to check layout.
+  - Numbers not available in `key_numbers.csv` were left out: the appendix rows for the `fault_status` counting rule and the motor outlier check are shown in words only (Step 6 shortlist). No outlier check exists for the airway-blockage metric; the slide says "not run". The motor outlier check keeps the direction but the interval touches 0.
+  - Main slides 4 and 5 hold more than the 60 words of body text in the brief (about 146 and 129 words including tables, labels and captions); slide 1 to 3 about 112 to 114.
+  - Charts on slide 4 are small (three per slide); the chart images are cropped to the plot area and chart 3 shows only the per-100-sessions panel.
+- **Next**: review the deck in PowerPoint or Google Slides; Tuesday is buffer only.
+
+### Mon 12 Oct, 15:13
+- **Did**
+  - Step 9 revisions. `src/insights.py`: added `rec_` rows (log3_time_sync_old = 0, battery temperature not reported, dust sentinel 65535; share of analysis sessions per cohort, from `data/clean/dq/clean_sessions.parquet`, cross-checked against `dq_summary.csv`), `machines_with_faults_` and `motor_gap_median_days_` rows, a leave-one-out check on Finding 2 (`i2_loo_` rows) and slide-sized charts in `reports/figures/slide/` (data quality, Findings 1 to 3). `key_numbers.csv` now has 174 rows (was 152).
+  - `src/build_deck.py`: content fixes (cohort-recording bullet with real percentages, "snapshots of lifetime counters, irregular spacing", Faults row, Finding 1 confidence high with "cause unknown", like-for-like line, slide 5 per-hour wording), design fixes (no shadows or theme effects anywhere, new slide charts, enlarged chart on slide 2, dark divider) and content additions (data quality line, tagged recommendations including a data-platform item, A1 order and drop-one rows, A3 coincidence note). Rebuilt `docs/slide_notes.md`.
+- **Why**: review feedback on accuracy and design; the drop-one check tests how much Finding 2 leans on single machines.
+- **Found**
+  - All six recording percentages sourced: log3_time_sync_old = 0 in 58% of Normal vs 0% of RR; temperature not reported 47% vs 3%; dust 65535 in any column 9% vs 26%.
+  - Finding 2 drop-one result (SV53, type 12 per 100 sessions): dropping each of the 36 RR machines in turn keeps RR minus Normal positive (4.7 to 11.5; 12/2 alone 3.3 to 6.0). The worst case (refitted bootstrap) is 4.7 [0.8 to 9.6]; 12/2 alone 3.3 [1.0 to 6.7]; neither interval includes zero. The ratio in the worst case falls to about 3x (4.0x for 12/2). One RR machine has 45% of RR type 12 faults and the top three 58% (12/2: 35% and 57%). Direction is robust; the size ("about 5x") leans heavily on one machine. Headlines were not changed.
+  - Existing key numbers are unchanged except `i3_diff_ab` interval_high, which moved from 5.37673 to 5.37672 (6th significant figure; printed 5.38 either way). Step 6/6b consistency still passes (61 checked, 0 differ).
+  - Build checks pass, including a new scan for shadows and theme effects. LibreOffice is not installed, so no PNG previews were exported; I checked a rough preview rendered from the .pptx by a throwaway script (not committed; it does not draw the divider background, which I confirmed in the XML).
+- **Next**: review in PowerPoint or Google Slides; decide whether to soften the "about 5x" headline given the concentration result.
+
+
+### Mon 12 Oct, 22:04
+- **Did**
+  - Step 10 (final clean-up, no new analysis). Reproducibility check: copied `reports/insights/key_numbers.csv`, re-ran the full pipeline from raw (profiling scripts, `build_clean.py`, `dq.py`, `model.py`, `insights.py`, `tableau_export.py`; 12 scripts) and diffed the result against the copy.
+  - Rewrote `README.md` (overview and findings, deliverables map, layout, environment, data setup, run steps with runtime, approach, dashboard, assumptions summary).
+  - Restructured `docs/assumptions_log.md` into four sections (data limitations, assumptions, additional data needed, known gaps); merged duplicate and superseded rows without dropping information; added rows for battery data excluded from findings, additional data needed, the final deck's origin and this clean-up. The leave-one-out result and the cohort recording differences were already logged and now carry their key_numbers ids.
+  - Added `dashboard/*.twbr` and `dashboard/.~*` to `.gitignore`.
+- **Why**: prepare the repository for submission; the log is deliverable 4 and the README is what a reviewer reads first.
+- **Found**
+  - `key_numbers.csv` is identical after the full re-run (174 rows, no differences). Total runtime of the 12 scripts: 61 seconds (notebooks not included).
+  - `requirements.txt` matches `pip freeze` of the environment used (one package name differs only in letter case), so it was not changed.
+  - A Tableau lock file, `dashboard/.~telemtry_dashboard__89012.twbr`, is tracked by git; the new ignore patterns do not untrack it.
+  - The notebook outputs contain no full serials and no raw rows.
+  - `reports/insights/insight_cards.md` does not mention the leave-one-out result (45% of RR type 12 faults from one machine), the cohort recording differences or the confidence labels; the README and the log do.
+  - `src/build_deck.py`, `reports/slides/` and `docs/slide_notes.md` are an earlier in-repo draft; the final deck is added separately as `reports/telemetry_findings.pdf` and `.pptx`.
+- **Next**: add the final deck files, untrack the lock file, decide on the card and worklog wording points above, then commit. No new analysis.
+
+### Tue 13 Oct, 00:15
+- **Did**
+  - Round-2 insight search after review feedback that round-1 insights were not specific enough. Explored the model and clean tables (SV50 vs SV53, sub-models, fault anatomy, dust, battery bins, motor columns, trends). New `src/insights2.py` (writes `reports/insights/key_numbers_v2.csv`, 157 rows) and `src/charts2.py` (6 charts in `reports/figures/v2/`, 86 printed numbers read from and checked against the csv). Wrote `reports/insights/insight_cards_v2.md`. Added a section 5 to the assumptions log.
+  - Did not touch round-1 files, the deck or the dashboard.
+- **Why**: the review asked for SV50 and SV53 specifics (returns, main cause, running vs error, dust, battery temperature, motors).
+- **Found**
+  - SV50: 0 of 105 machines are in Return/Repair; no dust, no motor rows. Filter Wash is 69% of SV50 fault occurrences; 71% of blockages are 12/1 (still running).
+  - Faults link to sessions on serial + session_id with matching server dates (99.4% linked), which enables within-session analysis.
+  - Filter Wash session is about 6x as likely to also record a blockage (within machine, 130 machines); 12/1 becomes 12/2 in 46% of sessions, median 3.9 s; SV53-AB blockage 8.2 vs 1.0 to 2.3 for other Normal SV53 sub-models; battery temperature "not OK" is mostly no flag (74% of SV50 sessions), with real heat exposure on SV50 (60% of 15 machines vs 12% of 42 SV53); same-machine fault rates rose sharply from late 2025 to mid 2026.
+  - Negative results: dust does not flag blockage (fine and coarse lower in blockage sessions); motor profile does not predict machine blockage; `filter_wash_counter` shows no cohort difference.
+  - Round-1 Insight 2 ("RR about 5x Normal") is partly sub-model mix and one machine (3.1x re-weighted).
+- **Next**: decide which round-2 insights replace or join the deck's findings (rank in the cards file), soften the round-1 Insight 2 headline, then update the deck, dashboard and README. Round-2 numbers are not yet in the deck.
+
+### Tue 13 Oct, 00:25
+- **Did**
+  - Tested the fixed candidate list (0 to 5) with `src/insights3.py`: appended 117 `n_` rows to `reports/insights/key_numbers.csv` (174 existing rows verified unchanged byte for byte; script is idempotent) and wrote `reports/insights/n_*.csv` (verdicts, window sensitivity, dust, motor, battery-state counts). Appended a candidate-round section to `reports/insights/insight_cards.md` and section 6 to the assumptions log.
+  - Candidate 2 needed a design fix: the first run (no minimum exposure) gave differences of thousands per 100 days, caused by machines whose 7-day windows covered nearly their whole span. Added minimums (1 day inside, 14 days outside), an MH rate ratio, and a time-adjusted ratio (strata machine x calendar month).
+- **Why**: find more actionable and defensible insights for product, quality and engineering, reporting nulls as well.
+- **Found**
+  - Facts: no value-0 fault rows (0 of 31,406); RR is 46 machines (SV53-AB 24, AF 12, AC 3, AE 3, AA 1, none 3, no SV50); the 120 motor machines are all SV53 or unlabelled.
+  - 1 severity mix: 12/2 share 29% (SV50), 39% (Normal SV53), 50% (RR SV53); group differences Not supported.
+  - 2 reminder then blockage: Moderate (leaning Strong). As specified (faults-only span) unstable, 7 machines per SV53 group; with the sessions-table exposure span the 7-day excess is 6.5, 6.2, 14.8 episodes per 100 days (SV50, Normal SV53, RR), and the time-adjusted ratio is about 3x (2.8, 3.0, 3.4) with intervals excluding 1.
+  - 3 dust: Not supported (mixed signs, intervals span 0). 4 motor pressure/exhaust: Not supported (one sensitivity metric weakly negative in Normal only; pressure array meaning is an inferred alias). 5 battery temperature state: Strong data-quality result, model-driven (71.4 pp) not cohort-driven (0.5 pp); firmware too sparse to test.
+- **Next**: decide which of the four recommended insights replace round-1 findings in the deck; the deck, dashboard and README do not yet include round 2 or this round. Rerun order is `src/insights.py` then `src/insights3.py`.
+
+### Tue 13 Oct, 01:09
+- **Did**
+  - Final consolidation (no new candidate analyses). New `src/insights_final.py` writes 222 `f_` rows (I1 to I4, with leave-one-out, robustness, join-rule and model-comparison numbers) into `reports/insights/key_numbers.csv`; `src/charts_final.py` writes one chart per insight to `reports/figures/final_v2/`; `src/make_deck_numbers.py` generates `reports/insights/deck_numbers.md`; `src/run_all.py` rebuilds everything in order. `src/insights.py` now preserves `n_`/`f_` rows and its self-check ignores them. Added a Final insights section to `reports/insights/insight_cards.md` and section 7 to the assumptions log; README run section updated.
+  - Re-ran the whole pipeline from scratch (generated data removed first) with `python src/run_all.py`: 155 s, no failures; a second run from `insights` onward gave a byte-identical `key_numbers.csv`.
+- **Why**: one reproducible source of truth for the four final insights so the deck can be rebuilt from it.
+- **Found**
+  - The 174 original rows are byte-identical; the 117 `n_` rows and 222 `f_` rows reproduce exactly. Tableau CSVs unchanged (checksums equal).
+  - Join rule: serial + session_id with server dates within 24 h links 99.4% of faults; the round-1 nearest-date rule agrees for 99.93% and I1/I4 differ by at most 0.07%.
+  - Corrections: the I1 lead effect is about 3x only at 7 days; with the first hour excluded or over 30 days it is 1.2x to 2.8x and some intervals include 1 (the candidate-round card overstated this); I2 "about 9x" has interval 1.2 to 98; the other SV53 sub-models run 0.6 to 2.3 per 100 sessions (not 1.0 to 2.3); I3 4.7x [1.5 to 14.1] and 3.1x [1.3 to 9.3] overlap; I4 escalation share and timing do not separate SV50 from SV53, only the share of errors preceded by a warning does (65.2 pp [47.5 to 82.5]).
+  - "0 of 105" = known SV50 machines in the RR cohort; the RR cohort has 46 machines (43 SV53, 3 with no model label).
+- **Next**: edit the dashboard titles listed in the Final insights section of the cards (about 5x title), rebuild the deck from `deck_numbers.md`, then commit.
+
+### Tue 13 Oct, dashboard data
+- **Did**
+  - New `src/make_dashboard_data.py` writes `data/model/tableau/insights_dashboard.csv` (20 long-format rows, 4 insights in deck order) from the `f_` rows of `key_numbers.csv` by id; added to `src/run_all.py` after the Tableau export. Wrote `dashboard/data/README_dashboard.md` (layout, columns, 95% machine-bootstrap note, selection-bias and no-causation caveat).
+  - The script re-reads the CSV and checks value, interval and machine count against `key_numbers.csv` as stored text: all 20 rows pass. All requested ids existed.
+- **Why**: the dashboard should show the same four final insights and numbers as the deck, with no new statistics.
+- **Found**: nothing new; no statistic recomputed. The CSV is in `data/model/tableau/` (where the existing Tableau CSVs are, git-ignored), not `dashboard/data/`.
+- **Next**: rebuild the Tableau workbook on `insights_dashboard.csv`, re-export screenshots, update the README dashboard section.
+
+### Tue 13 Oct, final pass
+- **Did**
+  - Checked the paths cited in the slide footers (all seven exist). Rewrote `README.md` end to end (overview, setup, run, approach and grains, DQ summary, four findings with `key_numbers.csv` ids, limitations, layout). Tidied `docs/assumptions_log.md`: marked first-round and appendix rows as superseded (none deleted), added section 8 with the consolidated "additional data needed" rows. `src/make_dashboard_data.py` now also writes `dashboard/data/insights_dashboard.csv` (identical to the `data/model/tableau/` copy).
+  - The deck was finalised manually outside this repo; the dashboard was rebuilt to mirror the four insights; README and assumptions log finalised.
+- **Why**: submission due today 10:00 SGT; the repo should match the final deck with no superseded headlines.
+- **Found**: first-round headlines (about 5x, 81%, appendix A1/A3) remain only in generated or historical files (insight cards round-1 sections, `docs/slide_notes.md`, earlier worklog entries) and are labelled superseded where they are in the assumptions log. No new numbers.
+- **Next**: add `reports/telemetry_findings.pdf` and the two new dashboard screenshots, review the flagged items, then commit.

@@ -1,24 +1,21 @@
 # Telemetry & Product Data Analytics Take-Home
 
-## Overview
-TODO
+## 1. Overview
 
-## Approach
-TODO
+Two cohorts of connected vacuum cleaners, Normal and Return/Repair (RR), send clean-session, fault, motor and battery telemetry. The assignment: assess data quality, build a data model (with a productionisation sketch), find a small number of well-supported insights, and present them in a report and a dashboard.
 
-## Assumptions
-TODO (see `docs/assumptions_log.md`)
+| Deliverable | Where |
+|---|---|
+| Analysis report (title, contents, 5 sections; 7 pages) | `reports/telemetry_findings.pdf` |
+| Code repository | this repo (`src/`, `notebooks/`, this README) |
+| Dashboard (Tableau) | `dashboard/screenshots/01_findings.png` (insights dashboard) and `dashboard/screenshots/02_dq_explorer.png` (data quality explorer). The Tableau workbook is not committed (it embeds data). Dashboard data: `dashboard/data/insights_dashboard.csv`, described in `dashboard/data/README_dashboard.md` |
+| Assumptions and limitations log | `docs/assumptions_log.md` |
 
-## Environment
-- Python 3.8.1 (the only interpreter available on the development machine; a newer Python is fine if you have one, but `requirements.txt` was resolved on 3.8).
-- **Note:** Python 3.8 is past end-of-life. It was kept deliberately for this take-home because upgrading would cost time for little benefit; nothing in the analysis depends on 3.8-specific behaviour.
-- Packages: pandas, duckdb, jupyter, matplotlib. Exact versions (including transitive dependencies) are pinned in `requirements.txt`, taken from `pip freeze` of the working environment.
-- Raw inputs are company-provided, read-only and **not committed** (git-ignored). Place them at the repo root before running anything: `normal_machines/` (4 CSVs), `return_repair_machines/` (4 CSVs), `reference_files/` (`DDM_Bins.json`, `BMS_Bins.json`) and the assignment brief `take_home_assignment_details.pdf`.
-- Generated outputs in `data/clean/` and `data/model/` are git-ignored; rebuild them with the run steps below.
-- Parquet files are written and read with DuckDB (no pyarrow needed). To inspect one: `python -c "import duckdb; print(duckdb.sql(\"SELECT * FROM 'data/clean/motor.parquet' LIMIT 5\").df())"`.
+Also: `docs/worklog.md` (activity log), `docs/erd.md` (data model), `docs/productionization.md` (ingestion to BI sketch), `docs/parsing_spec.md` (payload parsing).
 
-## How to run
-Setup (from the repo root):
+## 2. Setup
+
+- **Python.** 3.8.1 (the version the results were produced on; a newer Python should work but `requirements.txt` was resolved on 3.8.1). Main packages: pandas 2.0.3, duckdb 1.3.2, matplotlib 3.7.5, numpy 1.24.4, jupyter 1.1.1. Parquet is read and written through DuckDB.
 
 ```bash
 python3 -m venv .venv
@@ -26,89 +23,130 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Profiling (Step 1), from the repo root:
+- **Data (not included).** The company-provided inputs are git-ignored and are not redistributed. Place them at the repo root before running anything:
+
+| Path | Content |
+|---|---|
+| `normal_machines/` | the 4 Normal-cohort CSVs (clean sessions, faults, motor, battery) |
+| `return_repair_machines/` | the 4 Return/Repair-cohort CSVs |
+| `reference_files/` | `DDM_Bins.json` and `BMS_Bins.json` |
+| `take_home_assignment_details.pdf` | the assignment brief (source of field and fault meanings) |
+
+Raw files are never modified.
+
+## 3. How to run
 
 ```bash
-python src/profile.py            # reports/profiling/profile_summary.csv, profile_columns.csv
-python src/inspect_decoded.py    # reports/profiling/decoded_data_*.{csv,txt}
-python src/dup_diagnostics.py    # dup_diff_columns.csv, battery_empty_payload.csv, fault_status_order.csv
+python src/run_all.py                 # everything, in order; about 3 minutes
+python src/run_all.py --from insights # restart at a named step
 ```
 
-Payload parsing spec (Step 2, read-only), in this order:
+Steps run in order: profile, inspect, dups, cumulative, spec, links, bands, clean, dq, model, insights, candidates, round2, final, charts, decknumbers, tableau, dashboard. The first failing check stops the run. The pipeline is deterministic (bootstrap seed fixed), so a rerun reproduces `key_numbers.csv`.
 
-```bash
-python src/cumulative_check.py     # cumulative_check.csv, cumulative_gaps.csv
-python src/build_parsing_spec.py   # parsing_spec_paths.csv, spec_checks.csv, spec_tables/*.md (used in docs/parsing_spec.md)
+| Output | Folder |
+|---|---|
+| Parsed tables (Parquet) and flagged tables with `is_analysis_row` | `data/clean/`, `data/clean/dq/` (generated, git-ignored) |
+| Star schema (Parquet and CSV) and Tableau CSVs | `data/model/`, `data/model/tableau/` (generated, git-ignored) |
+| Profiling, DQ and model checks | `reports/profiling/`, `reports/dq/` (`dq_summary.csv`), `reports/model/` |
+| All reported numbers, deck number sheet, insight write-ups | `reports/insights/` (`key_numbers.csv`, `deck_numbers.md`, `insight_cards.md`) |
+| Final charts | `reports/figures/final_v2/` |
+| Dashboard data | `dashboard/data/insights_dashboard.csv` |
+
+Optional notebook (run from `notebooks/`): `01_eda_shortlist.ipynb` (first-round EDA; writes `reports/eda/shortlist.md`).
+
+## 4. Where to find each part
+
+| Brief item | Where | Key functions |
+|---|---|---|
+| Data processing: parsing and cleaning | `src/build_clean.py`, `src/payload_parsers.py`, `src/payload_io.py`, `src/field_meanings.py` (all field meanings, units and bin mappings) | `build_typed`, `build_motor`, `build_battery`, `build_machine_lookup` (build_clean); `parse_motor`, `parse_battery` (payload_parsers) |
+| Data processing: star schema | `src/model.py`; ERD in `docs/erd.md`; productionisation sketch in `docs/productionization.md` | `build_dim_machine`, `build_dim_date`, `build_fact_session`, `build_fact_fault`, `build_fact_motor_period`, `build_fact_battery_period`, `build_machine_summary` |
+| Data quality checks | `src/dq.py` (summary rows via `summarise`; output `reports/dq/dq_summary.csv` and detail CSVs); profiling in `src/profile.py`, `src/dup_diagnostics.py`, `src/cumulative_check.py`, `src/link_checks.py` | `check_duplicates_sessions`, `check_duplicates_faults`, `check_duplicates_payload`, `check_invalid_sessions`, `check_counter_decreases`, `check_coverage`, `check_fault_codes`, `check_outliers_rows` |
+| Analysis | `src/insights_final.py` (final insights I1 to I4, `f_` rows) built on `src/insights.py`, `src/insights2.py`, `src/insights3.py`; notebooks in `notebooks/`; charts in `src/charts_final.py` | `build_i1`, `build_i2`, `build_i3`, `build_i4` (insights_final) |
+| Feature engineering | see below | |
+| Dashboard | `src/make_dashboard_data.py` → `dashboard/data/insights_dashboard.csv` → Tableau (workbook not in repo); machine-level and DQ views from `src/tableau_export.py` | `build`, `check` (make_dashboard_data) |
+
+Feature engineering, by function:
+- **Counters to period deltas:** `build_periods` (with `build_fact_motor_period`, `build_fact_battery_period`) in `src/model.py`: `days_elapsed`, `delta_valid`, and missing deltas when a counter decreases.
+- **Rates per 100 cleans:** `pooled_ci` in `src/insights.py` and `compare_pooled` in `src/eda_helpers.py` (pooled rate, machine bootstrap, `scale=100`).
+- **Duplicate classes** (`exact_copy`, `join_fanout`, `reupload`, `distinct`, plus `dup_keep`): assigned in the SQL of `build_sessions_stage_a`, `build_faults` and `_build_payload_table` in `src/dq.py`, reported by the `check_duplicates_*` functions.
+- **Fault-to-session linking:** `build_fact_fault` in `src/model.py` (nearest session date, `session_key`) and `link_faults` in `src/insights2.py` (serial + `session_id`, server dates within 24 h; used for I1 and I4).
+- **Flags:** `add_machine_outlier_flags` and `check_invalid_sessions` in `src/dq.py`; `is_analysis_row` set in the `data/clean/dq/` tables.
+
+## 5. Approach
+
+`raw` (read-only CSVs and bin JSONs) → `clean` (`build_clean.py`: lossless typing and payload parsing, one output row per raw row with `source_file` and `source_row`) → `dq` (`dq.py`: classify and flag, never delete; `is_analysis_row`) → `model` (`model.py`: star schema) → `insights` (`insights*.py`; every reported number is a row in `reports/insights/key_numbers.csv`) → `dashboard data` (`make_dashboard_data.py`, copied from the `f_` rows by id, with a pass/fail check). Cohort is a column, not a code path. Field meanings, units and bin mappings live in one module, `src/field_meanings.py`; the only sources are the brief and the two bin JSONs.
+
+**Star schema** (`docs/erd.md` has the ERD and keys):
+
+| Table | Grain (one row is...) |
+|---|---|
+| `dim_machine` | one machine (`anonymized_serial`), with cohort, model, region, pack type and presence flags |
+| `dim_date` | one calendar day |
+| `fact_session` | one analysis session: serial + `session_id` + `date_server` after the duplicate rules |
+| `fact_fault` | one fault occurrence under the primary rule (serial, `session_id`, `fault_type`, `fault_value`, `fault_timestamp`) |
+| `fact_motor_period` | one interval between two consecutive analysis motor snapshots of a machine (cumulative counters turned into deltas) |
+| `fact_battery_period` | the same, for battery snapshots |
+| `machine_summary` | one machine, with per-machine metrics and their sample sizes |
+
+Counters are cumulative lifetime values: each period row is the difference between consecutive snapshots of one machine, with `days_elapsed`; a counter decrease marks the whole period invalid rather than assuming a reset. Comparisons use machines as the unit (pooled rates, 95% bootstrap over machines, fixed seed).
+
+## 6. Data quality summary
+
+Source: `reports/dq/dq_summary.csv` (one row per check, table and cohort) and the `dq_` rows of `key_numbers.csv`.
+
+- **Heavy duplication; rows are classified, not deleted.** Analysis rows as a share of raw rows: clean sessions 75.9% Normal and 70.7% RR; faults 32.1% and 4.3%; battery 19.9% and 1.2%; motor 100% and 86.5% (`dq_pct_kept_*`). Exact copies are 78.3% of raw fault rows (`dq_exact_copy_faults_all`).
+- **Empty battery payloads** are 94.8% of raw battery rows (`dq_empty_battery_all`), so battery data are thin.
+- **Other checks** (sentinel dust values, out-of-range charge values, counter decreases, future device timestamps, schema differences between cohorts, join fan-out) are in `reports/dq/` and the assumptions log.
+
+## 7. Findings (deck order)
+
+All results are exploratory. Every number is a row in `reports/insights/key_numbers.csv` (id in brackets); `reports/insights/deck_numbers.md` has the full set with intervals, machine counts and robustness checks.
+
+1. **Filter Wash reminders flag, and come before, airway blockages.** Sessions with a Filter Wash alert have a blockage in 11.8% vs 0.9% without one, about 6x on the same machine (6.0x [4.3 to 8.6], `f_i1_samesession_rr_all`). Blockage episodes are about 3x as frequent in the 7 days after an alert (2.8x, 3.0x, 3.4x for Normal SV50, Normal SV53, RR SV53; `f_i1_lead_adjratio_sessionspan_7d_*`); the excess is smaller when the alert's own session is excluded and weaker over 30 days, so treat anything beyond 7 days as not established.
+2. **The SV53 rarely warns before a blockage error.** Among Normal machines, 27% of SV53 error sessions had an earlier warning vs 92% for SV50 (`f_i4_prior121_share_normal_SV53`, `f_i4_prior121_share_normal_SV50`; difference 65.2 pp [47.5 to 82.5], `f_i4_prior121_diff_sv50_minus_sv53_normal`). Escalation share and timing do not separate the models.
+3. **Returned SV53s log 3–5x more blockages, led by SV53-AB.** RR/Normal ratio 4.7x as recorded [1.5 to 14.1] and 3.1x [1.3 to 9.3] with the same sub-model mix (`f_i3_crude_ratio`, `f_i3_std_ratio`). The two intervals overlap; SV53-AB runs 8.2 blockages per 100 sessions vs 0.6 to 2.3 for the other sub-models (`f_i3_rate12_normal_SV53_*`).
+4. **The SV50 often sends no battery temperature, and no dust or motor data.** No temperature flag in 74% of SV50 cleans vs 3% for SV53 (`f_i2_notrep_pct_normal_SV50`, `f_i2_notrep_pct_normal_SV53`). Battery heat is a lead only: 9 of 15 SV50 vs 5 of 42 SV53 machines show discharge above 45 C (`f_i2_any_hot_machines_*`), low confidence.
+
+Supporting material: robustness checks in `reports/insights/deck_numbers.md`, final insight cards in `reports/insights/insight_cards.md` (sections I1 to I4), charts in `reports/figures/final_v2/`, dashboard data in `dashboard/data/insights_dashboard.csv`.
+
+## 8. Dashboard
+
+**Live dashboard: <TABLEAU_PUBLIC_LINK>**
+
+The Tableau workbook is not committed (it embeds data). Data source for the insights view: `dashboard/data/insights_dashboard.csv` (aggregates only, copied by id from `key_numbers.csv`; column and chart descriptions in `dashboard/data/README_dashboard.md`). The data quality view uses `tableau_dq_volume.csv` (row counts) and `tableau_machines.csv` (machine-level dots), both written by `src/tableau_export.py` into `data/model/tableau/` (generated, git-ignored, not published).
+
+![Insights dashboard](dashboard/screenshots/01_findings.png)
+
+**`01_findings.png` — Insights 1–4, one panel per insight.** Insight 1 compares the share of cleans with an airway blockage with and without a Filter Wash reminder (11.8% vs 0.9%); the panel title carries the ~6x same-clean and ~3x 7-day figures. Insight 2 shows the share of blockage errors preceded by a warning, SV50 against SV53 (92% vs 27%). Insight 3 shows blockages per 100 cleans by SV53 sub-model (SV53-AB highest) and the returned-to-normal ratio as recorded and with the same sub-model mix. Insight 4 shows the share of cleans with no battery temperature (SV50 74%, SV53 3%) with a footnote on the low-confidence hot-battery counts (9 of 15 SV50 vs 5 of 42 SV53 batteries above 45 °C). All intervals are 95% machine bootstraps.
+
+![Data quality explorer](dashboard/screenshots/02_dq_explorer.png)
+
+**`02_dq_explorer.png` — raw vs usable rows, plus one dot per machine.** Left: for each table (clean sessions, faults, motor, battery) and cohort, bars compare raw rows with the rows kept for analysis after duplicates and empty payloads are flagged (for example faults: 32.1% of raw Normal rows and 4.3% of raw RR rows are kept; `dq_pct_kept_*` in `key_numbers.csv`). It shows why raw row counts must not be used as event counts. Right: each dot is one machine, sessions per week against airway blockages per 100 sessions, with filters for outlier flag, model family and region. It is machine-level and built from `tableau_machines.csv`, so it is a descriptive view, not a finding.
+
+The dashboard shows correlation only; Return/Repair is a selected population.
+
+## 9. Assumptions and limitations
+
+Full log: `docs/assumptions_log.md` (each row marked verified, assumed or inferred).
+
+- **Selected population.** RR machines were returned or repaired for reasons and on dates that are not in the data; differences describe that group, not a typical machine. Samples are small.
+- **Correlation only.** Nothing here states or implies a cause; event order uses `fault_timestamp` (device time), which is inferred.
+- **Unknown field meanings.** `fault_status`, `hex_error_code`, `log_type`, the time-sync columns, sub-model codes and battery snapshot units are not defined in the brief or the bin JSONs; findings do not depend on them.
+- **The SV50 is missing data.** No dust values, no motor logs, battery data for only 15 machines and no RR machines, so SV50 can only be compared on faults and sessions (`f_i2_ctx_*`).
+- **Intervals** are 95% bootstraps over machines (2,000 resamples, fixed seed); several comparisons were run with no multiplicity correction.
+- **Model, not cohort.** Normal vs RR comparisons are restricted to SV53 because RR has no SV50 machines.
+
+## 10. Repo layout
+
 ```
-
-Link checks and parse/harmonise (Step 3), from the repo root:
-
-```bash
-python src/link_checks.py        # reports/profiling/link_checks.csv (read-only cross-table checks)
-python src/check_band_order.py   # reports/profiling/band_order_check.csv (evidence for the 2-D battery bin order)
-python src/build_clean.py        # data/clean/*.parquet, parse_summary.csv, machine_lookup_checks.csv, clean_column_dictionary.csv
-```
-
-`build_clean.py` is lossless (one output row per raw row, `source_file` + `source_row` for traceability), does not de-duplicate or correct values, and exits non-zero if a row count or the motor reconciliation (parsed values vs the Normal flattened columns) fails. Field meanings, units and bin-to-column mappings live in `src/field_meanings.py`; `payload_parsers.py` holds the motor and battery parsers.
-
-Data quality (Step 4), after `build_clean.py`:
-
-```bash
-python src/dq.py   # data/clean/dq/*.parquet (flagged tables + machine_dq), reports/dq/dq_summary.csv and detail CSVs
-```
-
-`dq.py` never changes the Step 3 outputs. Each table in `data/clean/dq/` has every original column, `dup_class` / `dup_keep` and other `flag_*` columns, cleaned analysis columns (`*_clean`) and `is_analysis_row`; later steps use only rows with `is_analysis_row = True` (faults also have `is_analysis_row_status_rule` for the sensitivity count). Raw values are never overwritten and no row is deleted. The run exits non-zero if an original column's row or non-null count changes. `reports/dq/dq_summary.csv` has one row per check and cohort (`check, table, cohort, rows_affected, pct, action_taken`); the basis of each count is in the check name.
-
-Data model (Step 5), after `dq.py`:
-
-```bash
-python src/model.py   # data/model/*.parquet and *.csv, reports/model/model_checks.csv, table_row_counts.csv, period_summary.csv
-```
-
-`model.py` reads only analysis rows from `data/clean/dq/` and writes a star schema: `dim_machine`, `dim_date`, `fact_session`, `fact_fault`, `fact_motor_period`, `fact_battery_period` and `machine_summary`. Motor and battery facts are one row per interval between consecutive snapshots (with `days_elapsed`), and a counter decrease makes that period's deltas missing (`delta_valid = False`) rather than being treated as a reset. The CSV files are the Tableau source. The run exits non-zero, and writes no tables, if any validation check fails. Grain, keys and rules are in `docs/erd.md`; the production sketch is in `docs/productionization.md`.
-
-EDA shortlist (Step 6), after `model.py`, from the repo root with the virtual environment active:
-
-```bash
-cd notebooks && jupyter nbconvert --to notebook --execute --inplace 01_eda_shortlist.ipynb
-```
-
-The notebook reads only `data/model/` (helpers in `src/eda_helpers.py`), keeps its outputs in the notebook, and writes `reports/eda/shortlist.md` and the figures in `reports/figures/eda/`. Run it from the `notebooks/` folder (it imports `../src`).
-
-Final insights (Step 7), after `model.py`, from the repo root with the virtual environment active:
-
-```bash
-python src/insights.py   # reports/insights/key_numbers.csv, step6_consistency.csv, reports/figures/final/*.png and *.svg
-cd notebooks && jupyter nbconvert --to notebook --execute --inplace 02_insights.ipynb
-```
-
-`src/insights.py` holds all Step 7 computation (pooled fault rates with machine-resampled bootstrap intervals; machine-level medians for continuous measures) and the four final charts. It reads `data/model/`; the DQ headline numbers come from the generated reports in `reports/profiling/` and `reports/dq/` and are cross-checked against the model. `reports/insights/key_numbers.csv` has one row per number used downstream, `step6_consistency.csv` compares the numbers repeated from Step 6/6b, and `reports/insights/insight_cards.md` has the write-up of each insight with its caveats. `02_insights.ipynb` calls the module and shows the tables and charts.
-
-Tableau export (Step 8 prep), after `insights.py`:
-
-```bash
-python src/tableau_export.py   # data/model/tableau/tableau_machines.csv, tableau_insight_rates.csv, tableau_dq_volume.csv
-```
-
-`src/tableau_export.py` writes three flat CSVs with plain labels: one row per machine (232), the bar segments of the two fault charts (10), and raw vs analysis row counts per table and cohort (16). Rates and row counts are read from `reports/insights/key_numbers.csv` and re-computed from `data/model/`; the script stops with an assertion error if they differ, if the components of a bar do not add to its total, or if the 6-character `machine_id` is not unique.
-
-Dashboard (Step 8), built in Tableau on the three CSVs above:
-
-- `dashboard/screenshots/01_findings.png`: "Return/Repair vs Normal" findings view. Fault-rate bars per 100 sessions (Filter Wash vs other faults, SV50 vs SV53), airway-blockage rate among SV53 machines (12/1 and 12/2 split), motor minutes per day by cohort, and a count of machines and sessions with 10 or more sessions.
-- `dashboard/screenshots/02_dq_explorer.png`: data quality and machine-level detail. Raw vs analysis row counts per table and cohort, plus a one-dot-per-machine scatter of sessions per week against airway-blockage rate, with filters for outlier flag (flagged outliers hidden by default), model family, region and cohort.
-- Data sources: `tableau_machines.csv` (machine-level views), `tableau_insight_rates.csv` (fault-rate bars) and `tableau_dq_volume.csv` (row counts).
-- The packaged workbook (`dashboard/telemetry_dashboard.twbx`) embeds the data extract, so it is git-ignored and not committed. Reviewers can use the screenshots. To rebuild the workbook, run `src/tableau_export.py` and connect Tableau to the three CSVs in `data/model/tableau/`.
-- Shareable link: TODO (add the Tableau Public URL here if the workbook is published).
-- The dashboard shows correlation only. Return/Repair machines are a selected population, and the screenshots carry the same caveat. Model family and region labels include an "Unknown" level for machines that could not be matched to a model or region.
-
-## Repo structure
-```
-normal_machines/, return_repair_machines/, reference_files/   raw inputs (read-only, git-ignored)
-src/            profiling, parsing, build_clean.py, dq.py, model.py, eda_helpers.py (Step 6 helpers), insights.py (Step 7 numbers and charts), tableau_export.py (Step 8 Tableau CSVs), field_meanings.py (field meanings in one place)
-data/clean/     parsed tables (Step 3); data/clean/dq/ flagged tables with is_analysis_row (Step 4)
-data/model/     star schema, Parquet + CSV (Step 5); data/model/tableau/ flat Tableau CSVs (Step 8 prep)
-reports/        profiling/, dq/, model/ (generated checks and summaries); eda/ (shortlist.md, Step 6); insights/ (key_numbers.csv, insight_cards.md, Step 7); figures/eda/ (Step 6 charts) and figures/final/ (Step 7 charts, PNG and SVG)
-docs/           assumptions_log.md, worklog.md, parsing_spec.md, erd.md, productionization.md
-notebooks/      EDA and presentation notebooks (01_eda_shortlist.ipynb, Step 6; 02_insights.ipynb, Step 7)
-dashboard/      Tableau dashboard screenshots (screenshots/); the .twbx workbook is git-ignored because it embeds data
+normal_machines/, return_repair_machines/, reference_files/   raw inputs (company-provided, git-ignored, not included)
+take_home_assignment_details.pdf                              brief (git-ignored, not included)
+src/             pipeline scripts (run_all.py runs them in order) and field_meanings.py
+notebooks/       01_eda_shortlist.ipynb
+data/clean/      parsed and flagged tables      (generated, git-ignored)
+data/model/      star schema, tableau/ CSVs     (generated, git-ignored)
+reports/         profiling/, dq/, model/, eda/, insights/, figures/ (final_v2/ = final charts), telemetry_findings.pdf
+dashboard/       screenshots/, data/ (insights_dashboard.csv, README_dashboard.md); workbooks are git-ignored
+docs/            assumptions_log.md, worklog.md, erd.md, productionization.md, parsing_spec.md
+requirements.txt
 ```
