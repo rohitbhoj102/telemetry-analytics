@@ -11,6 +11,8 @@ Two cohorts of connected Dyson machines, Normal and Return/Repair (RR), send cle
 | Dashboard (Tableau) | `dashboard/screenshots/01_findings.png` (insights dashboard) and `dashboard/screenshots/02_dq_explorer.png` (data quality explorer). Dashboard data: `dashboard/data/insights_dashboard.csv`, described in `dashboard/data/README_dashboard.md` |
 | Assumptions and limitations log | `docs/assumptions_log.md` |
 
+**AI assistance.** The scripts for the analysis in `src/` were created by Claude (an AI assistant made by Anthropic), working from my instructions.
+
 ## 2. Setup
 
 - **Python.** 3.8.1 (the version the results were produced on; a newer Python should work but `requirements.txt` was resolved on 3.8.1). Main packages: pandas 2.0.3, duckdb 1.3.2, matplotlib 3.7.5, numpy 1.24.4, jupyter 1.1.1. Parquet is read and written through DuckDB.
